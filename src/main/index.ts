@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import type { AppSettings } from '../shared/types'
 
 function createWindow(): void {
   // Create the browser window.
@@ -57,6 +58,10 @@ app.whenReady().then(() => {
       tvShowDirectory: '',
       tmdbApiKey: ''
     }
+  })
+
+  ipcMain.handle('set-app-settings', (_, appSettings: AppSettings) => {
+    console.log('Setting app settings...', appSettings)
   })
 
   ipcMain.handle('get-recently-added', () => {

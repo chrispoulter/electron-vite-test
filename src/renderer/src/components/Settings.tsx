@@ -6,16 +6,15 @@ export const Settings = (): React.JSX.Element => {
   const [isSaving, setIsSaving] = React.useState(false)
 
   useEffect(() => {
-    window.api.getAppSettings().then((settings) => setAppSettings(settings))
+    window.api.getAppSettings().then(setAppSettings)
   }, [])
 
   const onSaveSettings = (): void => {
     setIsSaving(true)
 
-    setTimeout(() => {
-      // Implement saving settings logic here
+    window.api.setAppSettings(appSettings!).then(() => {
       setIsSaving(false)
-    }, 1000)
+    })
   }
 
   if (!appSettings) {
