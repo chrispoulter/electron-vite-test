@@ -1,10 +1,9 @@
 {
-  "name": "electron-app",
+  "name": "media-library",
   "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "description": "A media library application built with Electron and Vite.",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "Chris Poulter",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
@@ -18,7 +17,8 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:linux": "electron-vite build && electron-builder --linux",
+    "generate-icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
@@ -42,9 +42,12 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
+    "png-to-ico": "^3.0.1",
+    "png2icons": "^2.0.1",
     "prettier": "^3.8.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "sharp": "^0.34.5",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"
   }
