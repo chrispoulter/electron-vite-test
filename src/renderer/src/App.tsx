@@ -1,19 +1,18 @@
-import Versions from './components/Versions'
+import { Content } from './components/Content'
+import { Footer } from './components/Footer'
+import { Header } from './components/Header'
+import { Sidebar } from './components/Sidebar'
 
 function App(): React.JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <button
-        className="mt-4 flex items-center gap-2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-        onClick={ipcHandle}
-      >
-        Send Ping
-      </button>
-      <Versions />
-    </>
+    <div className="flex flex-col h-screen">
+      <Header />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        <Content />
+      </div>
+      <Footer />
+    </div>
   )
 }
 
