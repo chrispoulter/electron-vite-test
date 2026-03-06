@@ -4,11 +4,14 @@ function Versions(): React.JSX.Element {
   const [versions] = useState(window.electron.process.versions)
 
   return (
-    <ul className="versions">
-      <li className="electron-version">Electron v{versions.electron}</li>
-      <li className="chrome-version">Chromium v{versions.chrome}</li>
-      <li className="node-version">Node v{versions.node}</li>
-    </ul>
+    <div>
+      <h2 className="mt-6 text-2xl font-bold">Versions</h2>
+      <ul className="list-disc pl-5">
+        <li>Electron v{versions.electron}</li>
+        <li>Chromium v{versions.chrome}</li>
+        <li>Node v{versions.node}</li>
+      </ul>
+    </div>
   )
 }
 
