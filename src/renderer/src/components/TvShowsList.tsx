@@ -1,18 +1,26 @@
 import React from 'react'
-import { Movie } from './MoviesList'
-import { MovieCard } from './MovieCard'
-import { TvShow } from './TvShowsList'
 import { TvShowCard } from './TvShowCard'
 
-type RecentlyAddedItem = Movie | TvShow
+type TvShowEpisode = {
+  episodeNumber: number
+  filePath: string
+}
 
-export const RecentlyAdded = (): React.JSX.Element => {
-  const [recentlyAdded, setRecentlyAdded] = React.useState<RecentlyAddedItem[]>([
-    {
-      title: 'Movie 1',
-      posterUrl: 'https://placehold.co/150',
-      filePath: '/path/to/movie1'
-    },
+type TvShowSeason = {
+  seasonNumber: number
+  episodes: TvShowEpisode[]
+}
+
+export type TvShow = {
+  title: string
+  posterUrl: string
+  seasons: TvShowSeason[]
+}
+
+export const TvShowsList = (): React.JSX.Element => {
+  const [search, setSearch] = React.useState('')
+
+  const [tvShows, setTvShows] = React.useState<TvShow[]>([
     {
       title: 'TV Show 1',
       posterUrl: 'https://placehold.co/150',
@@ -27,11 +35,6 @@ export const RecentlyAdded = (): React.JSX.Element => {
       ]
     },
     {
-      title: 'Movie 2',
-      posterUrl: 'https://placehold.co/150',
-      filePath: '/path/to/movie2'
-    },
-    {
       title: 'TV Show 2',
       posterUrl: 'https://placehold.co/150',
       seasons: [
@@ -41,13 +44,15 @@ export const RecentlyAdded = (): React.JSX.Element => {
             { episodeNumber: 1, filePath: '/path/to/episode1' },
             { episodeNumber: 2, filePath: '/path/to/episode2' }
           ]
+        },
+        {
+          seasonNumber: 2,
+          episodes: [
+            { episodeNumber: 1, filePath: '/path/to/episode1' },
+            { episodeNumber: 2, filePath: '/path/to/episode2' }
+          ]
         }
       ]
-    },
-    {
-      title: 'Movie 3',
-      posterUrl: 'https://placehold.co/150',
-      filePath: '/path/to/movie3'
     },
     {
       title: 'TV Show 3',
@@ -66,15 +71,19 @@ export const RecentlyAdded = (): React.JSX.Element => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Recently Added</h2>
+      <input
+        type="text"
+        placeholder="Search TV shows..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full p-2 mb-4 border rounded"
+      />
       <div className="flex flex-col gap-2">
-        {recentlyAdded.map((item, index) => {
-          if ('seasons' in item) {
-            return <TvShowCard key={index} tvShow={item} />
-          } else {
-            return <MovieCard key={index} movie={item} />
-          }
-        })}
+        {tvShows
+          .filter((show) => show.title.toLowerCase().includes(search.toLowerCase()))
+          .map((show, index) => (
+            <TvShowCard key={index} tvShow={show} />
+          ))}
       </div>
     </div>
   )
