@@ -1,4 +1,4 @@
-import { TvShow } from './TvShowsList'
+import type { TvShow } from '../../../shared/types'
 
 export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element => {
   return (

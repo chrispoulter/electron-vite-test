@@ -1,11 +1,5 @@
 import React from 'react'
-
-type AppSettings = {
-  theme: 'light' | 'dark' | 'system'
-  movieDirectory: string
-  tvShowDirectory: string
-  tmdbApiKey: string
-}
+import type { AppSettings } from 'src/shared/types'
 
 export const Settings = (): React.JSX.Element => {
   const [appSettings, setAppSettings] = React.useState<AppSettings>({

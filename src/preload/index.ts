@@ -3,7 +3,10 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath)
+  getRecentlyAdded: () => ipcRenderer.invoke('get-recently-added'),
+  getMovies: () => ipcRenderer.invoke('get-movies'),
+  getTvShows: () => ipcRenderer.invoke('get-tv-shows'),
+  openFile: (filePath: string) => ipcRenderer.invoke('open-file', filePath)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

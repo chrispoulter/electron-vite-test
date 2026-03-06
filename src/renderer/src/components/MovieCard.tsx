@@ -1,4 +1,4 @@
-import { Movie } from './MoviesList'
+import type { Movie } from '../../../shared/types'
 
 export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
   return (
