@@ -9,7 +9,7 @@ export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
       <img
         src={movie.posterUrl}
         alt={movie.title}
-        className="w-full h-auto mb-2 rounded cursor-pointer"
+        className="w-full h-auto mb-2 rounded cursor-pointer max-w-14"
       />
       <h3 className="text-lg font-bold">{movie.title}</h3>
     </div>

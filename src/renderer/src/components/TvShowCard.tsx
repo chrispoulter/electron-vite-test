@@ -3,7 +3,11 @@ import type { TvShow } from '../../../shared/types'
 export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element => {
   return (
     <div className="bg-gray-200 dark:bg-gray-800 p-4 rounded">
-      <img src={tvShow.posterUrl} alt={tvShow.title} className="w-full h-auto mb-2 rounded" />
+      <img
+        src={tvShow.posterUrl}
+        alt={tvShow.title}
+        className="w-full h-auto mb-2 rounded  max-w-14"
+      />
       <h3 className="text-lg font-bold">{tvShow.title}</h3>
       {tvShow.seasons.map((season) => (
         <div key={season.seasonNumber} className="ml-4 mt-2">
