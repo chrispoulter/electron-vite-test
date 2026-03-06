@@ -13,7 +13,7 @@ type TvShowSeason = {
 
 export type TvShow = {
   title: string
-  posterUrl: string
+  posterUrl?: string
   seasons: TvShowSeason[]
 }
 
@@ -28,8 +28,8 @@ export const TvShowsList = (): React.JSX.Element => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         }
       ]
@@ -41,15 +41,15 @@ export const TvShowsList = (): React.JSX.Element => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         },
         {
           seasonNumber: 2,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         }
       ]
@@ -61,8 +61,8 @@ export const TvShowsList = (): React.JSX.Element => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         }
       ]

@@ -52,6 +52,11 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
+  ipcMain.handle('open-file', (_, filePath: string) => {
+    console.log(`Opening file: ${filePath}`)
+    shell.openPath(filePath)
+  })
+
   createWindow()
 
   app.on('activate', function () {

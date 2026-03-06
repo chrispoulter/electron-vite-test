@@ -11,7 +11,7 @@ export const RecentlyAdded = (): React.JSX.Element => {
     {
       title: 'Movie 1',
       posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: '/path/to/movie1'
+      filePath: 'D:\\Movies\\A\\Alien.mp4'
     },
     {
       title: 'TV Show 1',
@@ -20,8 +20,8 @@ export const RecentlyAdded = (): React.JSX.Element => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         }
       ]
@@ -29,7 +29,7 @@ export const RecentlyAdded = (): React.JSX.Element => {
     {
       title: 'Movie 2',
       posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: '/path/to/movie2'
+      filePath: 'D:\\Movies\\A\\Alien.mp4'
     },
     {
       title: 'TV Show 2',
@@ -38,8 +38,8 @@ export const RecentlyAdded = (): React.JSX.Element => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         }
       ]
@@ -47,7 +47,7 @@ export const RecentlyAdded = (): React.JSX.Element => {
     {
       title: 'Movie 3',
       posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: '/path/to/movie3'
+      filePath: 'D:\\Movies\\A\\Alien.mp4'
     },
     {
       title: 'TV Show 3',
@@ -56,8 +56,8 @@ export const RecentlyAdded = (): React.JSX.Element => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: '/path/to/episode1' },
-            { episodeNumber: 2, filePath: '/path/to/episode2' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
           ]
         }
       ]

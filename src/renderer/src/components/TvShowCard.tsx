@@ -10,7 +10,13 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           <h4 className="text-md font-semibold">Season {season.seasonNumber}</h4>
           <ul className="list-disc list-inside">
             {season.episodes.map((episode) => (
-              <li key={episode.episodeNumber}>Episode {episode.episodeNumber}</li>
+              <li
+                key={episode.episodeNumber}
+                onClick={() => window.api.openFile(episode.filePath)}
+                className="cursor-pointer"
+              >
+                Episode {episode.episodeNumber}
+              </li>
             ))}
           </ul>
         </div>
