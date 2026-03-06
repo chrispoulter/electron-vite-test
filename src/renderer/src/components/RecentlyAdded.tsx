@@ -10,12 +10,12 @@ export const RecentlyAdded = (): React.JSX.Element => {
   const [recentlyAdded, setRecentlyAdded] = React.useState<RecentlyAddedItem[]>([
     {
       title: 'Movie 1',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
       filePath: '/path/to/movie1'
     },
     {
       title: 'TV Show 1',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
       seasons: [
         {
           seasonNumber: 1,
@@ -28,12 +28,12 @@ export const RecentlyAdded = (): React.JSX.Element => {
     },
     {
       title: 'Movie 2',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
       filePath: '/path/to/movie2'
     },
     {
       title: 'TV Show 2',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
       seasons: [
         {
           seasonNumber: 1,
@@ -46,12 +46,12 @@ export const RecentlyAdded = (): React.JSX.Element => {
     },
     {
       title: 'Movie 3',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
       filePath: '/path/to/movie3'
     },
     {
       title: 'TV Show 3',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
       seasons: [
         {
           seasonNumber: 1,

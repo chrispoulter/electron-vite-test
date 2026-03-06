@@ -23,7 +23,7 @@ export const TvShowsList = (): React.JSX.Element => {
   const [tvShows, setTvShows] = React.useState<TvShow[]>([
     {
       title: 'TV Show 1',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
       seasons: [
         {
           seasonNumber: 1,
@@ -36,7 +36,7 @@ export const TvShowsList = (): React.JSX.Element => {
     },
     {
       title: 'TV Show 2',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
       seasons: [
         {
           seasonNumber: 1,
@@ -56,7 +56,7 @@ export const TvShowsList = (): React.JSX.Element => {
     },
     {
       title: 'TV Show 3',
-      posterUrl: 'https://placehold.co/150',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
       seasons: [
         {
           seasonNumber: 1,

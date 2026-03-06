@@ -11,11 +11,31 @@ export const MoviesList = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
 
   const [movies, setMovies] = React.useState<Movie[]>([
-    { title: 'Movie 1', posterUrl: 'https://placehold.co/150', filePath: '/path/to/movie1' },
-    { title: 'Movie 2', posterUrl: 'https://placehold.co/150', filePath: '/path/to/movie2' },
-    { title: 'Movie 3', posterUrl: 'https://placehold.co/150', filePath: '/path/to/movie3' },
-    { title: 'Movie 4', posterUrl: 'https://placehold.co/150', filePath: '/path/to/movie4' },
-    { title: 'Movie 5', posterUrl: 'https://placehold.co/150', filePath: '/path/to/movie5' }
+    {
+      title: 'Movie 1',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      filePath: '/path/to/movie1'
+    },
+    {
+      title: 'Movie 2',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      filePath: '/path/to/movie2'
+    },
+    {
+      title: 'Movie 3',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      filePath: '/path/to/movie3'
+    },
+    {
+      title: 'Movie 4',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      filePath: '/path/to/movie4'
+    },
+    {
+      title: 'Movie 5',
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      filePath: '/path/to/movie5'
+    }
   ])
 
   return (
