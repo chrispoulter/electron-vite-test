@@ -1,15 +1,13 @@
-import React from 'react'
-import type { AppSettings } from 'src/shared/types'
+import React, { useEffect } from 'react'
+import type { AppSettings } from '../../../shared/types'
 
 export const Settings = (): React.JSX.Element => {
-  const [appSettings, setAppSettings] = React.useState<AppSettings>({
-    theme: 'system',
-    movieDirectory: '',
-    tvShowDirectory: '',
-    tmdbApiKey: ''
-  })
-
+  const [appSettings, setAppSettings] = React.useState<AppSettings>()
   const [isSaving, setIsSaving] = React.useState(false)
+
+  useEffect(() => {
+    window.api.getAppSettings().then((settings) => setAppSettings(settings))
+  }, [])
 
   const onSaveSettings = (): void => {
     setIsSaving(true)
@@ -18,6 +16,10 @@ export const Settings = (): React.JSX.Element => {
       // Implement saving settings logic here
       setIsSaving(false)
     }, 1000)
+  }
+
+  if (!appSettings) {
+    return <div className="text-gray-500">Loading...</div>
   }
 
   return (

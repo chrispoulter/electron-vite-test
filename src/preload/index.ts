@@ -3,6 +3,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
+  getAppSettings: () => ipcRenderer.invoke('get-app-settings'),
   getRecentlyAdded: () => ipcRenderer.invoke('get-recently-added'),
   getMovies: () => ipcRenderer.invoke('get-movies'),
   getTvShows: () => ipcRenderer.invoke('get-tv-shows'),

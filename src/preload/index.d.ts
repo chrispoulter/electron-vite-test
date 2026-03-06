@@ -5,6 +5,7 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
+      getAppSettings: () => Promise<AppSettings>
       getRecentlyAdded: () => Promise<(Movie | TvShow)[]>
       getMovies: () => Promise<Movie[]>
       getTvShows: () => Promise<TvShow[]>

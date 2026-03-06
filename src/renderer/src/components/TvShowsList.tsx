@@ -4,11 +4,15 @@ import { TvShowCard } from './TvShowCard'
 
 export const TvShowsList = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
-  const [tvShows, setTvShows] = React.useState<TvShow[] | undefined>()
+  const [tvShows, setTvShows] = React.useState<TvShow[]>()
 
   useEffect(() => {
     window.api.getTvShows().then((tvShows) => setTvShows(tvShows))
   }, [])
+
+  if (!tvShows) {
+    return <div className="text-gray-500">Loading...</div>
+  }
 
   return (
     <div>
@@ -20,7 +24,7 @@ export const TvShowsList = (): React.JSX.Element => {
         className="w-full p-2 mb-4 border rounded"
       />
       <div className="flex flex-col gap-2">
-        {(tvShows ?? [])
+        {tvShows
           .filter((show) => show.title.toLowerCase().includes(search.toLowerCase()))
           .map((show, index) => (
             <TvShowCard key={index} tvShow={show} />

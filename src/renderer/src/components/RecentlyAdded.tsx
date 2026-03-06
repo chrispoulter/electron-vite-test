@@ -4,17 +4,21 @@ import { MovieCard } from './MovieCard'
 import { TvShowCard } from './TvShowCard'
 
 export const RecentlyAdded = (): React.JSX.Element => {
-  const [recentlyAdded, setRecentlyAdded] = React.useState<(Movie | TvShow)[] | undefined>()
+  const [recentlyAdded, setRecentlyAdded] = React.useState<(Movie | TvShow)[]>()
 
   useEffect(() => {
     window.api.getRecentlyAdded().then((items) => setRecentlyAdded(items))
   }, [])
 
+  if (!recentlyAdded) {
+    return <div className="text-gray-500">Loading...</div>
+  }
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Recently Added</h2>
       <div className="flex flex-col gap-2">
-        {recentlyAdded?.map((item, index) => {
+        {recentlyAdded.map((item, index) => {
           if ('seasons' in item) {
             return <TvShowCard key={index} tvShow={item} />
           } else {

@@ -49,6 +49,16 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  ipcMain.handle('get-app-settings', () => {
+    console.log('Getting app settings...')
+    return {
+      theme: 'system',
+      movieDirectory: '',
+      tvShowDirectory: '',
+      tmdbApiKey: ''
+    }
+  })
+
   ipcMain.handle('get-recently-added', () => {
     console.log('Getting recently added...')
     return [
