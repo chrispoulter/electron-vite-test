@@ -2,8 +2,9 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { getSettings, setSettings } from './settingsStore'
 import type { AppSettings } from '../shared/types'
+import { getSettings, setSettings } from './settingsStore'
+import { getMovies, getRecentlyAdded, getTVShows } from './mediaScanner'
 
 function createWindow(): void {
   // Create the browser window.
@@ -52,156 +53,11 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('get-app-settings', () => getSettings())
-
   ipcMain.handle('set-app-settings', (_, appSettings: AppSettings) => setSettings(appSettings))
-
-  ipcMain.handle('get-recently-added', () => {
-    console.log('Getting recently added...')
-    return [
-      {
-        title: 'Movie 1',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Alien.mp4'
-      },
-      {
-        title: 'TV Show 1',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-        seasons: [
-          {
-            seasonNumber: 1,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          }
-        ]
-      },
-      {
-        title: 'Movie 2',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Alien.mp4'
-      },
-      {
-        title: 'TV Show 2',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-        seasons: [
-          {
-            seasonNumber: 1,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          }
-        ]
-      },
-      {
-        title: 'Movie 3',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Alien.mp4'
-      },
-      {
-        title: 'TV Show 3',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-        seasons: [
-          {
-            seasonNumber: 1,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          }
-        ]
-      }
-    ]
-  })
-
-  ipcMain.handle('get-movies', () => {
-    console.log('Getting movies...')
-    return [
-      {
-        title: 'Movie 1',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Alien.mp4'
-      },
-      {
-        title: 'Movie 2',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Movie2.mp4'
-      },
-      {
-        title: 'Movie 3',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Movie3.mp4'
-      },
-      {
-        title: 'Movie 4',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Movie4.mp4'
-      },
-      {
-        title: 'Movie 5',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-        filePath: 'D:\\Movies\\A\\Movie5.mp4'
-      }
-    ]
-  })
-
-  ipcMain.handle('get-tv-shows', () => {
-    console.log('Getting TV shows...')
-    return [
-      {
-        title: 'TV Show 1',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-        seasons: [
-          {
-            seasonNumber: 1,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          }
-        ]
-      },
-      {
-        title: 'TV Show 2',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-        seasons: [
-          {
-            seasonNumber: 1,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          },
-          {
-            seasonNumber: 2,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          }
-        ]
-      },
-      {
-        title: 'TV Show 3',
-        posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-        seasons: [
-          {
-            seasonNumber: 1,
-            episodes: [
-              { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-              { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
-            ]
-          }
-        ]
-      }
-    ]
-  })
-
-  ipcMain.handle('open-file', (_, filePath: string) => {
-    console.log(`Opening file: ${filePath}`)
-    shell.openPath(filePath)
-  })
+  ipcMain.handle('get-recently-added', () => getRecentlyAdded())
+  ipcMain.handle('get-movies', () => getMovies())
+  ipcMain.handle('get-tv-shows', () => getTVShows())
+  ipcMain.handle('open-file', (_, filePath: string) => shell.openPath(filePath))
 
   createWindow()
 
