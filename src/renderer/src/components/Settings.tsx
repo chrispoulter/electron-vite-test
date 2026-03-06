@@ -35,7 +35,6 @@ export const Settings = (): React.JSX.Element => {
               setAppSettings({ ...appSettings, theme: e.target.value as AppSettings['theme'] })
             }
             disabled={isSaving}
-            required
           >
             <option value="light">Light</option>
             <option value="dark">Dark</option>
@@ -77,7 +76,6 @@ export const Settings = (): React.JSX.Element => {
             value={appSettings.tmdbApiKey}
             onChange={(e) => setAppSettings({ ...appSettings, tmdbApiKey: e.target.value })}
             disabled={isSaving}
-            required
           />
           <p className="text-sm text-gray-400">
             Enter your TMDb API key to enable metadata fetching.

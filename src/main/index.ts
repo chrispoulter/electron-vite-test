@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { getSettings, setSettings } from './settingsStore'
 import type { AppSettings } from '../shared/types'
 
 function createWindow(): void {
@@ -50,19 +51,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.handle('get-app-settings', () => {
-    console.log('Getting app settings...')
-    return {
-      theme: 'system',
-      movieDirectory: '',
-      tvShowDirectory: '',
-      tmdbApiKey: ''
-    }
-  })
+  ipcMain.handle('get-app-settings', () => getSettings())
 
-  ipcMain.handle('set-app-settings', (_, appSettings: AppSettings) => {
-    console.log('Setting app settings...', appSettings)
-  })
+  ipcMain.handle('set-app-settings', (_, appSettings: AppSettings) => setSettings(appSettings))
 
   ipcMain.handle('get-recently-added', () => {
     console.log('Getting recently added...')
