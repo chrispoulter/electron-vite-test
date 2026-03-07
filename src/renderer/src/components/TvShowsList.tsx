@@ -16,6 +16,7 @@ export const TvShowsList = (): React.JSX.Element => {
 
   return (
     <div className="dark:text-white">
+      <h2 className="text-2xl font-bold mb-4">TV Shows</h2>
       <input
         type="text"
         placeholder="Search TV shows..."

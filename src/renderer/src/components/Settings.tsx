@@ -25,7 +25,7 @@ export const Settings = (): React.JSX.Element => {
 
   return (
     <div className="dark:text-white">
-      <h2 className="text-xl font-semibold mb-4">Settings</h2>
+      <h2 className="text-2xl font-bold mb-4">Settings</h2>
       <p className="mb-4">Configure your application preferences here.</p>
       <form onSubmit={onSaveSettings}>
         <div className="mb-4">
