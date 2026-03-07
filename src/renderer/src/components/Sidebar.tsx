@@ -7,7 +7,7 @@ type SidebarProps = {
 
 export const Sidebar = ({ view, setView }: SidebarProps): React.JSX.Element => {
   return (
-    <aside className="w-64 bg-gray-200 dark:bg-gray-800 p-4">
+    <aside className="w-64 bg-gray-200 dark:bg-gray-800 dark:text-white p-4">
       <nav>
         <ul>
           <li className="mb-2">

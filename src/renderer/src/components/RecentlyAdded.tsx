@@ -15,7 +15,7 @@ export const RecentlyAdded = (): React.JSX.Element => {
   }
 
   return (
-    <div>
+    <div className="dark:text-white">
       <h2 className="text-2xl font-bold mb-4">Recently Added</h2>
       <div className="flex flex-col gap-2">
         {recentlyAdded.map((item, index) => {

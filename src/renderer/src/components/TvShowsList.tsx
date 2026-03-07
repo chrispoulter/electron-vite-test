@@ -15,13 +15,13 @@ export const TvShowsList = (): React.JSX.Element => {
   }
 
   return (
-    <div>
+    <div className="dark:text-white">
       <input
         type="text"
         placeholder="Search TV shows..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full p-2 mb-4 border rounded"
+        className="w-full p-2 mb-4 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
       />
       <div className="flex flex-col gap-2">
         {tvShows

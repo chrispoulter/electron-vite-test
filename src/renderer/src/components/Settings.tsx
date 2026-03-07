@@ -24,14 +24,14 @@ export const Settings = (): React.JSX.Element => {
   }
 
   return (
-    <div>
+    <div className="dark:text-white">
       <h2 className="text-xl font-semibold mb-4">Settings</h2>
       <p className="mb-4">Configure your application preferences here.</p>
       <form onSubmit={onSaveSettings}>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Theme</label>
           <select
-            className="w-full border border-gray-300 rounded mb-1 p-2"
+            className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             value={appSettings.theme}
             onChange={(e) =>
               setAppSettings({ ...appSettings, theme: e.target.value as AppSettings['theme'] })
@@ -47,7 +47,7 @@ export const Settings = (): React.JSX.Element => {
           <label className="block text-sm font-medium mb-1">Movie Directory</label>
           <input
             type="text"
-            className="w-full border border-gray-400 rounded mb-1 p-2"
+            className="w-full border border-gray-400 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             placeholder="/path/to/movies"
             value={appSettings.movieDirectory}
             onChange={(e) => setAppSettings({ ...appSettings, movieDirectory: e.target.value })}
@@ -60,7 +60,7 @@ export const Settings = (): React.JSX.Element => {
           <label className="block text-sm font-medium mb-1">TV Show Directory</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded mb-1 p-2"
+            className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             placeholder="/path/to/tv-shows"
             value={appSettings.tvShowDirectory}
             onChange={(e) => setAppSettings({ ...appSettings, tvShowDirectory: e.target.value })}
@@ -73,7 +73,7 @@ export const Settings = (): React.JSX.Element => {
           <label className="block text-sm font-medium mb-1">TMDb API Key</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded mb-1 p-2"
+            className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             placeholder="Your TMDb API Key"
             value={appSettings.tmdbApiKey}
             onChange={(e) => setAppSettings({ ...appSettings, tmdbApiKey: e.target.value })}
