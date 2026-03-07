@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import type { AppSettings } from '../../../shared/types'
+import { applyTheme } from '../utils/theme'
 
 export const Settings = (): React.JSX.Element => {
   const [appSettings, setAppSettings] = React.useState<AppSettings>()
@@ -14,6 +15,7 @@ export const Settings = (): React.JSX.Element => {
 
     window.api.setAppSettings(appSettings!).then(() => {
       setIsSaving(false)
+      applyTheme(appSettings!.theme)
     })
   }
 

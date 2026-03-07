@@ -4,7 +4,7 @@ import { AppSettings, Movie, TvShow } from '../shared/types'
 
 // Custom APIs for renderer
 const api = {
-  getAppSettings: (): Promise<AppSettings[]> => ipcRenderer.invoke('get-app-settings'),
+  getAppSettings: (): Promise<AppSettings> => ipcRenderer.invoke('get-app-settings'),
   setAppSettings: (settings: AppSettings): Promise<void> =>
     ipcRenderer.invoke('set-app-settings', settings),
   getRecentlyAdded: (): Promise<(Movie | TvShow)[]> => ipcRenderer.invoke('get-recently-added'),
