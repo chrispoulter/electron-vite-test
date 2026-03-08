@@ -12,9 +12,7 @@ export const RecentlyAddedView = (): React.JSX.Element => {
   }, [])
 
   const filtered = recentlyAdded?.filter((item) =>
-    'seasons' in item
-      ? item.title.toLowerCase().includes(search.toLowerCase())
-      : item.title.toLowerCase().includes(search.toLowerCase())
+    item.title.toLowerCase().includes(search.toLowerCase())
   )
 
   return (
@@ -36,7 +34,7 @@ export const RecentlyAddedView = (): React.JSX.Element => {
       ) : (
         <div className="flex flex-col gap-2">
           {filtered.map((item, index) => {
-            if ('seasons' in item) {
+            if ('episodes' in item) {
               return <TvShowCard key={index} tvShow={item} />
             } else {
               return <MovieCard key={index} movie={item} />
