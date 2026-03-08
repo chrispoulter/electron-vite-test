@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import type { Movie, TvShow } from '../../../shared/types'
+import { Search } from './Search'
 import { MovieCard } from './MovieCard'
 import { TvShowCard } from './TvShowCard'
 
@@ -18,13 +19,7 @@ export const RecentlyAddedView = (): React.JSX.Element => {
   return (
     <div className="dark:text-white">
       <h2 className="mb-4 text-2xl font-bold">Recently Added</h2>
-      <input
-        type="text"
-        placeholder="Search recently added..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="mb-4 w-full rounded border p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-      />
+      <Search placeholder="Search recently added..." value={search} onChange={setSearch} />
       {!filtered?.length ? (
         <div className="text-gray-500">
           {search
