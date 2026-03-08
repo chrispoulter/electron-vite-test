@@ -35,7 +35,7 @@ export const MovieCard = ({
       <small className="ml-auto rounded bg-purple-500 p-1 px-2 py-1 text-xs text-white">
         Movie
       </small>
-      <PlayIcon className="h-5 w-5" />
+      <PlayIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
     </div>
   )
 }
