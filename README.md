@@ -1,34 +1,94 @@
-# electron-app
+# Media Library
 
-An Electron application with React and TypeScript
+A desktop application for organizing and browsing your personal collection of movies and TV shows. Built with Electron, React, and TypeScript.
+
+## Features
+
+- **Movies** — Browse your movie collection with real-time search filtering
+- **TV Shows** — Browse TV shows with expandable episode and season listings
+- **Recently Added** — View the 20 most recently added items across both libraries
+- **Settings** — Configure media directories, theme preference, and TMDb API key
+- **Light / Dark / System theme** — Follows system preference or can be set manually
+- **Persistent window state** — Position, size, and maximized state are saved across restarts
+- **Direct playback** — Open any media file in your default player with one click
+
+## Supported Formats
+
+`mp4` `mkv` `avi` `mov` `wmv` `m4v` `webm`
+
+## Tech Stack
+
+| Layer | Technology |
+| --- | --- |
+| Desktop shell | Electron 40 |
+| UI | React 19 + TypeScript |
+| Build tooling | Vite 7 + electron-vite |
+| Styling | Tailwind CSS |
+| Packaging | electron-builder |
+| Auto-update | electron-updater |
 
 ## Recommended IDE Setup
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+[VS Code](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Project Setup
 
 ### Install
 
 ```bash
-$ npm install
+npm install
 ```
 
 ### Development
 
 ```bash
-$ npm run dev
+npm run dev
 ```
 
-### Build
+### Typecheck
 
 ```bash
-# For windows
-$ npm run build:win
+npm run typecheck
+```
 
-# For macOS
-$ npm run build:mac
+### Lint & Format
 
-# For Linux
-$ npm run build:linux
+```bash
+npm run lint
+npm run format
+```
+
+## Build
+
+```bash
+# Windows
+npm run build:win
+
+# macOS
+npm run build:mac
+
+# Linux (AppImage, snap, deb)
+npm run build:linux
+```
+
+## How Media Scanning Works
+
+The app scans the directories you configure in Settings:
+
+- **Movies** — each subdirectory is treated as one movie; video files inside it are listed as the movie's files.
+- **TV Shows** — each top-level folder is one show; season numbers are detected from filenames using the pattern `S##` (e.g. `S01`).
+
+Settings and window state are persisted to `{userData}/settings.json` and `{userData}/window-state.json` respectively.
+
+## Project Structure
+
+```
+src/
+├── main/           # Electron main process (IPC, file scanning, settings)
+├── preload/        # Secure IPC bridge exposed to the renderer
+├── renderer/       # React application
+│   └── src/
+│       ├── components/   # Views and UI components
+│       └── utils/        # Theme and time formatting helpers
+└── shared/         # Shared TypeScript types
 ```
