@@ -14,7 +14,7 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           <small className="rounded bg-pink-500 p-1 text-xs text-white">TV Show</small>
         </h3>
         <button
-          className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          className="ml-auto min-w-32 cursor-pointer rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
           onClick={() => setShowEpisodes(!showEpisodes)}
         >
           Episodes
