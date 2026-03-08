@@ -13,10 +13,10 @@ export const Sidebar = ({ view, setView }: SidebarProps): React.JSX.Element => {
           <li className="mb-2">
             <a
               href="#"
+              onClick={() => setView('recently-added')}
               className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
                 'bg-gray-300 dark:bg-gray-600': view === 'recently-added'
               })}
-              onClick={() => setView('recently-added')}
             >
               Recently Added
             </a>
@@ -24,10 +24,10 @@ export const Sidebar = ({ view, setView }: SidebarProps): React.JSX.Element => {
           <li className="mb-2">
             <a
               href="#"
+              onClick={() => setView('movies')}
               className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
                 'bg-gray-300 dark:bg-gray-600': view === 'movies'
               })}
-              onClick={() => setView('movies')}
             >
               Movies
             </a>
@@ -35,10 +35,10 @@ export const Sidebar = ({ view, setView }: SidebarProps): React.JSX.Element => {
           <li className="mb-2">
             <a
               href="#"
+              onClick={() => setView('tv-shows')}
               className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
                 'bg-gray-300 dark:bg-gray-600': view === 'tv-shows'
               })}
-              onClick={() => setView('tv-shows')}
             >
               TV Shows
             </a>
@@ -46,10 +46,10 @@ export const Sidebar = ({ view, setView }: SidebarProps): React.JSX.Element => {
           <li className="mb-2">
             <a
               href="#"
+              onClick={() => setView('settings')}
               className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
                 'bg-gray-300 dark:bg-gray-600': view === 'settings'
               })}
-              onClick={() => setView('settings')}
             >
               Settings
             </a>

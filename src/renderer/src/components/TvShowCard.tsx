@@ -6,17 +6,17 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
 
   return (
     <div className="flex flex-col gap-4 rounded bg-gray-200 p-2 dark:bg-gray-700 dark:text-white">
-      <div className="flex items-center gap-4">
+      <div
+        className="flex cursor-pointer items-center gap-4"
+        onClick={() => setShowEpisodes(!showEpisodes)}
+      >
         <img src={tvShow.posterUrl} alt={tvShow.title} className="h-auto w-full max-w-8 rounded" />
         <h3 className="truncate text-lg font-bold">
           {tvShow.title}
           <br />
           <small className="rounded bg-pink-500 p-1 text-xs text-white">TV Show</small>
         </h3>
-        <button
-          className="ml-auto min-w-32 cursor-pointer rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
-          onClick={() => setShowEpisodes(!showEpisodes)}
-        >
+        <button className="ml-auto min-w-32 cursor-pointer rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">
           Episodes
         </button>
       </div>
@@ -25,13 +25,11 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           {tvShow.episodes.map((episode, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
+              onClick={() => window.api.openFile(episode.filePath)}
+              className="flex items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white cursor-pointer"
             >
               <span className="truncate text-sm font-bold">{episode.title}</span>
-              <button
-                className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                onClick={() => window.api.openFile(episode.filePath)}
-              >
+              <button className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
                 Play
               </button>
             </div>
