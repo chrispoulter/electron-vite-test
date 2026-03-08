@@ -13,7 +13,7 @@ export const TvShowCard = ({ tvShow, showAddedDate }: TvShowCardProps): React.JS
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="flex flex-col gap-4 rounded bg-gray-200 p-2 dark:bg-gray-700 dark:text-white">
+    <div className="flex flex-col gap-4 rounded bg-gray-200 p-2 shadow-sm transition-all duration-150 hover:bg-gray-300 hover:shadow-md dark:bg-gray-700 dark:text-white dark:hover:bg-gray-800">
       <div className="flex cursor-pointer items-center gap-4" onClick={() => setIsOpen(!isOpen)}>
         <img
           src={tvShow.posterUrl || defaultTvShowPoster}
@@ -54,7 +54,7 @@ export const TvShowCard = ({ tvShow, showAddedDate }: TvShowCardProps): React.JS
             <div
               key={index}
               onClick={() => window.api.openFile(episode.filePath)}
-              className="flex cursor-pointer items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
+              className="flex cursor-pointer items-center gap-2 rounded bg-gray-100 p-2 transition-colors duration-150 hover:bg-gray-200 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
             >
               <span className="truncate text-sm">{episode.title}</span>
               <small className="ml-auto rounded bg-gray-500 px-2 py-1 text-xs text-white uppercase">

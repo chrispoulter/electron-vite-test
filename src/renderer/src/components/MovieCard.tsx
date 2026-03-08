@@ -12,7 +12,7 @@ export const MovieCard = ({ movie, showAddedDate }: MovieCardProps): React.JSX.E
   return (
     <div
       onClick={() => window.api.openFile(movie.filePath)}
-      className="flex cursor-pointer items-center gap-4 rounded bg-gray-200 p-2 dark:bg-gray-700 dark:text-white"
+      className="flex cursor-pointer items-center gap-4 rounded bg-gray-200 p-2 shadow-sm transition-all duration-150 hover:bg-gray-300 hover:shadow-md dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
     >
       <img
         src={movie.posterUrl || defaultMoviePoster}
