@@ -26,7 +26,7 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
             <div
               key={index}
               onClick={() => window.api.openFile(episode.filePath)}
-              className="flex items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white cursor-pointer"
+              className="flex cursor-pointer items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
             >
               <span className="truncate text-sm font-bold">{episode.title}</span>
               <button className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
