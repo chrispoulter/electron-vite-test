@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import type { AppSettings } from '../../../shared/types'
 import { applyTheme } from '../utils/theme'
 
-export const Settings = (): React.JSX.Element => {
+export const SettingsView = (): React.JSX.Element => {
   const [appSettings, setAppSettings] = React.useState<AppSettings>()
   const [isSaving, setIsSaving] = React.useState(false)
 

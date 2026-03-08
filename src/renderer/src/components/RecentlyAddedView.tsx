@@ -3,7 +3,7 @@ import type { Movie, TvShow } from '../../../shared/types'
 import { MovieCard } from './MovieCard'
 import { TvShowCard } from './TvShowCard'
 
-export const RecentlyAdded = (): React.JSX.Element => {
+export const RecentlyAddedView = (): React.JSX.Element => {
   const [recentlyAdded, setRecentlyAdded] = React.useState<(Movie | TvShow)[]>()
 
   useEffect(() => {

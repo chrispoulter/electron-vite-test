@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import type { Movie } from '../../../shared/types'
 import { MovieCard } from './MovieCard'
 
-export const MoviesList = (): React.JSX.Element => {
+export const MoviesView = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
   const [movies, setMovies] = React.useState<Movie[]>()
 

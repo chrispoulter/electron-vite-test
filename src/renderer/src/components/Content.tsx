@@ -1,7 +1,7 @@
-import { RecentlyAdded } from './RecentlyAdded'
-import { MoviesList } from './MoviesList'
-import { TvShowsList } from './TvShowsList'
-import { Settings } from './Settings'
+import { RecentlyAddedView } from './RecentlyAddedView'
+import { MoviesView } from './MoviesView'
+import { TvShowsView } from './TvShowsView'
+import { SettingsView } from './SettingsView'
 
 type ContentProps = {
   view: string
@@ -10,10 +10,10 @@ type ContentProps = {
 export const Content = ({ view }: ContentProps): React.JSX.Element => {
   return (
     <main className="flex-1 p-4 overflow-auto dark:bg-gray-900">
-      {view === 'recently-added' && <RecentlyAdded />}
-      {view === 'movies' && <MoviesList />}
-      {view === 'tv-shows' && <TvShowsList />}
-      {view === 'settings' && <Settings />}
+      {view === 'recently-added' && <RecentlyAddedView />}
+      {view === 'movies' && <MoviesView />}
+      {view === 'tv-shows' && <TvShowsView />}
+      {view === 'settings' && <SettingsView />}
     </main>
   )
 }

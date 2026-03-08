@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import type { TvShow } from '../../../shared/types'
 import { TvShowCard } from './TvShowCard'
 
-export const TvShowsList = (): React.JSX.Element => {
+export const TvShowsView = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
   const [tvShows, setTvShows] = React.useState<TvShow[]>()
 
