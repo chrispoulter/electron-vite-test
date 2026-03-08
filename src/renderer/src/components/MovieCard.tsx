@@ -1,5 +1,6 @@
 import defaultMoviePoster from '../assets/default-movie.svg'
 import type { Movie } from '../../../shared/types'
+import { PlayIcon } from './icons'
 
 export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
   return (
@@ -21,8 +22,8 @@ export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
         <br />
         <small className="rounded bg-purple-500 p-1 text-xs text-white">Movie</small>
       </h3>
-      <button className="hover:bg-blue-600cursor-pointer ml-auto min-w-32 rounded bg-blue-500 px-4 py-2 text-white">
-        Play
+      <button className="ml-auto cursor-pointer rounded bg-blue-500 p-2 text-white hover:bg-blue-600">
+        <PlayIcon className="h-5 w-5" />
       </button>
     </div>
   )

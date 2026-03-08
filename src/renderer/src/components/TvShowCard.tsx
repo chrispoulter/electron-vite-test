@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import defaultTvShowPoster from '../assets/default-tv-show.svg'
 import type { TvShow } from '../../../shared/types'
+import { ChevronDown, ChevronUp, PlayIcon } from './icons'
 
 export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element => {
   const [showEpisodes, setShowEpisodes] = useState(false)
@@ -25,8 +26,8 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           <br />
           <small className="rounded bg-teal-500 p-1 text-xs text-white">TV Show</small>
         </h3>
-        <button className="ml-auto min-w-32 cursor-pointer rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">
-          Episodes
+        <button className="ml-auto cursor-pointer rounded bg-gray-500 p-2 text-white hover:bg-gray-600">
+          {showEpisodes ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
         </button>
       </div>
       {showEpisodes && (
@@ -38,8 +39,8 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
               className="flex cursor-pointer items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
             >
               <span className="truncate text-sm font-bold">{episode.title}</span>
-              <button className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-                Play
+              <button className="ml-auto cursor-pointer rounded bg-blue-500 p-2 text-white hover:bg-blue-600">
+                <PlayIcon className="h-5 w-5" />
               </button>
             </div>
           ))}
