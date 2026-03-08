@@ -9,20 +9,13 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
         className="w-full h-auto mb-2 rounded  max-w-14"
       />
       <h3 className="text-lg font-bold">{tvShow.title}</h3>
-      {tvShow.seasons.map((season) => (
-        <div key={season.seasonNumber} className="ml-4 mt-2">
-          <h4 className="text-md font-semibold">Season {season.seasonNumber}</h4>
-          <ul className="list-disc list-inside">
-            {season.episodes.map((episode) => (
-              <li
-                key={episode.episodeNumber}
-                onClick={() => window.api.openFile(episode.filePath)}
-                className="cursor-pointer"
-              >
-                Episode {episode.episodeNumber}
-              </li>
-            ))}
-          </ul>
+      {tvShow.episodes.map((episode, index) => (
+        <div
+          key={index}
+          className="text-sm text-gray-600 dark:text-gray-400 cursor-pointer"
+          onClick={() => window.api.openFile(episode.filePath)}
+        >
+          {episode.title}
         </div>
       ))}
     </div>

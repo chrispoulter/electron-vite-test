@@ -5,21 +5,16 @@ export type Movie = {
   addedAt: number
 }
 
-type TvShowEpisode = {
-  episodeNumber: number
+export type TvShowEpisode = {
+  title: string
   filePath: string
   addedAt: number
-}
-
-type TvShowSeason = {
-  seasonNumber: number
-  episodes: TvShowEpisode[]
 }
 
 export type TvShow = {
   title: string
   posterUrl?: string
-  seasons: TvShowSeason[]
+  episodes: TvShowEpisode[]
 }
 
 export type AppSettings = {

@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, statSync } from 'fs'
 import { join } from 'path'
-import { Movie, TvShow } from '../shared/types'
+import { Movie, TvShow, TvShowEpisode } from '../shared/types'
 import { getSettings } from './settingsStore'
 
 const VIDEO_EXTENSIONS = new Set(['.mp4', '.mkv', '.avi', '.mov', '.wmv', '.m4v', '.webm'])
@@ -26,65 +26,7 @@ const parseEpisode = (fileName: string): { season: number; episode: number } | n
 }
 
 export const getRecentlyAdded = (): (Movie | TvShow)[] => {
-  return [
-    {
-      title: 'Movie 1',
-      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: 'D:\\Movies\\A\\Alien.mp4',
-      addedAt: Date.now()
-    },
-    {
-      title: 'TV Show 1',
-      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-      seasons: [
-        {
-          seasonNumber: 1,
-          episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
-          ]
-        }
-      ]
-    },
-    {
-      title: 'Movie 2',
-      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: 'D:\\Movies\\A\\Alien.mp4',
-      addedAt: Date.now()
-    },
-    {
-      title: 'TV Show 2',
-      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-      seasons: [
-        {
-          seasonNumber: 1,
-          episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
-          ]
-        }
-      ]
-    },
-    {
-      title: 'Movie 3',
-      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: 'D:\\Movies\\A\\Alien.mp4',
-      addedAt: Date.now()
-    },
-    {
-      title: 'TV Show 3',
-      posterUrl: 'https://image.tmdb.org/t/p/w300/36xXlhEpQqVVPuiZhfoQuaY4OlA.jpg',
-      seasons: [
-        {
-          seasonNumber: 1,
-          episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
-          ]
-        }
-      ]
-    }
-  ]
+  return []
 }
 
 export const getMovies = (): Movie[] => {
@@ -112,6 +54,7 @@ export const getMovies = (): Movie[] => {
 
       movies.push({
         title: parseTitle(file.name),
+        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
         filePath,
         addedAt: statSync(filePath).mtimeMs
       })
@@ -135,44 +78,33 @@ export const getTVShows = (): TvShow[] => {
       continue
     }
 
-    const seasonMap = new Map<
-      number,
-      { episodeNumber: number; filePath: string; addedAt: number }[]
-    >()
+    const episodes: TvShowEpisode[] = []
 
-    const showPath = join(tvShowsDirectory, folder.name)
+    const folderPath = join(tvShowsDirectory, folder.name)
 
-    for (const file of readdirSync(showPath, { withFileTypes: true })) {
+    for (const file of readdirSync(folderPath, { withFileTypes: true })) {
       if (!file.isFile() || !isVideoFile(file.name)) {
         continue
       }
 
-      const episode = parseEpisode(file.name)
+      const filePath = join(folderPath, file.name)
 
-      if (!episode) {
-        continue
-      }
-
-      const filePath = join(showPath, file.name)
-      const addedAt = statSync(filePath).mtimeMs
-
-      const episodes = seasonMap.get(episode.season) ?? []
-      episodes.push({ episodeNumber: episode.episode, filePath, addedAt })
-      seasonMap.set(episode.season, episodes)
+      episodes.push({
+        title: parseTitle(file.name),
+        filePath,
+        addedAt: statSync(filePath).mtimeMs
+      })
     }
 
-    if (seasonMap.size === 0) {
+    if (episodes.length === 0) {
       continue
     }
 
-    const seasons = [...seasonMap.entries()]
-      .sort(([a], [b]) => a - b)
-      .map(([seasonNumber, episodes]) => ({
-        seasonNumber,
-        episodes: episodes.sort((a, b) => a.episodeNumber - b.episodeNumber)
-      }))
-
-    tvShows.push({ title: folder.name, seasons })
+    tvShows.push({
+      title: folder.name,
+      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      episodes
+    })
   }
 
   return tvShows
