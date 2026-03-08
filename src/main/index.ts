@@ -64,8 +64,8 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.handle('get-app-settings', () => getSettings())
-  ipcMain.handle('set-app-settings', (_, settings: Settings) => setSettings(settings))
+  ipcMain.handle('get-settings', () => getSettings())
+  ipcMain.handle('set-settings', (_, settings: Settings) => setSettings(settings))
   ipcMain.handle('get-recently-added', () => getRecentlyAdded())
   ipcMain.handle('get-movies', () => getMovies())
   ipcMain.handle('get-tv-shows', () => getTVShows())
