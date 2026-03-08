@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 
 type WindowState = {
@@ -20,15 +20,16 @@ const defaultWindowState: WindowState = {
 
 const windowStatePath = join(app.getPath('userData'), 'window-state.json')
 
-export const getWindowState = (): WindowState => {
+export const getWindowState = async (): Promise<WindowState> => {
   try {
-    return JSON.parse(readFileSync(windowStatePath, 'utf-8'))
+    const data = await readFile(windowStatePath, 'utf-8')
+    return JSON.parse(data)
   } catch {
     return defaultWindowState
   }
 }
 
-export const setWindowState = (win: BrowserWindow): void => {
+export const setWindowState = async (win: BrowserWindow): Promise<void> => {
   const isMaximized = win.isMaximized()
   const bounds = isMaximized ? win.getNormalBounds() : win.getBounds()
   const state: WindowState = {
@@ -39,5 +40,5 @@ export const setWindowState = (win: BrowserWindow): void => {
     isMaximized
   }
 
-  writeFileSync(windowStatePath, JSON.stringify(state, null, 2))
+  await writeFile(windowStatePath, JSON.stringify(state, null, 2))
 }

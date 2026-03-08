@@ -7,8 +7,8 @@ import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
 import { getMovies, getRecentlyAdded, getTVShows } from './mediaScanner'
 
-function createWindow(): void {
-  const windowState = getWindowState()
+async function createWindow(): Promise<void> {
+  const windowState = await getWindowState()
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({

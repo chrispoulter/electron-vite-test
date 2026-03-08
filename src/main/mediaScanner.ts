@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, statSync } from 'fs'
+import { readdir, stat } from 'fs/promises'
 import { extname, join } from 'path'
 import { Movie, TvShow, TvShowEpisode } from '../shared/types'
 import { getSettings } from './settingsStore'
@@ -15,42 +15,53 @@ const parseTitle = (fileName: string): string => {
   return nameWithoutExt.replace(/\./g, ' ')
 }
 
-const getPosterUrlForMovie = (fileName: string): string | undefined => {
-  return undefined
+const getPosterUrlForMovie = async (fileName: string): Promise<string | undefined> => {
+  return Promise.resolve(undefined)
   return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
 }
 
-const getPosterUrlForTVShow = (fileName: string): string | undefined => {
-  return undefined
+const getPosterUrlForTVShow = async (fileName: string): Promise<string | undefined> => {
+  return Promise.resolve(undefined)
   return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
 }
 
-export const getMovies = (): Movie[] => {
-  const { moviesDirectory } = getSettings()
+export const getMovies = async (): Promise<Movie[]> => {
+  const { moviesDirectory } = await getSettings()
 
-  if (!moviesDirectory || !existsSync(moviesDirectory)) {
+  if (!moviesDirectory) {
+    return []
+  }
+
+  const exists = await stat(moviesDirectory)
+    .then((s) => s.isDirectory())
+    .catch(() => false)
+
+  if (!exists) {
     return []
   }
 
   const movies: Movie[] = []
 
-  for (const folder of readdirSync(moviesDirectory, { withFileTypes: true })) {
+  const folders = await readdir(moviesDirectory, { withFileTypes: true })
+
+  for (const folder of folders) {
     if (!folder.isDirectory()) {
       continue
     }
 
     const folderPath = join(moviesDirectory, folder.name)
 
-    for (const file of readdirSync(folderPath, { withFileTypes: true })) {
+    const files = await readdir(folderPath, { withFileTypes: true })
+    for (const file of files) {
       if (!file.isFile() || !isVideoFile(file.name)) {
         continue
       }
 
       const filePath = join(folderPath, file.name)
       const title = parseTitle(file.name)
-      const posterUrl = getPosterUrlForMovie(title)
+      const posterUrl = await getPosterUrlForMovie(title)
       const fileExtension = extname(file.name)
-      const addedAt = statSync(filePath).mtimeMs
+      const addedAt = (await stat(filePath)).mtimeMs
 
       movies.push({
         title,
@@ -65,16 +76,26 @@ export const getMovies = (): Movie[] => {
   return movies
 }
 
-export const getTVShows = (): TvShow[] => {
-  const { tvShowsDirectory } = getSettings()
+export const getTVShows = async (): Promise<TvShow[]> => {
+  const { tvShowsDirectory } = await getSettings()
 
-  if (!tvShowsDirectory || !existsSync(tvShowsDirectory)) {
+  if (!tvShowsDirectory) {
+    return []
+  }
+
+  const exists = await stat(tvShowsDirectory)
+    .then((s) => s.isDirectory())
+    .catch(() => false)
+
+  if (!exists) {
     return []
   }
 
   const tvShows: TvShow[] = []
 
-  for (const folder of readdirSync(tvShowsDirectory, { withFileTypes: true })) {
+  const folders = await readdir(tvShowsDirectory, { withFileTypes: true })
+
+  for (const folder of folders) {
     if (!folder.isDirectory()) {
       continue
     }
@@ -83,7 +104,9 @@ export const getTVShows = (): TvShow[] => {
     const seasons = new Set<number>()
     const folderPath = join(tvShowsDirectory, folder.name)
 
-    for (const file of readdirSync(folderPath, { withFileTypes: true })) {
+    const files = await readdir(folderPath, { withFileTypes: true })
+
+    for (const file of files) {
       if (!file.isFile() || !isVideoFile(file.name)) {
         continue
       }
@@ -91,7 +114,7 @@ export const getTVShows = (): TvShow[] => {
       const filePath = join(folderPath, file.name)
       const title = parseTitle(file.name)
       const fileExtension = extname(file.name)
-      const addedAt = statSync(filePath).mtimeMs
+      const addedAt = (await stat(filePath)).mtimeMs
 
       const match = title.match(/\bS(\d+)/i)
       if (match) {
@@ -110,7 +133,7 @@ export const getTVShows = (): TvShow[] => {
       continue
     }
 
-    const posterUrl = getPosterUrlForTVShow(folder.name)
+    const posterUrl = await getPosterUrlForTVShow(folder.name)
     const latestAddedAt = Math.max(...episodes.map((e) => e.addedAt))
 
     tvShows.push({
@@ -126,9 +149,8 @@ export const getTVShows = (): TvShow[] => {
   return tvShows
 }
 
-export const getRecentlyAdded = (): (Movie | TvShow)[] => {
-  const movies = getMovies()
-  const tvShows = getTVShows()
+export const getRecentlyAdded = async (): Promise<(Movie | TvShow)[]> => {
+  const [movies, tvShows] = await Promise.all([getMovies(), getTVShows()])
 
   const items: { item: Movie | TvShow; addedAt: number }[] = [
     ...movies.map((movie) => ({ item: movie, addedAt: movie.addedAt })),
