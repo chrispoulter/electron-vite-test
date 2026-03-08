@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
-import { getMovies, getRecentlyAdded, getTVShows } from './mediaScanner'
+import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
 
 async function createWindow(): Promise<void> {
   const windowState = await getWindowState()
@@ -68,7 +68,7 @@ app.whenReady().then(() => {
   ipcMain.handle('set-settings', (_, settings: Settings) => setSettings(settings))
   ipcMain.handle('get-recently-added', () => getRecentlyAdded())
   ipcMain.handle('get-movies', () => getMovies())
-  ipcMain.handle('get-tv-shows', () => getTVShows())
+  ipcMain.handle('get-tv-shows', () => getTvShows())
   ipcMain.handle('open-file', (_, filePath: string) => shell.openPath(filePath))
 
   createWindow()

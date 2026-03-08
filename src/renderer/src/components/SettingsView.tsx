@@ -85,7 +85,7 @@ export const SettingsView = (): React.JSX.Element => {
           </label>
           <input
             id="tmdbApiKey"
-            type="text"
+            type="password"
             placeholder="Your TMDb API Key"
             value={settings.tmdbApiKey}
             onChange={(e) => setSettings({ ...settings, tmdbApiKey: e.target.value })}

@@ -2,6 +2,7 @@ import { readdir, stat } from 'fs/promises'
 import { extname, join } from 'path'
 import { Movie, TvShow, TvShowEpisode } from '../shared/types'
 import { getSettings } from './settingsStore'
+import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
 
 const VIDEO_EXTENSIONS = new Set(['.mp4', '.mkv', '.avi', '.mov', '.wmv', '.m4v', '.webm'])
 
@@ -13,16 +14,6 @@ const isVideoFile = (fileName: string): boolean => {
 const parseTitle = (fileName: string): string => {
   const nameWithoutExt = fileName.slice(0, fileName.lastIndexOf('.'))
   return nameWithoutExt.replace(/\./g, ' ')
-}
-
-const getPosterUrlForMovie = async (fileName: string): Promise<string | undefined> => {
-  return Promise.resolve(undefined)
-  return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
-}
-
-const getPosterUrlForTVShow = async (fileName: string): Promise<string | undefined> => {
-  return Promise.resolve(undefined)
-  return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
 }
 
 export const getMovies = async (): Promise<Movie[]> => {
@@ -76,7 +67,7 @@ export const getMovies = async (): Promise<Movie[]> => {
   return movies
 }
 
-export const getTVShows = async (): Promise<TvShow[]> => {
+export const getTvShows = async (): Promise<TvShow[]> => {
   const { tvShowsDirectory } = await getSettings()
 
   if (!tvShowsDirectory) {
@@ -133,7 +124,7 @@ export const getTVShows = async (): Promise<TvShow[]> => {
       continue
     }
 
-    const posterUrl = await getPosterUrlForTVShow(folder.name)
+    const posterUrl = await getPosterUrlForTvShow(folder.name)
     const latestAddedAt = Math.max(...episodes.map((e) => e.addedAt))
 
     tvShows.push({
@@ -150,7 +141,7 @@ export const getTVShows = async (): Promise<TvShow[]> => {
 }
 
 export const getRecentlyAdded = async (): Promise<(Movie | TvShow)[]> => {
-  const [movies, tvShows] = await Promise.all([getMovies(), getTVShows()])
+  const [movies, tvShows] = await Promise.all([getMovies(), getTvShows()])
 
   const items: { item: Movie | TvShow; addedAt: number }[] = [
     ...movies.map((movie) => ({ item: movie, addedAt: movie.addedAt })),
