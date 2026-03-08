@@ -19,7 +19,8 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
     {
       title: 'Movie 1',
       posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: 'D:\\Movies\\A\\Alien.mp4'
+      filePath: 'D:\\Movies\\A\\Alien.mp4',
+      addedAt: Date.now()
     },
     {
       title: 'TV Show 1',
@@ -28,8 +29,8 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         }
       ]
@@ -37,7 +38,8 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
     {
       title: 'Movie 2',
       posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: 'D:\\Movies\\A\\Alien.mp4'
+      filePath: 'D:\\Movies\\A\\Alien.mp4',
+      addedAt: Date.now()
     },
     {
       title: 'TV Show 2',
@@ -46,8 +48,8 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         }
       ]
@@ -55,7 +57,8 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
     {
       title: 'Movie 3',
       posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: 'D:\\Movies\\A\\Alien.mp4'
+      filePath: 'D:\\Movies\\A\\Alien.mp4',
+      addedAt: Date.now()
     },
     {
       title: 'TV Show 3',
@@ -64,8 +67,8 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         }
       ]
@@ -74,13 +77,13 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
 }
 
 export const getMovies = (): Movie[] => {
-  const { movieDirectory } = getSettings()
+  const { moviesDirectory } = getSettings()
 
-  if (!existsSync(movieDirectory)) {
+  if (!existsSync(moviesDirectory)) {
     return []
   }
 
-  const files = readdirSync(movieDirectory, { recursive: true, withFileTypes: true })
+  const files = readdirSync(moviesDirectory, { recursive: true, withFileTypes: true })
 
   console.log(files)
   return files
@@ -101,8 +104,8 @@ export const getTVShows = (): TvShow[] => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         }
       ]
@@ -114,15 +117,15 @@ export const getTVShows = (): TvShow[] => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         },
         {
           seasonNumber: 2,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         }
       ]
@@ -134,8 +137,8 @@ export const getTVShows = (): TvShow[] => {
         {
           seasonNumber: 1,
           episodes: [
-            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4' },
-            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4' }
+            { episodeNumber: 1, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() },
+            { episodeNumber: 2, filePath: 'D:\\Movies\\A\\Alien.mp4', addedAt: Date.now() }
           ]
         }
       ]

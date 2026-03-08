@@ -5,8 +5,8 @@ import { AppSettings } from '../shared/types'
 
 const defaultSettings: AppSettings = {
   theme: 'system',
-  movieDirectory: '',
-  tvShowDirectory: '',
+  moviesDirectory: '',
+  tvShowsDirectory: '',
   tmdbApiKey: ''
 }
 

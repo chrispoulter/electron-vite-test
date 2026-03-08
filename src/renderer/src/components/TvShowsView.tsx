@@ -10,9 +10,9 @@ export const TvShowsView = (): React.JSX.Element => {
     window.api.getTvShows().then((tvShows) => setTvShows(tvShows))
   }, [])
 
-  if (!tvShows) {
-    return <div className="text-gray-500">Loading...</div>
-  }
+  const filtered = tvShows?.filter((show) =>
+    show.title.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <div className="dark:text-white">
@@ -24,13 +24,19 @@ export const TvShowsView = (): React.JSX.Element => {
         onChange={(e) => setSearch(e.target.value)}
         className="w-full p-2 mb-4 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
       />
-      <div className="flex flex-col gap-2">
-        {tvShows
-          .filter((show) => show.title.toLowerCase().includes(search.toLowerCase()))
-          .map((show, index) => (
+      {!filtered?.length ? (
+        <div className="text-gray-500">
+          {search
+            ? 'No shows match your search.'
+            : 'No TV shows found. Check your TV Shows folder in Settings.'}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {filtered.map((show, index) => (
             <TvShowCard key={index} tvShow={show} />
           ))}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

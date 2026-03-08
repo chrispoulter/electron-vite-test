@@ -2,11 +2,13 @@ export type Movie = {
   title: string
   posterUrl?: string
   filePath: string
+  addedAt: number
 }
 
 type TvShowEpisode = {
   episodeNumber: number
   filePath: string
+  addedAt: number
 }
 
 type TvShowSeason = {
@@ -22,7 +24,7 @@ export type TvShow = {
 
 export type AppSettings = {
   theme: 'light' | 'dark' | 'system'
-  movieDirectory: string
-  tvShowDirectory: string
+  moviesDirectory: string
+  tvShowsDirectory: string
   tmdbApiKey: string
 }

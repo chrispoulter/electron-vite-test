@@ -49,25 +49,25 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             className="w-full border border-gray-400 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             placeholder="/path/to/movies"
-            value={appSettings.movieDirectory}
-            onChange={(e) => setAppSettings({ ...appSettings, movieDirectory: e.target.value })}
+            value={appSettings.moviesDirectory}
+            onChange={(e) => setAppSettings({ ...appSettings, moviesDirectory: e.target.value })}
             disabled={isSaving}
             required
           />
-          <p className="text-sm text-gray-400">Full path to the movie directory.</p>
+          <p className="text-sm text-gray-400">Full path to the movies directory.</p>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">TV Show Directory</label>
+          <label className="block text-sm font-medium mb-1">TV Shows Directory</label>
           <input
             type="text"
             className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             placeholder="/path/to/tv-shows"
-            value={appSettings.tvShowDirectory}
-            onChange={(e) => setAppSettings({ ...appSettings, tvShowDirectory: e.target.value })}
+            value={appSettings.tvShowsDirectory}
+            onChange={(e) => setAppSettings({ ...appSettings, tvShowsDirectory: e.target.value })}
             disabled={isSaving}
             required
           />
-          <p className="text-sm text-gray-400">Full path to the TV show directory.</p>
+          <p className="text-sm text-gray-400">Full path to the TV shows directory.</p>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">TMDb API Key</label>

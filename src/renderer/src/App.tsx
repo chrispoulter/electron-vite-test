@@ -9,9 +9,7 @@ function App(): React.JSX.Element {
   const [view, setView] = useState('recently-added')
 
   useEffect(() => {
-    window.api.getAppSettings().then((settings) => {
-      applyTheme(settings.theme)
-    })
+    window.api.getAppSettings().then((settings) => applyTheme(settings.theme))
   }, [])
 
   return (
