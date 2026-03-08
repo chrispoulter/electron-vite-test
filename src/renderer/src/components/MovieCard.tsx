@@ -3,7 +3,7 @@ import type { Movie } from '../../../shared/types'
 export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
   return (
     <div
-      className="bg-gray-200 dark:bg-gray-800 dark:text-white p-4 rounded"
+      className="bg-gray-200 dark:bg-gray-700 dark:text-white p-4 rounded"
       onClick={() => window.api.openFile(movie.filePath)}
     >
       <img

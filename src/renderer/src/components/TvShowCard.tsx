@@ -2,7 +2,7 @@ import type { TvShow } from '../../../shared/types'
 
 export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element => {
   return (
-    <div className="bg-gray-200 dark:bg-gray-800 dark:text-white p-4 rounded">
+    <div className="bg-gray-200 dark:bg-gray-700 dark:text-white p-4 rounded">
       <img
         src={tvShow.posterUrl}
         alt={tvShow.title}

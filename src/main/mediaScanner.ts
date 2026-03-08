@@ -15,6 +15,14 @@ const parseTitle = (fileName: string): string => {
   return nameWithoutExt.replace(/\./g, ' ')
 }
 
+const getPosterUrlForMovie = (fileName: string): string => {
+  return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
+}
+
+const getPosterUrlForTVShow = (fileName: string): string => {
+  return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
+}
+
 export const getMovies = (): Movie[] => {
   const { moviesDirectory } = getSettings()
 
@@ -40,7 +48,7 @@ export const getMovies = (): Movie[] => {
 
       movies.push({
         title: parseTitle(file.name),
-        posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+        posterUrl: getPosterUrlForMovie(file.name),
         filePath,
         addedAt: statSync(filePath).mtimeMs
       })
@@ -88,7 +96,7 @@ export const getTVShows = (): TvShow[] => {
 
     tvShows.push({
       title: folder.name,
-      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
+      posterUrl: getPosterUrlForTVShow(folder.name),
       episodes
     })
   }
