@@ -3,13 +3,12 @@ import type { Movie } from '../../../shared/types'
 import { PlayIcon } from './icons'
 import { relativeTime } from '../utils/time'
 
-export const MovieCard = ({
-  movie,
-  showAddedDate
-}: {
+type MovieCardProps = {
   movie: Movie
   showAddedDate?: boolean
-}): React.JSX.Element => {
+}
+
+export const MovieCard = ({ movie, showAddedDate }: MovieCardProps): React.JSX.Element => {
   return (
     <div
       onClick={() => window.api.openFile(movie.filePath)}

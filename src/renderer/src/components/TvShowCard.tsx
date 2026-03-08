@@ -13,13 +13,12 @@ const getSeasonCount = (episodes: TvShow['episodes']): number => {
   return seasons.size
 }
 
-export const TvShowCard = ({
-  tvShow,
-  showAddedDate
-}: {
+type TvShowCardProps = {
   tvShow: TvShow
   showAddedDate?: boolean
-}): React.JSX.Element => {
+}
+
+export const TvShowCard = ({ tvShow, showAddedDate }: TvShowCardProps): React.JSX.Element => {
   const [showEpisodes, setShowEpisodes] = useState(false)
 
   const latestAddedAt = showAddedDate
