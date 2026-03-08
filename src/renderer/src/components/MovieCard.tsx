@@ -10,7 +10,7 @@ export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
         <small className="rounded bg-teal-500 p-1 text-xs text-white">Movie</small>
       </h3>
       <button
-        className="hover:bg-blue-600cursor-pointer min-w-32 rounded bg-blue-500 px-4 py-2 text-white"
+        className="hover:bg-blue-600cursor-pointer ml-auto min-w-32 rounded bg-blue-500 px-4 py-2 text-white"
         onClick={() => window.api.openFile(movie.filePath)}
       >
         Play

@@ -14,7 +14,7 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           <small className="rounded bg-pink-500 p-1 text-xs text-white">TV Show</small>
         </h3>
         <button
-          className="min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           onClick={() => setShowEpisodes(!showEpisodes)}
         >
           Episodes
@@ -25,11 +25,11 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           {tvShow.episodes.map((episode, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 rounded bg-gray-300 p-2 dark:bg-gray-600 dark:text-white"
+              className="flex items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
             >
               <span className="truncate text-sm font-bold">{episode.title}</span>
               <button
-                className="min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="ml-auto min-w-32 cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
                 onClick={() => window.api.openFile(episode.filePath)}
               >
                 Play
