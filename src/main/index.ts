@@ -4,13 +4,18 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import type { AppSettings } from '../shared/types'
 import { getSettings, setSettings } from './settingsStore'
+import { getWindowState, setWindowState } from './windowStateStore'
 import { getMovies, getRecentlyAdded, getTVShows } from './mediaScanner'
 
 function createWindow(): void {
+  const windowState = getWindowState()
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 730,
+    width: windowState.width,
+    height: windowState.height,
+    x: windowState.x,
+    y: windowState.y,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -21,7 +26,14 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', () => {
+    if (windowState.isMaximized) {
+      mainWindow.maximize()
+    }
     mainWindow.show()
+  })
+
+  mainWindow.on('close', () => {
+    setWindowState(mainWindow)
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
