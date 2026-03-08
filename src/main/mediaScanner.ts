@@ -47,13 +47,17 @@ export const getMovies = (): Movie[] => {
       }
 
       const filePath = join(folderPath, file.name)
+      const title = parseTitle(file.name)
+      const posterUrl = getPosterUrlForMovie(title)
+      const fileExtension = extname(file.name)
+      const addedAt = statSync(filePath).mtimeMs
 
       movies.push({
-        title: parseTitle(file.name),
-        posterUrl: getPosterUrlForMovie(file.name),
+        title,
+        posterUrl,
         filePath,
-        fileExtension: extname(file.name),
-        addedAt: statSync(filePath).mtimeMs
+        fileExtension,
+        addedAt
       })
     }
   }
@@ -76,7 +80,7 @@ export const getTVShows = (): TvShow[] => {
     }
 
     const episodes: TvShowEpisode[] = []
-
+    const seasons = new Set<number>()
     const folderPath = join(tvShowsDirectory, folder.name)
 
     for (const file of readdirSync(folderPath, { withFileTypes: true })) {
@@ -85,12 +89,20 @@ export const getTVShows = (): TvShow[] => {
       }
 
       const filePath = join(folderPath, file.name)
+      const title = parseTitle(file.name)
+      const fileExtension = extname(file.name)
+      const addedAt = statSync(filePath).mtimeMs
+
+      const match = title.match(/\bS(\d+)/i)
+      if (match) {
+        seasons.add(Number(match[1]))
+      }
 
       episodes.push({
-        title: parseTitle(file.name),
+        title,
         filePath,
-        fileExtension: extname(file.name),
-        addedAt: statSync(filePath).mtimeMs
+        fileExtension,
+        addedAt
       })
     }
 
@@ -98,20 +110,16 @@ export const getTVShows = (): TvShow[] => {
       continue
     }
 
-    const seasons = new Set<number>()
-
-    for (const ep of episodes) {
-      const match = ep.title.match(/\bS(\d+)/i) ?? ep.title.match(/\bSeason\s*(\d+)/i)
-      if (match) seasons.add(Number(match[1]))
-    }
+    const posterUrl = getPosterUrlForTVShow(folder.name)
+    const latestAddedAt = Math.max(...episodes.map((e) => e.addedAt))
 
     tvShows.push({
       title: folder.name,
-      posterUrl: getPosterUrlForTVShow(folder.name),
+      posterUrl,
       episodes,
       seasonCount: seasons.size,
       episodeCount: episodes.length,
-      latestAddedAt: Math.max(...episodes.map((e) => e.addedAt))
+      latestAddedAt
     })
   }
 
@@ -132,6 +140,6 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
 
   return items
     .sort((a, b) => b.addedAt - a.addedAt)
-    .slice(0, 10)
+    .slice(0, 20)
     .map(({ item }) => item)
 }
