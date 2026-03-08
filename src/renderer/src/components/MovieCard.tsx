@@ -22,9 +22,7 @@ export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
         <br />
         <small className="rounded bg-purple-500 p-1 text-xs text-white">Movie</small>
       </h3>
-      <button className="ml-auto cursor-pointer rounded bg-blue-500 p-2 text-white hover:bg-blue-600">
-        <PlayIcon className="h-5 w-5" />
-      </button>
+      <PlayIcon className="ml-auto h-5 w-5" />
     </div>
   )
 }

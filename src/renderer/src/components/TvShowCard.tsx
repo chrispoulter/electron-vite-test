@@ -26,9 +26,11 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           <br />
           <small className="rounded bg-teal-500 p-1 text-xs text-white">TV Show</small>
         </h3>
-        <button className="ml-auto cursor-pointer rounded bg-gray-500 p-2 text-white hover:bg-gray-600">
-          {showEpisodes ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
-        </button>
+        {showEpisodes ? (
+          <ChevronUp className="ml-auto h-5 w-5" />
+        ) : (
+          <ChevronDown className="ml-auto h-5 w-5" />
+        )}
       </div>
       {showEpisodes && (
         <div className="flex flex-col gap-1">
@@ -39,9 +41,7 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
               className="flex cursor-pointer items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
             >
               <span className="truncate text-sm font-bold">{episode.title}</span>
-              <button className="ml-auto cursor-pointer rounded bg-blue-500 p-2 text-white hover:bg-blue-600">
-                <PlayIcon className="h-5 w-5" />
-              </button>
+              <PlayIcon className="ml-auto h-5 w-5" />
             </div>
           ))}
         </div>
