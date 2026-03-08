@@ -1,4 +1,5 @@
-import { existsSync, readdirSync } from 'fs'
+import { existsSync, readdirSync, statSync } from 'fs'
+import { join } from 'path'
 import { Movie, TvShow } from '../shared/types'
 import { getSettings } from './settingsStore'
 
@@ -79,20 +80,35 @@ export const getRecentlyAdded = (): (Movie | TvShow)[] => {
 export const getMovies = (): Movie[] => {
   const { moviesDirectory } = getSettings()
 
-  if (!existsSync(moviesDirectory)) {
+  if (!moviesDirectory || !existsSync(moviesDirectory)) {
     return []
   }
 
-  const files = readdirSync(moviesDirectory, { recursive: true, withFileTypes: true })
+  const movies: Movie[] = []
 
-  console.log(files)
-  return files
-    .filter((file) => file.isFile() && isVideoFile(file.name))
-    .map((file) => ({
-      title: parseTitle(file.name),
-      posterUrl: 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg',
-      filePath: `${file.parentPath}\\${file.name}`
-    }))
+  for (const folder of readdirSync(moviesDirectory, { withFileTypes: true })) {
+    if (!folder.isDirectory()) {
+      continue
+    }
+
+    const folderPath = join(moviesDirectory, folder.name)
+
+    for (const file of readdirSync(folderPath, { withFileTypes: true })) {
+      if (!file.isFile() || !isVideoFile(file.name)) {
+        continue
+      }
+
+      const filePath = join(folderPath, file.name)
+
+      movies.push({
+        title: parseTitle(file.name),
+        filePath,
+        addedAt: statSync(filePath).mtimeMs
+      })
+    }
+  }
+
+  return movies
 }
 
 export const getTVShows = (): TvShow[] => {
