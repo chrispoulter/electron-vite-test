@@ -1,8 +1,15 @@
 import defaultMoviePoster from '../assets/default-movie.svg'
 import type { Movie } from '../../../shared/types'
 import { PlayIcon } from './icons'
+import { relativeTime } from '../utils/time'
 
-export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
+export const MovieCard = ({
+  movie,
+  showAddedDate
+}: {
+  movie: Movie
+  showAddedDate?: boolean
+}): React.JSX.Element => {
   return (
     <div
       onClick={() => window.api.openFile(movie.filePath)}
@@ -21,6 +28,11 @@ export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
         {movie.title}
         <br />
         <small className="rounded bg-purple-500 p-1 text-xs text-white">Movie</small>
+        {showAddedDate && (
+          <small className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
+            {relativeTime(movie.addedAt)}
+          </small>
+        )}
       </h3>
       <PlayIcon className="ml-auto h-5 w-5" />
     </div>

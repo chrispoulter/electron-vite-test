@@ -35,9 +35,9 @@ export const RecentlyAddedView = (): React.JSX.Element => {
         <div className="flex flex-col gap-2">
           {filtered.map((item, index) => {
             if ('episodes' in item) {
-              return <TvShowCard key={index} tvShow={item} />
+              return <TvShowCard key={index} tvShow={item} showAddedDate />
             } else {
-              return <MovieCard key={index} movie={item} />
+              return <MovieCard key={index} movie={item} showAddedDate />
             }
           })}
         </div>

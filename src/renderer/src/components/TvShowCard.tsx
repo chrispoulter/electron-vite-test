@@ -2,9 +2,20 @@ import { useState } from 'react'
 import defaultTvShowPoster from '../assets/default-tv-show.svg'
 import type { TvShow } from '../../../shared/types'
 import { ChevronDown, ChevronUp, PlayIcon } from './icons'
+import { relativeTime } from '../utils/time'
 
-export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element => {
+export const TvShowCard = ({
+  tvShow,
+  showAddedDate
+}: {
+  tvShow: TvShow
+  showAddedDate?: boolean
+}): React.JSX.Element => {
   const [showEpisodes, setShowEpisodes] = useState(false)
+
+  const latestAddedAt = showAddedDate
+    ? Math.max(...tvShow.episodes.map((e) => e.addedAt))
+    : undefined
 
   return (
     <div className="flex flex-col gap-4 rounded bg-gray-200 p-2 dark:bg-gray-700 dark:text-white">
@@ -25,6 +36,11 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
           {tvShow.title}
           <br />
           <small className="rounded bg-teal-500 p-1 text-xs text-white">TV Show</small>
+          {latestAddedAt && (
+            <small className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
+              {relativeTime(latestAddedAt)}
+            </small>
+          )}
         </h3>
         {showEpisodes ? (
           <ChevronUp className="ml-auto h-5 w-5" />
@@ -40,7 +56,7 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
               onClick={() => window.api.openFile(episode.filePath)}
               className="flex cursor-pointer items-center gap-2 rounded bg-gray-100 p-2 dark:bg-gray-600 dark:text-white"
             >
-              <span className="truncate text-sm font-bold">{episode.title}</span>
+              <span className="truncate text-sm">{episode.title}</span>
               <PlayIcon className="ml-auto h-5 w-5" />
             </div>
           ))}
