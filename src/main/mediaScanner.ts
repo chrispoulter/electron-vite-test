@@ -15,10 +15,6 @@ const parseTitle = (fileName: string): string => {
   return nameWithoutExt.replace(/\./g, ' ')
 }
 
-export const getRecentlyAdded = (): (Movie | TvShow)[] => {
-  return []
-}
-
 export const getMovies = (): Movie[] => {
   const { moviesDirectory } = getSettings()
 
@@ -98,4 +94,22 @@ export const getTVShows = (): TvShow[] => {
   }
 
   return tvShows
+}
+
+export const getRecentlyAdded = (): (Movie | TvShow)[] => {
+  const movies = getMovies()
+  const tvShows = getTVShows()
+
+  const items: { item: Movie | TvShow; addedAt: number }[] = [
+    ...movies.map((movie) => ({ item: movie, addedAt: movie.addedAt })),
+    ...tvShows.map((tvShow) => ({
+      item: tvShow,
+      addedAt: Math.max(...tvShow.episodes.map((e) => e.addedAt))
+    }))
+  ]
+
+  return items
+    .sort((a, b) => b.addedAt - a.addedAt)
+    .slice(0, 10)
+    .map(({ item }) => item)
 }
