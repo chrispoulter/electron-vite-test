@@ -32,21 +32,18 @@ export const TvShowCard = ({
             e.currentTarget.onerror = null
           }}
         />
-        <h3 className="truncate text-lg font-bold">
-          {tvShow.title}
-          <br />
-          <small className="rounded bg-teal-500 p-1 text-xs text-white">TV Show</small>
+        <div>
+          <h3 className="truncate font-bold">{tvShow.title}</h3>
           {latestAddedAt && (
-            <small className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               {relativeTime(latestAddedAt)}
-            </small>
+            </span>
           )}
-        </h3>
-        {showEpisodes ? (
-          <ChevronUp className="ml-auto h-5 w-5" />
-        ) : (
-          <ChevronDown className="ml-auto h-5 w-5" />
-        )}
+        </div>
+        <span className="ml-auto rounded bg-teal-500 p-1 px-2 py-1 text-xs text-white">
+          TV Show
+        </span>
+        {showEpisodes ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
       </div>
       {showEpisodes && (
         <div className="flex flex-col gap-1">
