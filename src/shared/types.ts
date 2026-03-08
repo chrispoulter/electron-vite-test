@@ -17,6 +17,9 @@ export type TvShow = {
   title: string
   posterUrl?: string
   episodes: TvShowEpisode[]
+  seasonCount: number
+  episodeCount: number
+  latestAddedAt: number
 }
 
 export type Settings = {
