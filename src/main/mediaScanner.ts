@@ -15,11 +15,13 @@ const parseTitle = (fileName: string): string => {
   return nameWithoutExt.replace(/\./g, ' ')
 }
 
-const getPosterUrlForMovie = (fileName: string): string => {
+const getPosterUrlForMovie = (fileName: string): string | undefined => {
+  return undefined
   return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
 }
 
-const getPosterUrlForTVShow = (fileName: string): string => {
+const getPosterUrlForTVShow = (fileName: string): string | undefined => {
+  return undefined
   return 'https://image.tmdb.org/t/p/w300/4kJmUCE7mkVJjXa7A0g2rY4IGTm.jpg'
 }
 

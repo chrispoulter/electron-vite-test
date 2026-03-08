@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import defaultTvShowPoster from '../assets/default-tv-show.svg'
 import type { TvShow } from '../../../shared/types'
 
 export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element => {
@@ -10,7 +11,15 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
         className="flex cursor-pointer items-center gap-4"
         onClick={() => setShowEpisodes(!showEpisodes)}
       >
-        <img src={tvShow.posterUrl} alt={tvShow.title} className="h-auto w-full max-w-8 rounded" />
+        <img
+          src={tvShow.posterUrl || defaultTvShowPoster}
+          alt={tvShow.title}
+          className="h-auto w-full max-w-8 rounded"
+          onError={(e) => {
+            e.currentTarget.src = defaultTvShowPoster
+            e.currentTarget.onerror = null
+          }}
+        />
         <h3 className="truncate text-lg font-bold">
           {tvShow.title}
           <br />
