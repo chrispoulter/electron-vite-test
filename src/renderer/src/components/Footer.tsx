@@ -4,9 +4,9 @@ export const Footer = (): React.JSX.Element => {
   const [versions] = useState(window.electron.process.versions)
 
   return (
-    <footer className="bg-gray-800 text-white p-4 mt-auto">
+    <footer className="mt-auto bg-gray-800 p-4 text-white">
       <p className="text-center">&copy; 2026 Media Library. All rights reserved.</p>
-      <p className="text-center text-sm mt-2">
+      <p className="mt-2 text-center text-sm">
         Electron v{versions.electron} | Chromium v{versions.chrome} | Node v{versions.node}
       </p>
     </footer>

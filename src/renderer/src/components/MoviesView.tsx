@@ -16,13 +16,13 @@ export const MoviesView = (): React.JSX.Element => {
 
   return (
     <div className="dark:text-white">
-      <h2 className="text-2xl font-bold mb-4">Movies</h2>
+      <h2 className="mb-4 text-2xl font-bold">Movies</h2>
       <input
         type="text"
         placeholder="Search movies..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full p-2 mb-4 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+        className="mb-4 w-full rounded border p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
       />
       {!filtered?.length ? (
         <div className="text-gray-500">

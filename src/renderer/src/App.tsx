@@ -13,7 +13,7 @@ function App(): React.JSX.Element {
   }, [])
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex h-screen flex-col">
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar view={view} setView={setView} />

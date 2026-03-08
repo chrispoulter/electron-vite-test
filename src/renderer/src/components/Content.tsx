@@ -9,7 +9,7 @@ type ContentProps = {
 
 export const Content = ({ view }: ContentProps): React.JSX.Element => {
   return (
-    <main className="flex-1 p-4 overflow-auto dark:bg-gray-900">
+    <main className="flex-1 overflow-auto p-4 dark:bg-gray-900">
       {view === 'recently-added' && <RecentlyAddedView />}
       {view === 'movies' && <MoviesView />}
       {view === 'tv-shows' && <TvShowsView />}

@@ -25,13 +25,13 @@ export const SettingsView = (): React.JSX.Element => {
 
   return (
     <div className="dark:text-white">
-      <h2 className="text-2xl font-bold mb-4">Settings</h2>
+      <h2 className="mb-4 text-2xl font-bold">Settings</h2>
       <p className="mb-4">Configure your application preferences here.</p>
       <form onSubmit={onSaveSettings}>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Theme</label>
+          <label className="mb-1 block text-sm font-medium">Theme</label>
           <select
-            className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             value={appSettings.theme}
             onChange={(e) =>
               setAppSettings({ ...appSettings, theme: e.target.value as AppSettings['theme'] })
@@ -44,10 +44,10 @@ export const SettingsView = (): React.JSX.Element => {
           </select>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Movie Directory</label>
+          <label className="mb-1 block text-sm font-medium">Movie Directory</label>
           <input
             type="text"
-            className="w-full border border-gray-400 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className="mb-1 w-full rounded border border-gray-400 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             placeholder="/path/to/movies"
             value={appSettings.moviesDirectory}
             onChange={(e) => setAppSettings({ ...appSettings, moviesDirectory: e.target.value })}
@@ -57,10 +57,10 @@ export const SettingsView = (): React.JSX.Element => {
           <p className="text-sm text-gray-400">Full path to the movies directory.</p>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">TV Shows Directory</label>
+          <label className="mb-1 block text-sm font-medium">TV Shows Directory</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             placeholder="/path/to/tv-shows"
             value={appSettings.tvShowsDirectory}
             onChange={(e) => setAppSettings({ ...appSettings, tvShowsDirectory: e.target.value })}
@@ -70,10 +70,10 @@ export const SettingsView = (): React.JSX.Element => {
           <p className="text-sm text-gray-400">Full path to the TV shows directory.</p>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">TMDb API Key</label>
+          <label className="mb-1 block text-sm font-medium">TMDb API Key</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded mb-1 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             placeholder="Your TMDb API Key"
             value={appSettings.tmdbApiKey}
             onChange={(e) => setAppSettings({ ...appSettings, tmdbApiKey: e.target.value })}
@@ -85,7 +85,7 @@ export const SettingsView = (): React.JSX.Element => {
         </div>
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
+          className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           disabled={isSaving}
         >
           {isSaving ? 'Saving...' : 'Save Settings'}

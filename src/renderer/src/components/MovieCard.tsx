@@ -2,15 +2,15 @@ import type { Movie } from '../../../shared/types'
 
 export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
   return (
-    <div className="bg-gray-200 dark:bg-gray-700 dark:text-white p-2 rounded flex gap-4 items-center">
-      <img src={movie.posterUrl} alt={movie.title} className="w-full h-auto rounded max-w-8" />
-      <h3 className="text-lg font-bold truncate">
+    <div className="flex items-center gap-4 rounded bg-gray-200 p-2 dark:bg-gray-700 dark:text-white">
+      <img src={movie.posterUrl} alt={movie.title} className="h-auto w-full max-w-8 rounded" />
+      <h3 className="truncate text-lg font-bold">
         {movie.title}
         <br />
-        <small className="p-1 bg-teal-500 text-white rounded text-xs">Movie</small>
+        <small className="rounded bg-teal-500 p-1 text-xs text-white">Movie</small>
       </h3>
       <button
-        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-auto cursor-pointer min-w-32"
+        className="hover:bg-blue-600cursor-pointer min-w-32 rounded bg-blue-500 px-4 py-2 text-white"
         onClick={() => window.api.openFile(movie.filePath)}
       >
         Play
