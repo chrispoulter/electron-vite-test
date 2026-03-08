@@ -52,7 +52,7 @@ export const getMovies = async (): Promise<Movie[]> => {
       const title = parseTitle(file.name)
       const posterUrl = await getPosterUrlForMovie(title)
       const fileExtension = extname(file.name)
-      const addedAt = (await stat(filePath)).mtimeMs
+      const { mtimeMs: addedAt } = await stat(filePath)
 
       movies.push({
         title,
@@ -105,7 +105,7 @@ export const getTvShows = async (): Promise<TvShow[]> => {
       const filePath = join(folderPath, file.name)
       const title = parseTitle(file.name)
       const fileExtension = extname(file.name)
-      const addedAt = (await stat(filePath)).mtimeMs
+      const { mtimeMs: addedAt } = await stat(filePath)
 
       const match = title.match(/\bS(\d+)/i)
       if (match) {
