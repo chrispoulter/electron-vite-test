@@ -1,12 +1,12 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import type { AppSettings, Movie, TvShow } from '../shared/types'
+import type { Settings, Movie, TvShow } from '../shared/types'
 
 declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      getAppSettings: () => Promise<AppSettings>
-      setAppSettings: (settings: AppSettings) => Promise<void>
+      getSettings: () => Promise<Settings>
+      setSettings: (settings: Settings) => Promise<void>
       getRecentlyAdded: () => Promise<(Movie | TvShow)[]>
       getMovies: () => Promise<Movie[]>
       getTvShows: () => Promise<TvShow[]>

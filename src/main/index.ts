@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import type { AppSettings } from '../shared/types'
+import type { Settings } from '../shared/types'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
 import { getMovies, getRecentlyAdded, getTVShows } from './mediaScanner'
@@ -65,7 +65,7 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('get-app-settings', () => getSettings())
-  ipcMain.handle('set-app-settings', (_, appSettings: AppSettings) => setSettings(appSettings))
+  ipcMain.handle('set-app-settings', (_, settings: Settings) => setSettings(settings))
   ipcMain.handle('get-recently-added', () => getRecentlyAdded())
   ipcMain.handle('get-movies', () => getMovies())
   ipcMain.handle('get-tv-shows', () => getTVShows())

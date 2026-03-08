@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react'
-import type { AppSettings } from '../../../shared/types'
+import type { Settings } from '../../../shared/types'
 import { applyTheme } from '../utils/theme'
 
 export const SettingsView = (): React.JSX.Element => {
-  const [appSettings, setAppSettings] = React.useState<AppSettings>()
+  const [settings, setSettings] = React.useState<Settings>()
   const [isSaving, setIsSaving] = React.useState(false)
 
   useEffect(() => {
-    window.api.getAppSettings().then(setAppSettings)
+    window.api.getSettings().then(setSettings)
   }, [])
 
   const onSaveSettings = (): void => {
     setIsSaving(true)
 
-    window.api.setAppSettings(appSettings!).then(() => {
+    window.api.setSettings(settings!).then(() => {
       setIsSaving(false)
-      applyTheme(appSettings!.theme)
+      applyTheme(settings!.theme)
     })
   }
 
-  if (!appSettings) {
+  if (!settings) {
     return <div className="text-gray-500">Loading...</div>
   }
 
@@ -32,9 +32,9 @@ export const SettingsView = (): React.JSX.Element => {
           <label className="mb-1 block text-sm font-medium">Theme</label>
           <select
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-            value={appSettings.theme}
+            value={settings.theme}
             onChange={(e) =>
-              setAppSettings({ ...appSettings, theme: e.target.value as AppSettings['theme'] })
+              setSettings({ ...settings, theme: e.target.value as Settings['theme'] })
             }
             disabled={isSaving}
           >
@@ -49,8 +49,8 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             className="mb-1 w-full rounded border border-gray-400 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             placeholder="/path/to/movies"
-            value={appSettings.moviesDirectory}
-            onChange={(e) => setAppSettings({ ...appSettings, moviesDirectory: e.target.value })}
+            value={settings.moviesDirectory}
+            onChange={(e) => setSettings({ ...settings, moviesDirectory: e.target.value })}
             disabled={isSaving}
             required
           />
@@ -62,8 +62,8 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             placeholder="/path/to/tv-shows"
-            value={appSettings.tvShowsDirectory}
-            onChange={(e) => setAppSettings({ ...appSettings, tvShowsDirectory: e.target.value })}
+            value={settings.tvShowsDirectory}
+            onChange={(e) => setSettings({ ...settings, tvShowsDirectory: e.target.value })}
             disabled={isSaving}
             required
           />
@@ -75,8 +75,8 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             placeholder="Your TMDb API Key"
-            value={appSettings.tmdbApiKey}
-            onChange={(e) => setAppSettings({ ...appSettings, tmdbApiKey: e.target.value })}
+            value={settings.tmdbApiKey}
+            onChange={(e) => setSettings({ ...settings, tmdbApiKey: e.target.value })}
             disabled={isSaving}
           />
           <p className="text-sm text-gray-400">

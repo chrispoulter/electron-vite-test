@@ -1,9 +1,9 @@
 import { app } from 'electron'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { AppSettings } from '../shared/types'
+import type { Settings } from '../shared/types'
 
-const defaultSettings: AppSettings = {
+const defaultSettings: Settings = {
   theme: 'system',
   moviesDirectory: '',
   tvShowsDirectory: '',
@@ -12,7 +12,7 @@ const defaultSettings: AppSettings = {
 
 const settingsPath = join(app.getPath('userData'), 'settings.json')
 
-export const getSettings = (): AppSettings => {
+export const getSettings = (): Settings => {
   try {
     return JSON.parse(readFileSync(settingsPath, 'utf-8'))
   } catch {
@@ -20,5 +20,5 @@ export const getSettings = (): AppSettings => {
   }
 }
 
-export const setSettings = (appSettings: AppSettings): void =>
-  writeFileSync(settingsPath, JSON.stringify(appSettings, null, 2))
+export const setSettings = (settings: Settings): void =>
+  writeFileSync(settingsPath, JSON.stringify(settings, null, 2))

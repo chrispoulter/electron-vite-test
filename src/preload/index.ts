@@ -1,12 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { AppSettings, Movie, TvShow } from '../shared/types'
+import { Settings, Movie, TvShow } from '../shared/types'
 
 // Custom APIs for renderer
 const api = {
-  getAppSettings: (): Promise<AppSettings> => ipcRenderer.invoke('get-app-settings'),
-  setAppSettings: (settings: AppSettings): Promise<void> =>
-    ipcRenderer.invoke('set-app-settings', settings),
+  getSettings: (): Promise<Settings> => ipcRenderer.invoke('get-settings'),
+  setSettings: (settings: Settings): Promise<void> => ipcRenderer.invoke('set-settings', settings),
   getRecentlyAdded: (): Promise<(Movie | TvShow)[]> => ipcRenderer.invoke('get-recently-added'),
   getMovies: (): Promise<Movie[]> => ipcRenderer.invoke('get-movies'),
   getTvShows: (): Promise<TvShow[]> => ipcRenderer.invoke('get-tv-shows'),

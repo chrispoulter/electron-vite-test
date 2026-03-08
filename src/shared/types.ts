@@ -17,7 +17,7 @@ export type TvShow = {
   episodes: TvShowEpisode[]
 }
 
-export type AppSettings = {
+export type Settings = {
   theme: 'light' | 'dark' | 'system'
   moviesDirectory: string
   tvShowsDirectory: string
