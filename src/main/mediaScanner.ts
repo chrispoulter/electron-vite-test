@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, statSync } from 'fs'
-import { join } from 'path'
+import { extname, join } from 'path'
 import { Movie, TvShow, TvShowEpisode } from '../shared/types'
 import { getSettings } from './settingsStore'
 
@@ -52,6 +52,7 @@ export const getMovies = (): Movie[] => {
         title: parseTitle(file.name),
         posterUrl: getPosterUrlForMovie(file.name),
         filePath,
+        fileExtension: extname(file.name),
         addedAt: statSync(filePath).mtimeMs
       })
     }
@@ -88,6 +89,7 @@ export const getTVShows = (): TvShow[] => {
       episodes.push({
         title: parseTitle(file.name),
         filePath,
+        fileExtension: extname(file.name),
         addedAt: statSync(filePath).mtimeMs
       })
     }

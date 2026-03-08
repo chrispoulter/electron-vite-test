@@ -2,12 +2,14 @@ export type Movie = {
   title: string
   posterUrl?: string
   filePath: string
+  fileExtension: string
   addedAt: number
 }
 
 export type TvShowEpisode = {
   title: string
   filePath: string
+  fileExtension: string
   addedAt: number
 }
 

@@ -34,8 +34,8 @@ export const MovieCard = ({
       </div>
       <div className="ml-auto flex items-center gap-2">
         <small className="rounded bg-purple-500 px-2 py-1 text-xs text-white">Movie</small>
-        <small className="rounded bg-gray-500 px-2 py-1 text-xs text-white">
-          {movie.filePath.split('.').pop()?.toUpperCase() ?? ''}
+        <small className="rounded bg-gray-500 px-2 py-1 text-xs text-white uppercase">
+          {movie.fileExtension}
         </small>
         <PlayIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
       </div>
