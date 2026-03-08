@@ -23,7 +23,7 @@ export const TvShowCard = ({ tvShow }: { tvShow: TvShow }): React.JSX.Element =>
         <h3 className="truncate text-lg font-bold">
           {tvShow.title}
           <br />
-          <small className="rounded bg-pink-500 p-1 text-xs text-white">TV Show</small>
+          <small className="rounded bg-teal-500 p-1 text-xs text-white">TV Show</small>
         </h3>
         <button className="ml-auto min-w-32 cursor-pointer rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">
           Episodes

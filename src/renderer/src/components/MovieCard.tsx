@@ -19,7 +19,7 @@ export const MovieCard = ({ movie }: { movie: Movie }): React.JSX.Element => {
       <h3 className="truncate text-lg font-bold">
         {movie.title}
         <br />
-        <small className="rounded bg-teal-500 p-1 text-xs text-white">Movie</small>
+        <small className="rounded bg-purple-500 p-1 text-xs text-white">Movie</small>
       </h3>
       <button className="hover:bg-blue-600cursor-pointer ml-auto min-w-32 rounded bg-blue-500 px-4 py-2 text-white">
         Play
