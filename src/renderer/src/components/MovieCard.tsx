@@ -24,21 +24,21 @@ export const MovieCard = ({
           e.currentTarget.onerror = null
         }}
       />
-      <div>
-        <h3 className="truncate font-bold">{movie.title}</h3>
+      <div className="truncate">
+        <h3 className="font-bold">{movie.title}</h3>
         {showAddedDate && (
           <span className="text-xs text-gray-500 dark:text-gray-400">
             {relativeTime(movie.addedAt)}
           </span>
         )}
       </div>
-      <small className="ml-auto rounded bg-purple-500 p-1 px-2 py-1 text-xs text-white">
-        Movie
-      </small>
-      <small className="rounded bg-gray-500 px-2 py-1 text-xs text-white">
-        {movie.filePath.split('.').pop()?.toUpperCase() ?? ''}
-      </small>
-      <PlayIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+      <div className="ml-auto flex items-center gap-2">
+        <small className="rounded bg-purple-500 px-2 py-1 text-xs text-white">Movie</small>
+        <small className="rounded bg-gray-500 px-2 py-1 text-xs text-white">
+          {movie.filePath.split('.').pop()?.toUpperCase() ?? ''}
+        </small>
+        <PlayIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+      </div>
     </div>
   )
 }

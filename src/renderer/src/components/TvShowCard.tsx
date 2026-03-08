@@ -4,6 +4,15 @@ import type { TvShow } from '../../../shared/types'
 import { ChevronDown, ChevronUp, PlayIcon } from './icons'
 import { relativeTime } from '../utils/time'
 
+const getSeasonCount = (episodes: TvShow['episodes']): number => {
+  const seasons = new Set<number>()
+  for (const ep of episodes) {
+    const match = ep.title.match(/\bS(\d+)/i) ?? ep.title.match(/\bSeason\s*(\d+)/i)
+    if (match) seasons.add(Number(match[1]))
+  }
+  return seasons.size
+}
+
 export const TvShowCard = ({
   tvShow,
   showAddedDate
@@ -16,6 +25,9 @@ export const TvShowCard = ({
   const latestAddedAt = showAddedDate
     ? Math.max(...tvShow.episodes.map((e) => e.addedAt))
     : undefined
+
+  const seasonCount = getSeasonCount(tvShow.episodes)
+  const episodeCount = tvShow.episodes.length
 
   return (
     <div className="flex flex-col gap-4 rounded bg-gray-200 p-2 dark:bg-gray-700 dark:text-white">
@@ -32,22 +44,29 @@ export const TvShowCard = ({
             e.currentTarget.onerror = null
           }}
         />
-        <div>
-          <h3 className="truncate font-bold">{tvShow.title}</h3>
+        <div className="truncate">
+          <h3 className="font-bold">{tvShow.title}</h3>
           {latestAddedAt && (
             <span className="text-xs text-gray-500 dark:text-gray-400">
               {relativeTime(latestAddedAt)}
             </span>
           )}
         </div>
-        <span className="ml-auto rounded bg-teal-500 p-1 px-2 py-1 text-xs text-white">
-          TV Show
-        </span>
-        {showEpisodes ? (
-          <ChevronUp className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-        )}
+
+        <div className="ml-auto flex items-center gap-4">
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            {seasonCount} {seasonCount === 1 ? 'Season' : 'Seasons'} · {episodeCount}{' '}
+            {episodeCount === 1 ? 'Episode' : 'Episodes'}
+          </span>
+          <span className="rounded bg-teal-500 p-1 px-2 py-1 text-xs text-nowrap text-white">
+            TV Show
+          </span>
+          {showEpisodes ? (
+            <ChevronUp className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          )}
+        </div>
       </div>
       {showEpisodes && (
         <div className="flex flex-col gap-1">
