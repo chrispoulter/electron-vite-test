@@ -18,14 +18,14 @@ A desktop application for organizing and browsing your personal collection of mo
 
 ## Tech Stack
 
-| Layer | Technology |
-| --- | --- |
-| Desktop shell | Electron 40 |
-| UI | React 19 + TypeScript |
+| Layer         | Technology             |
+| ------------- | ---------------------- |
+| Desktop shell | Electron 40            |
+| UI            | React 19 + TypeScript  |
 | Build tooling | Vite 7 + electron-vite |
-| Styling | Tailwind CSS |
-| Packaging | electron-builder |
-| Auto-update | electron-updater |
+| Styling       | Tailwind CSS           |
+| Packaging     | electron-builder       |
+| Auto-update   | electron-updater       |
 
 ## Recommended IDE Setup
 

@@ -1,6 +1,6 @@
 import defaultMoviePoster from '../assets/default-movie.svg'
 import type { Movie } from '../../../shared/types'
-import { PlayIcon } from './icons'
+import { PlayIcon } from './SvgIcons'
 import { relativeTime } from '../utils/time'
 
 type MovieCardProps = {

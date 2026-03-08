@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import defaultTvShowPoster from '../assets/default-tv-show.svg'
 import type { TvShow } from '../../../shared/types'
-import { ChevronDown, ChevronUp, PlayIcon } from './icons'
+import { ChevronDown, ChevronUp, PlayIcon } from './SvgIcons'
 import { relativeTime } from '../utils/time'
 
 type TvShowCardProps = {
