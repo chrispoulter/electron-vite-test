@@ -3,7 +3,7 @@ import { getSettings } from './settingsStore'
 const API_URL = 'https://api.themoviedb.org/3'
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w300'
 
-const getTitleAndYear = (title: string): { query: string; year: string } => {
+const getQueryAndYear = (title: string): { query: string; year: string } => {
   const match = title.match(/(.*?)(?:\s*\((\d{4})\))?$/)
 
   if (match) {
@@ -21,7 +21,7 @@ export const getPosterUrlForMovie = async (title: string): Promise<string | unde
     return undefined
   }
 
-  const { query, year } = getTitleAndYear(title)
+  const { query, year } = getQueryAndYear(title)
   const params = new URLSearchParams({ query, year })
 
   try {
@@ -51,7 +51,7 @@ export const getPosterUrlForTvShow = async (title: string): Promise<string | und
     return undefined
   }
 
-  const { query, year } = getTitleAndYear(title)
+  const { query, year } = getQueryAndYear(title)
   const params = new URLSearchParams({ query, year })
 
   try {
