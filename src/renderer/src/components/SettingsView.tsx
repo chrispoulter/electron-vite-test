@@ -10,7 +10,8 @@ export const SettingsView = (): React.JSX.Element => {
     window.api.getSettings().then(setSettings)
   }, [])
 
-  const onSaveSettings = (): void => {
+  const onSaveSettings = (e: React.FormEvent): void => {
+    e.preventDefault()
     setIsSaving(true)
 
     window.api.setSettings(settings!).then(() => {
