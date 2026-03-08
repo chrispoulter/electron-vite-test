@@ -15,16 +15,6 @@ const parseTitle = (fileName: string): string => {
   return nameWithoutExt.replace(/\./g, ' ')
 }
 
-const parseEpisode = (fileName: string): { season: number; episode: number } | null => {
-  const match = fileName.match(/S(\d+)E(\d+)/i)
-
-  if (!match) {
-    return null
-  }
-
-  return { season: parseInt(match[1], 10), episode: parseInt(match[2], 10) }
-}
-
 export const getRecentlyAdded = (): (Movie | TvShow)[] => {
   return []
 }
