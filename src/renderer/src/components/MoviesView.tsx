@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import type { Movie } from '../../../shared/types'
-import { Search } from './Search'
+import { SearchBar } from './SearchBar'
 import { MovieCard } from './MovieCard'
 
 export const MoviesView = (): React.JSX.Element => {
@@ -18,7 +18,7 @@ export const MoviesView = (): React.JSX.Element => {
   return (
     <div className="dark:text-white">
       <h2 className="mb-4 text-2xl font-bold">Movies</h2>
-      <Search placeholder="Search movies..." value={search} onChange={setSearch} />
+      <SearchBar placeholder="Search movies..." value={search} onChange={setSearch} />
       {!filtered?.length ? (
         <div className="text-gray-500">
           {search
