@@ -11,48 +11,56 @@ export const Sidebar = ({ view, setView }: SidebarProps): React.JSX.Element => {
       <nav>
         <ul>
           <li className="mb-2">
-            <a
-              href="#"
+            <button
               onClick={() => setView('recently-added')}
-              className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
-                'bg-gray-300 dark:bg-gray-600': view === 'recently-added'
-              })}
+              className={clsx(
+                'w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-300 dark:hover:bg-gray-600',
+                {
+                  'bg-gray-300 dark:bg-gray-600': view === 'recently-added'
+                }
+              )}
             >
               Recently Added
-            </a>
+            </button>
           </li>
           <li className="mb-2">
-            <a
-              href="#"
+            <button
               onClick={() => setView('movies')}
-              className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
-                'bg-gray-300 dark:bg-gray-600': view === 'movies'
-              })}
+              className={clsx(
+                'w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-300 dark:hover:bg-gray-600',
+                {
+                  'bg-gray-300 dark:bg-gray-600': view === 'movies'
+                }
+              )}
             >
               Movies
-            </a>
+            </button>
           </li>
           <li className="mb-2">
-            <a
-              href="#"
+            <button
               onClick={() => setView('tv-shows')}
-              className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
-                'bg-gray-300 dark:bg-gray-600': view === 'tv-shows'
-              })}
+              className={clsx(
+                'w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-300 dark:hover:bg-gray-600',
+                {
+                  'bg-gray-300 dark:bg-gray-600': view === 'tv-shows'
+                }
+              )}
             >
               TV Shows
-            </a>
+            </button>
           </li>
           <li className="mb-2">
-            <a
-              href="#"
+            <button
               onClick={() => setView('settings')}
-              className={clsx('block rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-600', {
-                'bg-gray-300 dark:bg-gray-600': view === 'settings'
-              })}
+              className={clsx(
+                'w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-300 dark:hover:bg-gray-600',
+                {
+                  'bg-gray-300 dark:bg-gray-600': view === 'settings'
+                }
+              )}
             >
               Settings
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
