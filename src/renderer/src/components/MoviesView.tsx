@@ -1,22 +1,12 @@
-import React, { useEffect } from 'react'
-import type { Movie } from '../../../shared/types'
+import React from 'react'
+import { useMoviesQuery } from '../hooks/useMediaQueries'
 import { SearchBar } from './SearchBar'
 import { MovieCard } from './MovieCard'
 import { MovieCardSkeleton } from './MovieCardSkeleton'
 
 export const MoviesView = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
-  const [movies, setMovies] = React.useState<Movie[]>()
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [error, setError] = React.useState<string | null>(null)
-
-  useEffect(() => {
-    window.api
-      .getMovies()
-      .then((movies) => setMovies(movies))
-      .catch((e) => setError(e instanceof Error ? e.message : 'An unexpected error occurred'))
-      .finally(() => setIsLoading(false))
-  }, [])
+  const { data: movies, isLoading, error } = useMoviesQuery()
 
   const filtered = movies?.filter((movie) =>
     movie.title.toLowerCase().includes(search.toLowerCase())
@@ -35,7 +25,9 @@ export const MoviesView = (): React.JSX.Element => {
       ) : error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800/50 dark:bg-red-900/20">
           <p className="font-medium text-red-700 dark:text-red-400">Something went wrong</p>
-          <p className="mt-1 text-sm text-red-600 dark:text-red-500">{error}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+            {error instanceof Error ? error.message : 'An unexpected error occurred'}
+          </p>
         </div>
       ) : !filtered?.length ? (
         <div className="text-gray-500">

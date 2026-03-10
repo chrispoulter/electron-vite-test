@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useSettingsQuery, useSaveSettingsMutation } from '../hooks/useMediaQueries'
 import type { Settings } from '../../../shared/types'
-import { applyTheme } from '../utils/theme'
 
 const directoryPathSchema = z.string().refine(
   (v) => {
@@ -31,37 +31,23 @@ const settingsSchema = z.object({
 })
 
 export const SettingsView = (): React.JSX.Element => {
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [loadError, setLoadError] = React.useState<string | null>(null)
-  const [saveError, setSaveError] = React.useState<string | null>(null)
-  const [saveSuccess, setSaveSuccess] = React.useState(false)
+  const { data: settings, isLoading, error: loadError } = useSettingsQuery()
+  const saveSettingsMutation = useSaveSettingsMutation()
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting }
+    formState: { errors }
   } = useForm<Settings>({ resolver: zodResolver(settingsSchema) })
 
   useEffect(() => {
-    window.api
-      .getSettings()
-      .then(reset)
-      .catch((e) => setLoadError(e instanceof Error ? e.message : 'An unexpected error occurred'))
-      .finally(() => setIsLoading(false))
-  }, [reset])
-
-  const onSaveSettings = async (data: Settings): Promise<void> => {
-    setSaveError(null)
-    setSaveSuccess(false)
-    try {
-      await window.api.setSettings(data)
-      applyTheme(data.theme)
-      setSaveSuccess(true)
-    } catch (e) {
-      setSaveError(e instanceof Error ? e.message : 'An unexpected error occurred')
+    if (settings) {
+      reset(settings)
     }
-  }
+  }, [settings, reset])
+
+  const onSaveSettings = (data: Settings): void => saveSettingsMutation.mutate(data)
 
   if (isLoading) {
     return (
@@ -75,7 +61,7 @@ export const SettingsView = (): React.JSX.Element => {
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800/50 dark:bg-red-900/20">
         <p className="font-medium text-red-700 dark:text-red-400">Something went wrong</p>
-        <p className="mt-1 text-sm text-red-600 dark:text-red-500">{loadError}</p>
+        <p className="mt-1 text-sm text-red-600 dark:text-red-500">{loadError.message}</p>
       </div>
     )
   }
@@ -92,7 +78,7 @@ export const SettingsView = (): React.JSX.Element => {
           <select
             id="theme"
             {...register('theme')}
-            disabled={isSubmitting}
+            disabled={saveSettingsMutation.isPending}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           >
             <option value="light">Light</option>
@@ -109,7 +95,7 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             placeholder="/path/to/movies"
             {...register('moviesDirectory')}
-            disabled={isSubmitting}
+            disabled={saveSettingsMutation.isPending}
             className="mb-1 w-full rounded border border-gray-400 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           {errors.moviesDirectory ? (
@@ -129,7 +115,7 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             placeholder="/path/to/tv-shows"
             {...register('tvShowsDirectory')}
-            disabled={isSubmitting}
+            disabled={saveSettingsMutation.isPending}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           {errors.tvShowsDirectory ? (
@@ -149,7 +135,7 @@ export const SettingsView = (): React.JSX.Element => {
             type="password"
             placeholder="Your TMDb API Key"
             {...register('tmdbApiKey')}
-            disabled={isSubmitting}
+            disabled={saveSettingsMutation.isPending}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           <p className="text-sm text-gray-400">
@@ -158,19 +144,19 @@ export const SettingsView = (): React.JSX.Element => {
         </div>
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={saveSettingsMutation.isPending}
           className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          {isSubmitting ? 'Saving...' : 'Save Settings'}
+          {saveSettingsMutation.isPending ? 'Saving...' : 'Save Settings'}
         </button>
-        {saveSuccess && (
+        {saveSettingsMutation.isSuccess && (
           <p className="mt-3 rounded border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700 dark:border-green-800/50 dark:bg-green-900/20 dark:text-green-400">
             Settings saved successfully.
           </p>
         )}
-        {saveError && (
+        {saveSettingsMutation.error && (
           <p className="mt-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-800/50 dark:bg-red-900/20 dark:text-red-400">
-            {saveError}
+            {saveSettingsMutation.error.message}
           </p>
         )}
       </form>

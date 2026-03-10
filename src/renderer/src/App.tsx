@@ -3,14 +3,18 @@ import { Content } from './components/Content'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Sidebar } from './components/Sidebar'
+import { useSettingsQuery } from './hooks/useMediaQueries'
 import { applyTheme } from './utils/theme'
 
 function App(): React.JSX.Element {
   const [view, setView] = useState('recently-added')
+  const { data: settings } = useSettingsQuery()
 
   useEffect(() => {
-    window.api.getSettings().then((settings) => applyTheme(settings.theme))
-  }, [])
+    if (settings) {
+      applyTheme(settings.theme)
+    }
+  }, [settings])
 
   return (
     <div className="flex h-screen flex-col">

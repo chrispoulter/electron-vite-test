@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import type { Movie, TvShow } from '../../../shared/types'
+import React from 'react'
+import { useRecentlyAddedQuery } from '../hooks/useMediaQueries'
 import { SearchBar } from './SearchBar'
 import { MovieCard } from './MovieCard'
 import { TvShowCard } from './TvShowCard'
@@ -7,17 +7,7 @@ import { MovieCardSkeleton } from './MovieCardSkeleton'
 
 export const RecentlyAddedView = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
-  const [recentlyAdded, setRecentlyAdded] = React.useState<(Movie | TvShow)[]>()
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [error, setError] = React.useState<string | null>(null)
-
-  useEffect(() => {
-    window.api
-      .getRecentlyAdded()
-      .then((items) => setRecentlyAdded(items))
-      .catch((e) => setError(e instanceof Error ? e.message : 'An unexpected error occurred'))
-      .finally(() => setIsLoading(false))
-  }, [])
+  const { data: recentlyAdded, isLoading, error } = useRecentlyAddedQuery()
 
   const filtered = recentlyAdded?.filter((item) =>
     item.title.toLowerCase().includes(search.toLowerCase())
@@ -36,7 +26,9 @@ export const RecentlyAddedView = (): React.JSX.Element => {
       ) : error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800/50 dark:bg-red-900/20">
           <p className="font-medium text-red-700 dark:text-red-400">Something went wrong</p>
-          <p className="mt-1 text-sm text-red-600 dark:text-red-500">{error}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+            {error instanceof Error ? error.message : 'An unexpected error occurred'}
+          </p>
         </div>
       ) : !filtered?.length ? (
         <div className="text-gray-500">

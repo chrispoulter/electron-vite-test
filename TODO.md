@@ -1,4 +1,3 @@
-
 # TODO
 
 - **react-query** - for loading, states, errors, caching of movies and tv shows

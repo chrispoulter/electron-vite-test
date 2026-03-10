@@ -1,22 +1,12 @@
-import React, { useEffect } from 'react'
-import type { TvShow } from '../../../shared/types'
+import React from 'react'
+import { useTvShowsQuery } from '../hooks/useMediaQueries'
 import { SearchBar } from './SearchBar'
 import { TvShowCard } from './TvShowCard'
 import { TvShowCardSkeleton } from './TvShowCardSkeleton'
 
 export const TvShowsView = (): React.JSX.Element => {
   const [search, setSearch] = React.useState('')
-  const [tvShows, setTvShows] = React.useState<TvShow[]>()
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [error, setError] = React.useState<string | null>(null)
-
-  useEffect(() => {
-    window.api
-      .getTvShows()
-      .then((tvShows) => setTvShows(tvShows))
-      .catch((e) => setError(e instanceof Error ? e.message : 'An unexpected error occurred'))
-      .finally(() => setIsLoading(false))
-  }, [])
+  const { data: tvShows, isLoading, error } = useTvShowsQuery()
 
   const filtered = tvShows?.filter((show) =>
     show.title.toLowerCase().includes(search.toLowerCase())
@@ -35,7 +25,9 @@ export const TvShowsView = (): React.JSX.Element => {
       ) : error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800/50 dark:bg-red-900/20">
           <p className="font-medium text-red-700 dark:text-red-400">Something went wrong</p>
-          <p className="mt-1 text-sm text-red-600 dark:text-red-500">{error}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-500">
+            {error instanceof Error ? error.message : 'An unexpected error occurred'}
+          </p>
         </div>
       ) : !filtered?.length ? (
         <div className="text-gray-500">
