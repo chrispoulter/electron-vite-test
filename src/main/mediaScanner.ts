@@ -17,6 +17,8 @@ const parseTitle = (fileName: string): string => {
 }
 
 export const getMovies = async (): Promise<Movie[]> => {
+  console.log('Fetching movies from directory')
+
   const { moviesDirectory } = await getSettings()
 
   if (!moviesDirectory) {
@@ -68,6 +70,8 @@ export const getMovies = async (): Promise<Movie[]> => {
 }
 
 export const getTvShows = async (): Promise<TvShow[]> => {
+  console.log('Fetching TV shows from directory')
+
   const { tvShowsDirectory } = await getSettings()
 
   if (!tvShowsDirectory) {
@@ -141,6 +145,8 @@ export const getTvShows = async (): Promise<TvShow[]> => {
 }
 
 export const getRecentlyAdded = async (): Promise<(Movie | TvShow)[]> => {
+  console.log('Fetching recently added movies and TV shows')
+
   const [movies, tvShows] = await Promise.all([getMovies(), getTvShows()])
 
   const items: { item: Movie | TvShow; addedAt: number }[] = [

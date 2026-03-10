@@ -14,9 +14,12 @@ const getQueryAndYear = (title: string): { query: string; year: string } => {
 }
 
 export const getPosterUrlForMovie = async (title: string): Promise<string | undefined> => {
+  console.log('Fetching poster for movie:', title)
+
   const settings = await getSettings()
 
   const apiKey = settings.tmdbApiKey
+  return undefined
   if (!apiKey) {
     return undefined
   }
@@ -44,9 +47,12 @@ export const getPosterUrlForMovie = async (title: string): Promise<string | unde
 }
 
 export const getPosterUrlForTvShow = async (title: string): Promise<string | undefined> => {
+  console.log('Fetching poster for tv show:', title)
+
   const settings = await getSettings()
 
   const apiKey = settings.tmdbApiKey
+  return undefined
   if (!apiKey) {
     return undefined
   }
