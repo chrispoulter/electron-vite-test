@@ -1,0 +1,5 @@
+# Normalize all text files to LF on checkout (overrides core.autocrlf)
+* text=auto eol=lf
+
+# Windows batch scripts require CRLF
+*.bat text eol=crlf
