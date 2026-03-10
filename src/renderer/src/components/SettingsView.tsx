@@ -32,7 +32,7 @@ const settingsSchema = z.object({
 
 export const SettingsView = (): React.JSX.Element => {
   const { data: settings, isLoading, error: loadError } = useSettingsQuery()
-  const saveSettingsMutation = useSaveSettingsMutation()
+  const { mutate, isPending, isSuccess, error: saveError } = useSaveSettingsMutation()
 
   const {
     register,
@@ -47,7 +47,7 @@ export const SettingsView = (): React.JSX.Element => {
     }
   }, [settings, reset])
 
-  const onSaveSettings = (data: Settings): void => saveSettingsMutation.mutate(data)
+  const onSaveSettings = (data: Settings): void => mutate(data)
 
   if (isLoading) {
     return (
@@ -78,7 +78,7 @@ export const SettingsView = (): React.JSX.Element => {
           <select
             id="theme"
             {...register('theme')}
-            disabled={saveSettingsMutation.isPending}
+            disabled={isPending}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           >
             <option value="light">Light</option>
@@ -95,7 +95,7 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             placeholder="/path/to/movies"
             {...register('moviesDirectory')}
-            disabled={saveSettingsMutation.isPending}
+            disabled={isPending}
             className="mb-1 w-full rounded border border-gray-400 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           {errors.moviesDirectory ? (
@@ -115,7 +115,7 @@ export const SettingsView = (): React.JSX.Element => {
             type="text"
             placeholder="/path/to/tv-shows"
             {...register('tvShowsDirectory')}
-            disabled={saveSettingsMutation.isPending}
+            disabled={isPending}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           {errors.tvShowsDirectory ? (
@@ -135,7 +135,7 @@ export const SettingsView = (): React.JSX.Element => {
             type="password"
             placeholder="Your TMDb API Key"
             {...register('tmdbApiKey')}
-            disabled={saveSettingsMutation.isPending}
+            disabled={isPending}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           <p className="text-sm text-gray-400">
@@ -144,19 +144,19 @@ export const SettingsView = (): React.JSX.Element => {
         </div>
         <button
           type="submit"
-          disabled={saveSettingsMutation.isPending}
+          disabled={isPending}
           className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          {saveSettingsMutation.isPending ? 'Saving...' : 'Save Settings'}
+          {isPending ? 'Saving...' : 'Save Settings'}
         </button>
-        {saveSettingsMutation.isSuccess && (
+        {isSuccess && (
           <p className="mt-3 rounded border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700 dark:border-green-800/50 dark:bg-green-900/20 dark:text-green-400">
             Settings saved successfully.
           </p>
         )}
-        {saveSettingsMutation.error && (
+        {saveError && (
           <p className="mt-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-800/50 dark:bg-red-900/20 dark:text-red-400">
-            {saveSettingsMutation.error.message}
+            {saveError.message}
           </p>
         )}
       </form>
