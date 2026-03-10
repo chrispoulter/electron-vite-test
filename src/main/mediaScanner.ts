@@ -72,9 +72,6 @@ export const getMovies = async (): Promise<Movie[]> => {
 export const getTvShows = async (): Promise<TvShow[]> => {
   console.log('Fetching TV shows from directory')
 
-  // wait for 5 seconds to simulate loading state
-  await new Promise((resolve) => setTimeout(resolve, 5000))
-
   const { tvShowsDirectory } = await getSettings()
 
   if (!tvShowsDirectory) {

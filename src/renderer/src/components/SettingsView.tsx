@@ -34,6 +34,7 @@ export const SettingsView = (): React.JSX.Element => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [loadError, setLoadError] = React.useState<string | null>(null)
   const [saveError, setSaveError] = React.useState<string | null>(null)
+  const [saveSuccess, setSaveSuccess] = React.useState(false)
 
   const {
     register,
@@ -52,9 +53,11 @@ export const SettingsView = (): React.JSX.Element => {
 
   const onSaveSettings = async (data: Settings): Promise<void> => {
     setSaveError(null)
+    setSaveSuccess(false)
     try {
       await window.api.setSettings(data)
       applyTheme(data.theme)
+      setSaveSuccess(true)
     } catch (e) {
       setSaveError(e instanceof Error ? e.message : 'An unexpected error occurred')
     }
@@ -160,6 +163,11 @@ export const SettingsView = (): React.JSX.Element => {
         >
           {isSubmitting ? 'Saving...' : 'Save Settings'}
         </button>
+        {saveSuccess && (
+          <p className="mt-3 rounded border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700 dark:border-green-800/50 dark:bg-green-900/20 dark:text-green-400">
+            Settings saved successfully.
+          </p>
+        )}
         {saveError && (
           <p className="mt-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-800/50 dark:bg-red-900/20 dark:text-red-400">
             {saveError}
