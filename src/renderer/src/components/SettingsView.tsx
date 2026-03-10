@@ -1,34 +1,63 @@
 import React, { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import type { Settings } from '../../../shared/types'
 import { applyTheme } from '../utils/theme'
 
+const directoryPathSchema = z.string().refine(
+  (v) => {
+    if (!v.trim()) {
+      return true
+    }
+
+    return window.electron.process.platform === 'win32'
+      ? /^[a-zA-Z]:[/\\]|^\\\\[^\\]+\\/.test(v)
+      : v.startsWith('/')
+  },
+  {
+    message:
+      window.electron.process.platform === 'win32'
+        ? 'Enter a full Windows path (e.g. C:\\Users\\me\\Movies or \\\\server\\share)'
+        : 'Enter an absolute path starting with / (e.g. /home/me/Movies)'
+  }
+)
+
+const settingsSchema = z.object({
+  theme: z.enum(['light', 'dark', 'system']),
+  moviesDirectory: directoryPathSchema,
+  tvShowsDirectory: directoryPathSchema,
+  tmdbApiKey: z.string()
+})
+
 export const SettingsView = (): React.JSX.Element => {
-  const [settings, setSettings] = React.useState<Settings>()
   const [isLoading, setIsLoading] = React.useState(true)
   const [loadError, setLoadError] = React.useState<string | null>(null)
-  const [isSaving, setIsSaving] = React.useState(false)
   const [saveError, setSaveError] = React.useState<string | null>(null)
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting }
+  } = useForm<Settings>({ resolver: zodResolver(settingsSchema) })
 
   useEffect(() => {
     window.api
       .getSettings()
-      .then(setSettings)
+      .then(reset)
       .catch((e) => setLoadError(e instanceof Error ? e.message : 'An unexpected error occurred'))
       .finally(() => setIsLoading(false))
-  }, [])
+  }, [reset])
 
-  const onSaveSettings = (e: React.SubmitEvent): void => {
-    e.preventDefault()
-    setIsSaving(true)
+  const onSaveSettings = async (data: Settings): Promise<void> => {
     setSaveError(null)
-
-    window.api
-      .setSettings(settings!)
-      .then(() => {
-        applyTheme(settings!.theme)
-      })
-      .catch((e) => setSaveError(e instanceof Error ? e.message : 'An unexpected error occurred'))
-      .finally(() => setIsSaving(false))
+    try {
+      await window.api.setSettings(data)
+      applyTheme(data.theme)
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : 'An unexpected error occurred')
+    }
   }
 
   if (isLoading) {
@@ -48,26 +77,19 @@ export const SettingsView = (): React.JSX.Element => {
     )
   }
 
-  if (!settings) {
-    return <></>
-  }
-
   return (
     <div className="dark:text-white">
       <h2 className="mb-4 text-2xl font-bold">Settings</h2>
       <p className="mb-4">Configure your application preferences here.</p>
-      <form onSubmit={onSaveSettings}>
+      <form onSubmit={handleSubmit(onSaveSettings)}>
         <div className="mb-4">
           <label htmlFor="theme" className="mb-1 block text-sm font-medium">
             Theme
           </label>
           <select
             id="theme"
-            value={settings.theme}
-            onChange={(e) =>
-              setSettings({ ...settings, theme: e.target.value as Settings['theme'] })
-            }
-            disabled={isSaving}
+            {...register('theme')}
+            disabled={isSubmitting}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           >
             <option value="light">Light</option>
@@ -83,13 +105,17 @@ export const SettingsView = (): React.JSX.Element => {
             id="moviesDirectory"
             type="text"
             placeholder="/path/to/movies"
-            value={settings.moviesDirectory}
-            onChange={(e) => setSettings({ ...settings, moviesDirectory: e.target.value })}
-            disabled={isSaving}
-            required
+            {...register('moviesDirectory')}
+            disabled={isSubmitting}
             className="mb-1 w-full rounded border border-gray-400 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
-          <p className="text-sm text-gray-400">Full path to the movies directory.</p>
+          {errors.moviesDirectory ? (
+            <p className="text-sm text-red-500 dark:text-red-400">
+              {errors.moviesDirectory.message}
+            </p>
+          ) : (
+            <p className="text-sm text-gray-400">Full path to the movies directory.</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="tvShowsDirectory" className="mb-1 block text-sm font-medium">
@@ -99,13 +125,17 @@ export const SettingsView = (): React.JSX.Element => {
             id="tvShowsDirectory"
             type="text"
             placeholder="/path/to/tv-shows"
-            value={settings.tvShowsDirectory}
-            onChange={(e) => setSettings({ ...settings, tvShowsDirectory: e.target.value })}
-            disabled={isSaving}
-            required
+            {...register('tvShowsDirectory')}
+            disabled={isSubmitting}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
-          <p className="text-sm text-gray-400">Full path to the TV shows directory.</p>
+          {errors.tvShowsDirectory ? (
+            <p className="text-sm text-red-500 dark:text-red-400">
+              {errors.tvShowsDirectory.message}
+            </p>
+          ) : (
+            <p className="text-sm text-gray-400">Full path to the TV shows directory.</p>
+          )}
         </div>
         <div className="mb-4">
           <label htmlFor="tmdbApiKey" className="mb-1 block text-sm font-medium">
@@ -115,9 +145,8 @@ export const SettingsView = (): React.JSX.Element => {
             id="tmdbApiKey"
             type="password"
             placeholder="Your TMDb API Key"
-            value={settings.tmdbApiKey}
-            onChange={(e) => setSettings({ ...settings, tmdbApiKey: e.target.value })}
-            disabled={isSaving}
+            {...register('tmdbApiKey')}
+            disabled={isSubmitting}
             className="mb-1 w-full rounded border border-gray-300 p-2 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
           <p className="text-sm text-gray-400">
@@ -126,10 +155,10 @@ export const SettingsView = (): React.JSX.Element => {
         </div>
         <button
           type="submit"
-          disabled={isSaving}
+          disabled={isSubmitting}
           className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          {isSaving ? 'Saving...' : 'Save Settings'}
+          {isSubmitting ? 'Saving...' : 'Save Settings'}
         </button>
         {saveError && (
           <p className="mt-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-800/50 dark:bg-red-900/20 dark:text-red-400">
