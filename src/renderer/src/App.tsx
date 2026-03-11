@@ -18,12 +18,6 @@ function App(): React.JSX.Element {
     }
   }, [settings])
 
-  useEffect(() => {
-    window.api.onPosterUpdated((data) => {
-      console.log('Poster updated:', data)
-    })
-  }, [])
-
   return (
     <div className="flex h-screen flex-col">
       <Header />
