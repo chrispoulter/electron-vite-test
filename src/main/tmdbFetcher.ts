@@ -1,7 +1,7 @@
 const API_URL = 'https://api.themoviedb.org/3'
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w300'
 
-const getQueryAndYear = (title: string): { query: string; year: string } => {
+const parseQueryAndYear = (title: string): { query: string; year: string } => {
   const match = title.match(/(.*?)(?:\s*\((\d{4})\))?$/)
 
   if (match) {
@@ -21,7 +21,7 @@ export const getPosterUrlForMovie = async (
     return null
   }
 
-  const { query, year } = getQueryAndYear(title)
+  const { query, year } = parseQueryAndYear(title)
   const params = new URLSearchParams({ query, year })
 
   try {
@@ -53,7 +53,7 @@ export const getPosterUrlForTvShow = async (
     return null
   }
 
-  const { query, year } = getQueryAndYear(title)
+  const { query, year } = parseQueryAndYear(title)
   const params = new URLSearchParams({ query, year })
 
   try {
