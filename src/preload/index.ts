@@ -9,7 +9,9 @@ const api = {
   getRecentlyAdded: (): Promise<(Movie | TvShow)[]> => ipcRenderer.invoke('get-recently-added'),
   getMovies: (): Promise<Movie[]> => ipcRenderer.invoke('get-movies'),
   getTvShows: (): Promise<TvShow[]> => ipcRenderer.invoke('get-tv-shows'),
-  openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath)
+  openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath),
+  onPosterUpdated: (callback: (data: any) => void) =>
+    ipcRenderer.on('poster-updated', (_event, data) => callback(data))
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

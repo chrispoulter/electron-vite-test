@@ -1,4 +1,4 @@
-import { app } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { mkdir, stat, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
@@ -75,6 +75,9 @@ const processItem = async (item: QueueItem): Promise<void> => {
     const arrayBuffer = await response.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
     await writeFile(filePath, buffer)
+
+    const win = BrowserWindow.getAllWindows()[0]
+    win.webContents.send('poster-updated', { title: item.title, type: item.type })
 
     console.log('Saved poster image for', item.title)
   } catch (error) {
