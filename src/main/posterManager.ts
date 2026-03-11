@@ -8,7 +8,11 @@ type QueueItem = { title: string; type: 'movie' | 'tv-show' }
 const queue: QueueItem[] = []
 let isProcessing = false
 
-export const enqueuePoster = (title: string, type: 'movie' | 'tv-show'): void => {
+export const enqueuePoster = (
+  title: string,
+  type: 'movie' | 'tv-show',
+  tmdbApiKey: string
+): void => {
   console.log('Enqueuing poster image for', title, type)
 
   if (getPosterUrl(title)) {
@@ -22,17 +26,17 @@ export const enqueuePoster = (title: string, type: 'movie' | 'tv-show'): void =>
   queue.push({ title, type })
 
   if (!isProcessing) {
-    processQueue()
+    processQueue(tmdbApiKey)
   }
 }
 
-const processQueue = async (): Promise<void> => {
+const processQueue = async (tmdbApiKey: string): Promise<void> => {
   isProcessing = true
   while (queue.length > 0) {
     const item = queue.shift()
 
     if (item) {
-      await processItem(item)
+      await processItem(item, tmdbApiKey)
     }
 
     if (queue.length > 0) {
@@ -42,18 +46,18 @@ const processQueue = async (): Promise<void> => {
   isProcessing = false
 }
 
-const processItem = async (item: QueueItem): Promise<void> => {
+const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> => {
   console.log('Processing poster image for', item.title, item.type)
 
   let posterUrl: string | undefined
 
   switch (item.type) {
     case 'movie':
-      posterUrl = await getPosterUrlForMovie(item.title)
+      posterUrl = await getPosterUrlForMovie(item.title, tmdbApiKey)
       break
 
     case 'tv-show':
-      posterUrl = await getPosterUrlForTvShow(item.title)
+      posterUrl = await getPosterUrlForTvShow(item.title, tmdbApiKey)
       break
   }
 

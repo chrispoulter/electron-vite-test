@@ -1,5 +1,3 @@
-import { getSettings } from './settingsStore'
-
 const API_URL = 'https://api.themoviedb.org/3'
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w300'
 
@@ -13,14 +11,14 @@ const getQueryAndYear = (title: string): { query: string; year: string } => {
   return { query: title, year: '' }
 }
 
-export const getPosterUrlForMovie = async (title: string): Promise<string | undefined> => {
+export const getPosterUrlForMovie = async (
+  title: string,
+  tmdbApiKey: string
+): Promise<string | undefined> => {
   console.log('Fetching poster for movie:', title)
 
-  const settings = await getSettings()
-
-  const apiKey = settings.tmdbApiKey
-  if (!apiKey) {
-    return undefined
+  if (!tmdbApiKey) {
+    return 'no-api-key'
   }
 
   const { query, year } = getQueryAndYear(title)
@@ -28,7 +26,7 @@ export const getPosterUrlForMovie = async (title: string): Promise<string | unde
 
   try {
     const response = await fetch(`${API_URL}/search/movie?${params.toString()}`, {
-      headers: { Authorization: `Bearer ${apiKey}` }
+      headers: { Authorization: `Bearer ${tmdbApiKey}` }
     })
 
     const data = await response.json()
@@ -45,14 +43,14 @@ export const getPosterUrlForMovie = async (title: string): Promise<string | unde
   }
 }
 
-export const getPosterUrlForTvShow = async (title: string): Promise<string | undefined> => {
+export const getPosterUrlForTvShow = async (
+  title: string,
+  tmdbApiKey: string
+): Promise<string | undefined> => {
   console.log('Fetching poster for tv show:', title)
 
-  const settings = await getSettings()
-
-  const apiKey = settings.tmdbApiKey
-  if (!apiKey) {
-    return undefined
+  if (!tmdbApiKey) {
+    return 'no-api-key'
   }
 
   const { query, year } = getQueryAndYear(title)
@@ -60,7 +58,7 @@ export const getPosterUrlForTvShow = async (title: string): Promise<string | und
 
   try {
     const response = await fetch(`${API_URL}/search/tv?${params.toString()}`, {
-      headers: { Authorization: `Bearer ${apiKey}` }
+      headers: { Authorization: `Bearer ${tmdbApiKey}` }
     })
 
     const data = await response.json()
