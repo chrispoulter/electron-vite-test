@@ -11,7 +11,7 @@ declare global {
       getMovies: () => Promise<Movie[]>
       getTvShows: () => Promise<TvShow[]>
       openFile: (filePath: string) => Promise<void>
-      onPosterUpdated: (callback: (data: PosterUpdate) => void) => void
+      onPosterUpdated: (callback: (data: PosterUpdate) => void) => () => void
     }
   }
 }
