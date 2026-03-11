@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron'
 import { mkdir, stat, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
+import { PosterUpdate } from '../shared/types'
 
 type QueueItem = { title: string; type: 'movie' | 'tv' }
 
@@ -76,11 +77,13 @@ const processItem = async (item: QueueItem): Promise<void> => {
     const buffer = Buffer.from(arrayBuffer)
     await writeFile(filePath, buffer)
 
-    const win = BrowserWindow.getAllWindows()[0]
-    win.webContents.send('poster-updated', { title: item.title, type: item.type })
+    broadcastPosterUpdate({ title: item.title, type: item.type })
 
     console.log('Saved poster image for', item.title)
   } catch (error) {
     console.error('Error fetching/saving poster image for', item.title, error)
   }
 }
+
+const broadcastPosterUpdate = (data: PosterUpdate): void =>
+  BrowserWindow.getAllWindows().forEach((win) => win.webContents.send('poster-updated', data))

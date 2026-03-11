@@ -22,6 +22,11 @@ export type TvShow = {
   latestAddedAt: number
 }
 
+export type PosterUpdate = {
+  title: string
+  type: 'movie' | 'tv'
+}
+
 export type Settings = {
   theme: 'light' | 'dark' | 'system'
   moviesDirectory: string
