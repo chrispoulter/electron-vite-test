@@ -55,32 +55,22 @@ export const usePosterUpdates = (): void => {
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    const handlePosterUpdate = (data: PosterUpdate): void => {
+    const unsubscribe = window.api.onPosterUpdated((data: PosterUpdate): void => {
       console.log('Poster updated:', data)
 
       queryClient.setQueryData<Movie[]>(['movies'], (old) =>
-        old?.map((m) =>
-          data.title === m.title ? { ...m, posterUrl: `poster://${data.title}.jpg` } : m
-        )
+        old?.map((m) => (data.title === m.title ? { ...m, updated: Date.now() } : m))
       )
 
       queryClient.setQueryData<TvShow[]>(['tv-shows'], (old) =>
-        old?.map((s) =>
-          data.title === s.title ? { ...s, posterUrl: `poster://${data.title}.jpg` } : s
-        )
+        old?.map((s) => (data.title === s.title ? { ...s, updated: Date.now() } : s))
       )
 
       queryClient.setQueryData<(Movie | TvShow)[]>(['recently-added'], (old) =>
-        old?.map((s) =>
-          data.title === s.title ? { ...s, posterUrl: `poster://${data.title}.jpg` } : s
-        )
+        old?.map((s) => (data.title === s.title ? { ...s, updated: Date.now() } : s))
       )
-    }
+    })
 
-    window.api.onPosterUpdated(handlePosterUpdate)
-
-    return () => {
-      // Cleanup if needed (depends on how onPosterUpdated is implemented)
-    }
+    return unsubscribe
   }, [queryClient])
 }

@@ -28,7 +28,7 @@ const processQueue = async (): Promise<void> => {
     }
 
     if (queue.length > 0) {
-      await new Promise((resolve) => setTimeout(resolve, 300))
+      await new Promise((resolve) => setTimeout(resolve, 3000))
     }
   }
   isProcessing = false
