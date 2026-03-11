@@ -67,6 +67,16 @@ app.whenReady().then(async () => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  // protocol.handle('poster', (request) => {
+  //   const filePath = request.url.slice('poster://'.length).split('?')[0]
+
+  //   return net.fetch(
+  //     pathToFileURL(
+  //       join(app.getPath('userData'), 'posters', decodeURIComponent(filePath))
+  //     ).toString()
+  //   )
+  // })
+
   ipcMain.handle('get-settings', () => getSettings())
   ipcMain.handle('set-settings', (_, settings: Settings) => setSettings(settings))
   ipcMain.handle('get-recently-added', () => getRecentlyAdded())

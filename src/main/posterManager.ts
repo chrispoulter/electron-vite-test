@@ -65,9 +65,36 @@ const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> =
 
   await setPosterUrl(item.title, posterUrl)
 
-  if (posterUrl) {
-    broadcastPosterUpdate({ title: item.title, type: item.type, posterUrl })
+  if (!posterUrl) {
+    return
   }
+
+  // try {
+  //   const postersDir = join(app.getPath('userData'), 'posters')
+  //   await mkdir(postersDir, { recursive: true })
+
+  //   const filePath = join(postersDir, `${item.title}.jpg`)
+
+  //   const response = await fetch(posterUrl)
+
+  //   if (!response.ok) {
+  //     console.error('Failed to fetch poster image for', item.title, 'Status:', response.status)
+  //     return
+  //   }
+
+  //   const arrayBuffer = await response.arrayBuffer()
+  //   const buffer = Buffer.from(arrayBuffer)
+  //   await writeFile(filePath, buffer)
+
+  //   // posterUrl = `poster://${item.title}.jpg`
+  //   // await setPosterUrl(item.title, posterUrl)
+
+  //   console.log('Saved poster image for', item.title)
+  // } catch (error) {
+  //   console.error('Error fetching/saving poster image for', item.title, error)
+  // }
+
+  broadcastPosterUpdate({ title: item.title, type: item.type, posterUrl })
 }
 
 const broadcastPosterUpdate = (poster: Poster): void =>
