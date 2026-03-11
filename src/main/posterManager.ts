@@ -57,7 +57,7 @@ const processItem = async (item: QueueItem): Promise<void> => {
       break
   }
 
-  setPosterUrl(item.title, posterUrl)
+  await setPosterUrl(item.title, posterUrl)
 
   broadcastPosterUpdate({ title: item.title, type: item.type, posterUrl })
 }
