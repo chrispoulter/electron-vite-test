@@ -1,5 +1,6 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, protocol, net } from 'electron'
 import { join } from 'path'
+import { pathToFileURL } from 'url'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
@@ -62,6 +63,16 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
+  })
+
+  protocol.handle('poster', (request) => {
+    const filePath = request.url.slice('poster://'.length)
+
+    return net.fetch(
+      pathToFileURL(
+        join(app.getPath('userData'), 'posters', decodeURIComponent(filePath))
+      ).toString()
+    )
   })
 
   ipcMain.handle('get-settings', () => getSettings())

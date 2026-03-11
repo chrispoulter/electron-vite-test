@@ -19,7 +19,6 @@ export const getPosterUrlForMovie = async (title: string): Promise<string | unde
   const settings = await getSettings()
 
   const apiKey = settings.tmdbApiKey
-  return undefined
   if (!apiKey) {
     return undefined
   }
@@ -52,7 +51,6 @@ export const getPosterUrlForTvShow = async (title: string): Promise<string | und
   const settings = await getSettings()
 
   const apiKey = settings.tmdbApiKey
-  return undefined
   if (!apiKey) {
     return undefined
   }
