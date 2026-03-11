@@ -9,7 +9,7 @@ const queue: QueueItem[] = []
 let isProcessing = false
 
 export const enqueuePoster = (title: string, type: 'movie' | 'tv'): void => {
-  console.log('Enqueuing poster for', title, type)
+  console.log('Enqueuing poster image for', title, type)
   queue.push({ title, type })
 
   if (!isProcessing) {
@@ -21,9 +21,11 @@ const processQueue = async (): Promise<void> => {
   isProcessing = true
   while (queue.length > 0) {
     const item = queue.shift()
+
     if (item) {
       await processItem(item)
     }
+
     if (queue.length > 0) {
       await new Promise((resolve) => setTimeout(resolve, 300))
     }
@@ -32,40 +34,50 @@ const processQueue = async (): Promise<void> => {
 }
 
 const processItem = async (item: QueueItem): Promise<void> => {
-  console.log('Processing poster for', item.title, item.type)
+  console.log('Processing poster image for', item.title, item.type)
 
-  const filePath = join(app.getPath('userData'), 'posters', `${item.title}.jpg`)
+  const postersDir = join(app.getPath('userData'), 'posters')
+  await mkdir(postersDir, { recursive: true })
 
-  const exists = await stat(filePath)
-    .then((s) => s.isFile())
-    .catch(() => false)
+  const filePath = join(postersDir, `${item.title}.jpg`)
 
+  const exists = await stat(filePath).catch(() => false)
   if (exists) {
+    console.log('Poster image already exists for', item.title)
     return
   }
 
-  const posterUrl =
-    item.type === 'movie'
-      ? await getPosterUrlForMovie(item.title)
-      : await getPosterUrlForTvShow(item.title)
+  let posterUrl: string | undefined
 
-  if (posterUrl) {
-    try {
-      const response = await fetch(posterUrl)
-      if (response.ok) {
-        const buffer = Buffer.from(await response.arrayBuffer())
-        await stat(join(app.getPath('userData'), 'posters')).catch(() => {
-          return mkdir(join(app.getPath('userData'), 'posters'))
-        })
-        await writeFile(filePath, buffer)
-        console.log('Saved poster for', item.title)
-      } else {
-        console.error('Failed to fetch poster for', item.title, 'Status:', response.status)
-      }
-    } catch (error) {
-      console.error('Error fetching/saving poster for', item.title, error)
+  switch (item.type) {
+    case 'movie':
+      posterUrl = await getPosterUrlForMovie(item.title)
+      break
+
+    case 'tv':
+      posterUrl = await getPosterUrlForTvShow(item.title)
+      break
+  }
+
+  if (!posterUrl) {
+    console.log('No poster URL found for', item.title)
+    return
+  }
+
+  try {
+    const response = await fetch(posterUrl)
+
+    if (!response.ok) {
+      console.error('Failed to fetch poster image for', item.title, 'Status:', response.status)
+      return
     }
-  } else {
-    console.log('No poster found for', item.title)
+
+    const arrayBuffer = await response.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+    await writeFile(filePath, buffer)
+
+    console.log('Saved poster image for', item.title)
+  } catch (error) {
+    console.error('Error fetching/saving poster image for', item.title, error)
   }
 }
