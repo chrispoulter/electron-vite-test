@@ -66,7 +66,7 @@ app.whenReady().then(() => {
   })
 
   protocol.handle('poster', (request) => {
-    const filePath = request.url.slice('poster://'.length)
+    const filePath = request.url.slice('poster://'.length).split('?')[0]
 
     return net.fetch(
       pathToFileURL(
