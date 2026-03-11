@@ -1,6 +1,6 @@
 export type Movie = {
   title: string
-  posterUrl?: string
+  posterUrl: string | null
   filePath: string
   fileExtension: string
   addedAt: number
@@ -15,7 +15,7 @@ export type TvShowEpisode = {
 
 export type TvShow = {
   title: string
-  posterUrl?: string
+  posterUrl: string | null
   episodes: TvShowEpisode[]
   seasonCount: number
   episodeCount: number
@@ -25,7 +25,7 @@ export type TvShow = {
 export type Poster = {
   title: string
   type: 'movie' | 'tv-show'
-  posterUrl?: string
+  posterUrl: string
 }
 
 export type Settings = {

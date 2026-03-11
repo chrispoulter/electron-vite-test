@@ -14,11 +14,11 @@ const getQueryAndYear = (title: string): { query: string; year: string } => {
 export const getPosterUrlForMovie = async (
   title: string,
   tmdbApiKey: string
-): Promise<string | undefined> => {
+): Promise<string | null> => {
   console.log('Fetching poster for movie:', title)
 
   if (!tmdbApiKey) {
-    return 'no-api-key'
+    return null
   }
 
   const { query, year } = getQueryAndYear(title)
@@ -33,24 +33,24 @@ export const getPosterUrlForMovie = async (
 
     if (data.results && data.results.length > 0) {
       const posterPath = data.results[0].poster_path
-      return posterPath ? `${IMAGE_URL}${posterPath}` : 'not-found'
+      return posterPath ? `${IMAGE_URL}${posterPath}` : null
     }
 
-    return 'not-found'
+    return null
   } catch (error) {
     console.error('Error fetching movie poster:', error)
-    return 'error'
+    return null
   }
 }
 
 export const getPosterUrlForTvShow = async (
   title: string,
   tmdbApiKey: string
-): Promise<string | undefined> => {
+): Promise<string | null> => {
   console.log('Fetching poster for tv show:', title)
 
   if (!tmdbApiKey) {
-    return 'no-api-key'
+    return null
   }
 
   const { query, year } = getQueryAndYear(title)
@@ -65,12 +65,12 @@ export const getPosterUrlForTvShow = async (
 
     if (data.results && data.results.length > 0) {
       const posterPath = data.results[0].poster_path
-      return posterPath ? `${IMAGE_URL}${posterPath}` : 'not-found'
+      return posterPath ? `${IMAGE_URL}${posterPath}` : null
     }
 
-    return 'not-found'
+    return null
   } catch (error) {
     console.error('Error fetching tv show poster:', error)
-    return 'error'
+    return null
   }
 }

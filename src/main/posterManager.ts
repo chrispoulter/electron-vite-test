@@ -15,7 +15,9 @@ export const enqueuePoster = (
 ): void => {
   console.log('Enqueuing poster image for', title, type)
 
-  if (getPosterUrl(title)) {
+  const posterUrl = getPosterUrl(title)
+
+  if (posterUrl !== undefined) {
     return
   }
 
@@ -49,7 +51,7 @@ const processQueue = async (tmdbApiKey: string): Promise<void> => {
 const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> => {
   console.log('Processing poster image for', item.title, item.type)
 
-  let posterUrl: string | undefined
+  let posterUrl: string | null
 
   switch (item.type) {
     case 'movie':
@@ -63,7 +65,9 @@ const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> =
 
   await setPosterUrl(item.title, posterUrl)
 
-  broadcastPosterUpdate({ title: item.title, type: item.type, posterUrl })
+  if (posterUrl) {
+    broadcastPosterUpdate({ title: item.title, type: item.type, posterUrl })
+  }
 }
 
 const broadcastPosterUpdate = (poster: Poster): void =>
