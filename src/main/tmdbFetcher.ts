@@ -35,13 +35,13 @@ export const getPosterUrlForMovie = async (title: string): Promise<string | unde
 
     if (data.results && data.results.length > 0) {
       const posterPath = data.results[0].poster_path
-      return posterPath ? `${IMAGE_URL}${posterPath}` : undefined
+      return posterPath ? `${IMAGE_URL}${posterPath}` : 'not-found'
     }
 
-    return undefined
+    return 'not-found'
   } catch (error) {
     console.error('Error fetching movie poster:', error)
-    return undefined
+    return 'error'
   }
 }
 
@@ -67,12 +67,12 @@ export const getPosterUrlForTvShow = async (title: string): Promise<string | und
 
     if (data.results && data.results.length > 0) {
       const posterPath = data.results[0].poster_path
-      return posterPath ? `${IMAGE_URL}${posterPath}` : undefined
+      return posterPath ? `${IMAGE_URL}${posterPath}` : 'not-found'
     }
 
-    return undefined
+    return 'not-found'
   } catch (error) {
     console.error('Error fetching tv show poster:', error)
-    return undefined
+    return 'error'
   }
 }
