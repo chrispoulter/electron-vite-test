@@ -1,8 +1,9 @@
 import { readdir, stat } from 'fs/promises'
 import { extname, join } from 'path'
 import { Movie, TvShow, TvShowEpisode } from '../shared/types'
-import { enqueuePoster } from './posterManager'
 import { getSettings } from './settingsStore'
+import { getPosterUrl } from './posterStore'
+import { enqueuePoster } from './posterManager'
 
 const VIDEO_EXTENSIONS = new Set(['.mp4', '.mkv', '.avi', '.mov', '.wmv', '.m4v', '.webm'])
 
@@ -52,7 +53,7 @@ export const getMovies = async (): Promise<Movie[]> => {
 
       const filePath = join(folderPath, file.name)
       const title = parseTitle(file.name)
-      const posterUrl = `poster://${encodeURIComponent(title)}.jpg`
+      const posterUrl = getPosterUrl(title)
       const fileExtension = extname(file.name)
       const { mtimeMs: addedAt } = await stat(filePath)
 
@@ -130,7 +131,7 @@ export const getTvShows = async (): Promise<TvShow[]> => {
       continue
     }
 
-    const posterUrl = `poster://${encodeURIComponent(folder.name)}.jpg`
+    const posterUrl = getPosterUrl(folder.name)
     const latestAddedAt = Math.max(...episodes.map((e) => e.addedAt))
 
     enqueuePoster(folder.name, 'tv-show')

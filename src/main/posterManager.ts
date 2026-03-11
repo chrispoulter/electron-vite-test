@@ -1,8 +1,7 @@
-import { app, BrowserWindow } from 'electron'
-import { mkdir, stat, writeFile } from 'fs/promises'
-import { join } from 'path'
+import { BrowserWindow } from 'electron'
+import { Poster } from '../shared/types'
+import { getPosterUrl, setPosterUrl } from './posterStore'
 import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
-import { PosterUpdate } from '../shared/types'
 
 type QueueItem = { title: string; type: 'movie' | 'tv-show' }
 
@@ -11,6 +10,15 @@ let isProcessing = false
 
 export const enqueuePoster = (title: string, type: 'movie' | 'tv-show'): void => {
   console.log('Enqueuing poster image for', title, type)
+
+  if (getPosterUrl(title)) {
+    return
+  }
+
+  if (queue.some((item) => item.title === title)) {
+    return
+  }
+
   queue.push({ title, type })
 
   if (!isProcessing) {
@@ -37,17 +45,6 @@ const processQueue = async (): Promise<void> => {
 const processItem = async (item: QueueItem): Promise<void> => {
   console.log('Processing poster image for', item.title, item.type)
 
-  const postersDir = join(app.getPath('userData'), 'posters')
-  await mkdir(postersDir, { recursive: true })
-
-  const filePath = join(postersDir, `${item.title}.jpg`)
-
-  const exists = await stat(filePath).catch(() => false)
-  if (exists) {
-    console.log('Poster image already exists for', item.title)
-    return
-  }
-
   let posterUrl: string | undefined
 
   switch (item.type) {
@@ -60,30 +57,10 @@ const processItem = async (item: QueueItem): Promise<void> => {
       break
   }
 
-  if (!posterUrl) {
-    console.log('No poster URL found for', item.title)
-    return
-  }
+  setPosterUrl(item.title, posterUrl)
 
-  try {
-    const response = await fetch(posterUrl)
-
-    if (!response.ok) {
-      console.error('Failed to fetch poster image for', item.title, 'Status:', response.status)
-      return
-    }
-
-    const arrayBuffer = await response.arrayBuffer()
-    const buffer = Buffer.from(arrayBuffer)
-    await writeFile(filePath, buffer)
-
-    broadcastPosterUpdate({ title: item.title, type: item.type })
-
-    console.log('Saved poster image for', item.title)
-  } catch (error) {
-    console.error('Error fetching/saving poster image for', item.title, error)
-  }
+  broadcastPosterUpdate({ title: item.title, type: item.type, posterUrl })
 }
 
-const broadcastPosterUpdate = (data: PosterUpdate): void =>
-  BrowserWindow.getAllWindows().forEach((win) => win.webContents.send('poster-updated', data))
+const broadcastPosterUpdate = (poster: Poster): void =>
+  BrowserWindow.getAllWindows().forEach((win) => win.webContents.send('poster-updated', poster))

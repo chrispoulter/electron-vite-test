@@ -6,7 +6,7 @@ import {
   type UseMutationResult,
   type UseQueryResult
 } from '@tanstack/react-query'
-import type { Movie, TvShow, Settings, PosterUpdate } from '../../../shared/types'
+import type { Movie, TvShow, Settings, Poster } from '../../../shared/types'
 import { applyTheme } from '../utils/theme'
 
 export const useMoviesQuery = (): UseQueryResult<Movie[]> =>
@@ -55,25 +55,23 @@ export const usePosterUpdates = (): void => {
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    const unsubscribe = window.api.onPosterUpdated((data: PosterUpdate): void => {
+    const unsubscribe = window.api.onPosterUpdated((data: Poster): void => {
       console.log('Poster updated:', data)
-
-      const posterUrl = `poster://${encodeURIComponent(data.title)}.jpg?t=${Date.now()}`
 
       if (data.type === 'movie') {
         queryClient.setQueryData<Movie[]>(['movies'], (old) =>
-          old?.map((m) => (data.title === m.title ? { ...m, posterUrl } : m))
+          old?.map((m) => (data.title === m.title ? { ...m, posterUrl: data.posterUrl } : m))
         )
       }
 
       if (data.type === 'tv-show') {
         queryClient.setQueryData<TvShow[]>(['tv-shows'], (old) =>
-          old?.map((s) => (data.title === s.title ? { ...s, posterUrl } : s))
+          old?.map((s) => (data.title === s.title ? { ...s, posterUrl: data.posterUrl } : s))
         )
       }
 
       queryClient.setQueryData<(Movie | TvShow)[]>(['recently-added'], (old) =>
-        old?.map((s) => (data.title === s.title ? { ...s, posterUrl } : s))
+        old?.map((r) => (data.title === r.title ? { ...r, posterUrl: data.posterUrl } : r))
       )
     })
 

@@ -22,9 +22,10 @@ export type TvShow = {
   latestAddedAt: number
 }
 
-export type PosterUpdate = {
+export type Poster = {
   title: string
   type: 'movie' | 'tv-show'
+  posterUrl?: string
 }
 
 export type Settings = {

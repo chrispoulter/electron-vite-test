@@ -1,11 +1,11 @@
-import { app, shell, BrowserWindow, ipcMain, protocol, net } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
-import { pathToFileURL } from 'url'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
+import { getPosters } from './posterStore'
 import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
 
 async function createWindow(): Promise<void> {
@@ -54,7 +54,9 @@ async function createWindow(): Promise<void> {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await getPosters()
+
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -63,16 +65,6 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
-  })
-
-  protocol.handle('poster', (request) => {
-    const filePath = request.url.slice('poster://'.length).split('?')[0]
-
-    return net.fetch(
-      pathToFileURL(
-        join(app.getPath('userData'), 'posters', decodeURIComponent(filePath))
-      ).toString()
-    )
   })
 
   ipcMain.handle('get-settings', () => getSettings())

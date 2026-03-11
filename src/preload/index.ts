@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { Settings, Movie, TvShow, PosterUpdate } from '../shared/types'
+import { Settings, Movie, TvShow, Poster } from '../shared/types'
 
 // Custom APIs for renderer
 const api = {
@@ -10,8 +10,8 @@ const api = {
   getMovies: (): Promise<Movie[]> => ipcRenderer.invoke('get-movies'),
   getTvShows: (): Promise<TvShow[]> => ipcRenderer.invoke('get-tv-shows'),
   openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath),
-  onPosterUpdated: (callback: (data: PosterUpdate) => void) => {
-    const listener = (_: Electron.IpcRendererEvent, data: PosterUpdate): void => callback(data)
+  onPosterUpdated: (callback: (data: Poster) => void) => {
+    const listener = (_: Electron.IpcRendererEvent, data: Poster): void => callback(data)
     ipcRenderer.on('poster-updated', listener)
     return () => ipcRenderer.removeListener('poster-updated', listener)
   }
