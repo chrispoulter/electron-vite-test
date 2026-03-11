@@ -4,12 +4,12 @@ import { join } from 'path'
 import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
 import { PosterUpdate } from '../shared/types'
 
-type QueueItem = { title: string; type: 'movie' | 'tv' }
+type QueueItem = { title: string; type: 'movie' | 'tv-show' }
 
 const queue: QueueItem[] = []
 let isProcessing = false
 
-export const enqueuePoster = (title: string, type: 'movie' | 'tv'): void => {
+export const enqueuePoster = (title: string, type: 'movie' | 'tv-show'): void => {
   console.log('Enqueuing poster image for', title, type)
   queue.push({ title, type })
 
@@ -55,7 +55,7 @@ const processItem = async (item: QueueItem): Promise<void> => {
       posterUrl = await getPosterUrlForMovie(item.title)
       break
 
-    case 'tv':
+    case 'tv-show':
       posterUrl = await getPosterUrlForTvShow(item.title)
       break
   }

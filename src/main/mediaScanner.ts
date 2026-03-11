@@ -133,7 +133,7 @@ export const getTvShows = async (): Promise<TvShow[]> => {
     const posterUrl = `poster://${encodeURIComponent(folder.name)}.jpg`
     const latestAddedAt = Math.max(...episodes.map((e) => e.addedAt))
 
-    enqueuePoster(folder.name, 'tv')
+    enqueuePoster(folder.name, 'tv-show')
 
     tvShows.push({
       title: folder.name,

@@ -60,13 +60,17 @@ export const usePosterUpdates = (): void => {
 
       const posterUrl = `poster://${encodeURIComponent(data.title)}.jpg?t=${Date.now()}`
 
-      queryClient.setQueryData<Movie[]>(['movies'], (old) =>
-        old?.map((m) => (data.title === m.title ? { ...m, posterUrl } : m))
-      )
+      if (data.type === 'movie') {
+        queryClient.setQueryData<Movie[]>(['movies'], (old) =>
+          old?.map((m) => (data.title === m.title ? { ...m, posterUrl } : m))
+        )
+      }
 
-      queryClient.setQueryData<TvShow[]>(['tv-shows'], (old) =>
-        old?.map((s) => (data.title === s.title ? { ...s, posterUrl } : s))
-      )
+      if (data.type === 'tv-show') {
+        queryClient.setQueryData<TvShow[]>(['tv-shows'], (old) =>
+          old?.map((s) => (data.title === s.title ? { ...s, posterUrl } : s))
+        )
+      }
 
       queryClient.setQueryData<(Movie | TvShow)[]>(['recently-added'], (old) =>
         old?.map((s) => (data.title === s.title ? { ...s, posterUrl } : s))

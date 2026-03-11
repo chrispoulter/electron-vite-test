@@ -24,7 +24,7 @@ export type TvShow = {
 
 export type PosterUpdate = {
   title: string
-  type: 'movie' | 'tv'
+  type: 'movie' | 'tv-show'
 }
 
 export type Settings = {
