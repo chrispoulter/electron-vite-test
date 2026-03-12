@@ -77,6 +77,27 @@ The app scans the directories you configure in Settings:
 
 - **Movies** — each subdirectory is treated as one movie; video files inside it are listed as the movie's files.
 - **TV Shows** — each top-level folder is one show; season numbers are detected from filenames using the pattern `S##` (e.g. `S01`).
+- **Recently Added** — ordering is based on each media file's modified time (`mtime`).
+
+## Sample Media Library
+
+Generate a reusable sample library for manual testing:
+
+```bash
+npm run generate:sample-media
+```
+
+This creates the following folders in the repo:
+
+- `test-media/movies`
+- `test-media/tv-shows`
+
+Point the app's Settings to these absolute paths:
+
+- Movies: `{repo}/test-media/movies`
+- TV Shows: `{repo}/test-media/tv-shows`
+
+The generator creates placeholder files with supported video extensions and staggers their modified times so the Recently Added view has realistic data.
 
 Settings and window state are persisted to `{userData}/settings.json` and `{userData}/window-state.json` respectively.
 

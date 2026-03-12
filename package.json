@@ -18,7 +18,8 @@
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux",
-    "generate-icons": "node scripts/generate-icons.mjs"
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "generate:sample-media": "node scripts/generate-sample-media.mjs"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
