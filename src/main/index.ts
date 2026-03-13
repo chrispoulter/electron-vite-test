@@ -1,12 +1,67 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { autoUpdater } from 'electron-updater'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
 import { getPosters } from './posterStore'
 import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
+
+// function setupAutoUpdater(): void {
+//   // if (is.dev) return
+
+//   autoUpdater.autoDownload = false
+//   autoUpdater.autoInstallOnAppQuit = true
+//   autoUpdater.logger = console
+
+//   autoUpdater.on('update-available', (info) => {
+//     dialog
+//       .showMessageBox({
+//         type: 'info',
+//         title: 'Update Available',
+//         message: `Version ${info.version} is available.`,
+//         detail: 'Would you like to download and install it now?',
+//         buttons: ['Download', 'Later'],
+//         defaultId: 0,
+//         cancelId: 1
+//       })
+//       .then((result) => {
+//         if (result.response === 0) {
+//           autoUpdater.downloadUpdate()
+//         }
+//       })
+//   })
+
+//   autoUpdater.on('update-downloaded', () => {
+//     dialog
+//       .showMessageBox({
+//         type: 'info',
+//         title: 'Update Ready',
+//         message: 'Update downloaded.',
+//         detail: 'The update will be installed when you restart the application. Restart now?',
+//         buttons: ['Restart Now', 'Later'],
+//         defaultId: 0,
+//         cancelId: 1
+//       })
+//       .then((result) => {
+//         if (result.response === 0) {
+//           autoUpdater.quitAndInstall()
+//         }
+//       })
+//   })
+
+//   autoUpdater.on('error', (error) => {
+//     console.error('AutoUpdater error:', error.message)
+//   })
+
+//   setTimeout(() => {
+//     autoUpdater.checkForUpdates().catch((error) => {
+//       console.error('Failed to check for updates:', error.message)
+//     })
+//   }, 3000)
+// }
 
 async function createWindow(): Promise<void> {
   const windowState = await getWindowState()
@@ -85,6 +140,8 @@ app.whenReady().then(async () => {
   ipcMain.handle('open-file', (_, filePath: string) => shell.openPath(filePath))
 
   createWindow()
+  autoUpdater.checkForUpdatesAndNotify()
+  // setupAutoUpdater()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
