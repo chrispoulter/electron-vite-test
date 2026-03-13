@@ -13,12 +13,14 @@ const START_AT = new Date('2026-03-12T09:00:00Z').getTime()
 const STEP_MS = 1000 * 60 * 60 * 6
 
 const movies = [
-  { folder: 'T', file: 'The Matrix (1999).mkv' },
-  { folder: 'M', file: 'Mad Max: Fury Road (2015).mp4' },
-  { folder: 'P', file: 'Parasite (2019).mkv' },
   { folder: 'D', file: 'Dune - Part Two (2024).mkv' },
+  { folder: 'E', file: 'Everything Everywhere All at Once (2022).webm' },
+  { folder: 'M', file: 'Mad Max - Fury Road (2015).mp4' },
+  { folder: 'M', file: 'Not a video file.txt' },
+  { folder: 'P', file: 'Parasite (2019).mkv' },
   { folder: 'S', file: 'Spider-Man - Into the Spider-Verse (2018).m4v' },
-  { folder: 'E', file: 'Everything Everywhere All at Once (2022).webm' }
+  { folder: 'T', file: 'The Matrix (1999).mkv' },
+  { folder: 'T', file: 'The Unknown Movie (1999).mkv' }
 ]
 
 const tvShows = [
