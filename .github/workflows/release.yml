@@ -13,11 +13,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: windows-latest
+            build_script: build:win
+          - os: macos-latest
+            build_script: build:mac
+          - os: ubuntu-latest
+            build_script: build:linux
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -32,19 +38,10 @@ jobs:
         shell: bash
         run: npm version ${GITHUB_REF_NAME#v} --no-git-tag-version
 
-      - name: Build linux
-        if: matrix.os == 'ubuntu-latest'
-        run: npm run build:linux
+      - name: Build
+        run: npm run ${{ matrix.build_script }} -- --publish never
 
-      - name: Build mac
-        if: matrix.os == 'macos-latest'
-        run: npm run build:mac
-
-      - name: Build win
-        if: matrix.os == 'windows-latest'
-        run: npm run build:win
-
-      - name: Release
+      - name: Publish
         uses: softprops/action-gh-release@v1
         with:
           draft: true
