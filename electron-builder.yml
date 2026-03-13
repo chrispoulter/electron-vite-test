@@ -40,4 +40,3 @@ npmRebuild: false
 publish:
   provider: github
   releaseType: draft
-  allowOverwrite: true
