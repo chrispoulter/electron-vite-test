@@ -8,9 +8,6 @@ on:
 permissions:
   contents: write
 
-env:
-  EP_GH_IGNORE_TIME: true  
-
 jobs:
   release:
     name: Build & Release (${{ matrix.os }})
@@ -47,4 +44,5 @@ jobs:
       - name: Build & Publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EP_GH_IGNORE_TIME: true  
         run: npm run ${{ matrix.build_script }}
