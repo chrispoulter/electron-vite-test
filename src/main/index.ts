@@ -78,12 +78,13 @@ app.whenReady().then(async () => {
   //   )
   // })
 
+  ipcMain.handle('get-app-version', () => app.getVersion())
+  ipcMain.handle('open-file', (_, filePath: string) => shell.openPath(filePath))
   ipcMain.handle('get-settings', () => getSettings())
   ipcMain.handle('set-settings', (_, settings: Settings) => setSettings(settings))
   ipcMain.handle('get-recently-added', () => getRecentlyAdded())
   ipcMain.handle('get-movies', () => getMovies())
   ipcMain.handle('get-tv-shows', () => getTvShows())
-  ipcMain.handle('open-file', (_, filePath: string) => shell.openPath(filePath))
 
   createWindow()
 

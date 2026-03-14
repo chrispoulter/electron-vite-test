@@ -9,6 +9,13 @@ import {
 import type { Movie, TvShow, Settings, Poster } from '../../../shared/types'
 import { applyTheme } from '../utils/theme'
 
+export const useVersionQuery = (): UseQueryResult<string> =>
+  useQuery({
+    queryKey: ['version'],
+    queryFn: () => window.api.getAppVersion(),
+    staleTime: Infinity
+  })
+
 export const useMoviesQuery = (): UseQueryResult<Movie[]> =>
   useQuery({
     queryKey: ['movies'],

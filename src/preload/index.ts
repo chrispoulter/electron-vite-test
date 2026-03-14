@@ -4,12 +4,13 @@ import { Settings, Movie, TvShow, Poster } from '../shared/types'
 
 // Custom APIs for renderer
 const api = {
+  getAppVersion: (): Promise<string> => ipcRenderer.invoke('get-app-version'),
+  openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath),
   getSettings: (): Promise<Settings> => ipcRenderer.invoke('get-settings'),
   setSettings: (settings: Settings): Promise<void> => ipcRenderer.invoke('set-settings', settings),
   getRecentlyAdded: (): Promise<(Movie | TvShow)[]> => ipcRenderer.invoke('get-recently-added'),
   getMovies: (): Promise<Movie[]> => ipcRenderer.invoke('get-movies'),
   getTvShows: (): Promise<TvShow[]> => ipcRenderer.invoke('get-tv-shows'),
-  openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath),
   onPosterUpdated: (callback: (data: Poster) => void) => {
     const listener = (_: Electron.IpcRendererEvent, data: Poster): void => callback(data)
     ipcRenderer.on('poster-updated', listener)
