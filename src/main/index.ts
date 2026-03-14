@@ -2,12 +2,16 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
+import log from 'electron-log/main'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
 import { getPosters } from './posterStore'
 import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
+
+log.initialize()
+log.errorHandler.startCatching()
 
 async function createWindow(): Promise<void> {
   const windowState = await getWindowState()
@@ -87,6 +91,7 @@ app.whenReady().then(async () => {
 
   createWindow()
 
+  autoUpdater.logger = log
   autoUpdater.checkForUpdatesAndNotify()
 
   app.on('activate', function () {

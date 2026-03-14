@@ -1,4 +1,5 @@
 import { BrowserWindow } from 'electron'
+import log from 'electron-log/main'
 import { Poster } from '../shared/types'
 import { getPosterUrl, setPosterUrl } from './posterStore'
 import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
@@ -13,7 +14,7 @@ export const enqueuePoster = (
   type: 'movie' | 'tv-show',
   tmdbApiKey: string
 ): void => {
-  console.log('Enqueuing poster image for', title, type)
+  log.info('Enqueuing poster image for', title, type)
 
   const posterUrl = getPosterUrl(title)
 
@@ -49,7 +50,7 @@ const processQueue = async (tmdbApiKey: string): Promise<void> => {
 }
 
 const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> => {
-  console.log('Processing poster image for', item.title, item.type)
+  log.info('Processing poster image for', item.title, item.type)
 
   let posterUrl: string | null
 

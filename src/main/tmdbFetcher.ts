@@ -1,3 +1,5 @@
+import log from 'electron-log/main'
+
 const API_URL = 'https://api.themoviedb.org/3'
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w300'
 
@@ -15,7 +17,7 @@ export const getPosterUrlForMovie = async (
   title: string,
   tmdbApiKey: string
 ): Promise<string | null> => {
-  console.log('Fetching poster for movie:', title)
+  log.info('Fetching poster for movie:', title)
 
   if (!tmdbApiKey) {
     return null
@@ -38,7 +40,7 @@ export const getPosterUrlForMovie = async (
 
     return null
   } catch (error) {
-    console.error('Error fetching movie poster:', error)
+    log.error('Error fetching movie poster:', error)
     return null
   }
 }
@@ -47,7 +49,7 @@ export const getPosterUrlForTvShow = async (
   title: string,
   tmdbApiKey: string
 ): Promise<string | null> => {
-  console.log('Fetching poster for tv show:', title)
+  log.info('Fetching poster for tv show:', title)
 
   if (!tmdbApiKey) {
     return null
@@ -70,7 +72,7 @@ export const getPosterUrlForTvShow = async (
 
     return null
   } catch (error) {
-    console.error('Error fetching tv show poster:', error)
+    log.error('Error fetching tv show poster:', error)
     return null
   }
 }

@@ -1,3 +1,4 @@
+import log from 'electron-log/main'
 import { readdir, stat } from 'fs/promises'
 import { extname, join } from 'path'
 import { Movie, TvShow, TvShowEpisode } from '../shared/types'
@@ -18,7 +19,7 @@ const parseTitle = (fileName: string): string => {
 }
 
 export const getMovies = async (): Promise<Movie[]> => {
-  console.log('Fetching movies from directory')
+  log.info('Fetching movies from directory')
 
   const { moviesDirectory, tmdbApiKey } = await getSettings()
 
@@ -75,7 +76,7 @@ export const getMovies = async (): Promise<Movie[]> => {
 }
 
 export const getTvShows = async (): Promise<TvShow[]> => {
-  console.log('Fetching TV shows from directory')
+  log.info('Fetching TV shows from directory')
 
   const { tvShowsDirectory, tmdbApiKey } = await getSettings()
 
@@ -154,7 +155,7 @@ export const getTvShows = async (): Promise<TvShow[]> => {
 }
 
 export const getRecentlyAdded = async (): Promise<(Movie | TvShow)[]> => {
-  console.log('Fetching recently added movies and TV shows')
+  log.info('Fetching recently added movies and TV shows')
 
   const [movies, tvShows] = await Promise.all([getMovies(), getTvShows()])
 

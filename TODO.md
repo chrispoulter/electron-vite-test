@@ -4,4 +4,5 @@
 - **CI/CD** - add pipeline. include releases. use election update package.
 
 # Bugfix
+
 - CI/CD macos
