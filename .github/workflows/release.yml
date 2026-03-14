@@ -16,10 +16,10 @@ jobs:
         include:
           - os: windows-latest
             build_script: build:win
-          - os: macos-latest
-            build_script: build:mac
-          - os: ubuntu-latest
-            build_script: build:linux
+          # - os: macos-latest
+          #   build_script: build:mac
+          # - os: ubuntu-latest
+          #   build_script: build:linux
 
     steps:
       - name: Checkout
@@ -38,23 +38,7 @@ jobs:
         shell: bash
         run: npm version ${GITHUB_REF_NAME#v} --no-git-tag-version
 
-      - name: Build
-        run: npm run ${{ matrix.build_script }} -- --publish never
-
-      - name: Publish
-        uses: softprops/action-gh-release@v1
-        with:
-          draft: true
-          files: |
-            dist/*.exe
-            dist/*.zip
-            dist/*.dmg
-            dist/*.AppImage
-            dist/*.snap
-            dist/*.deb
-            dist/*.rpm
-            dist/*.tar.gz
-            dist/*.yml
-            dist/*.blockmap
+      - name: Build & Publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run ${{ matrix.build_script }}
