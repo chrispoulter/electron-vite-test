@@ -5,6 +5,7 @@ import { Settings, Movie, TvShow, Poster } from '../shared/types'
 // Custom APIs for renderer
 const api = {
   getAppVersion: (): Promise<string> => ipcRenderer.invoke('get-app-version'),
+  openLogFile: (): Promise<void> => ipcRenderer.invoke('open-log-file'),
   openFile: (filePath: string): Promise<void> => ipcRenderer.invoke('open-file', filePath),
   getSettings: (): Promise<Settings> => ipcRenderer.invoke('get-settings'),
   setSettings: (settings: Settings): Promise<void> => ipcRenderer.invoke('set-settings', settings),

@@ -1,13 +1,15 @@
 import { app, dialog } from 'electron'
 import { autoUpdater } from 'electron-updater'
+import log from 'electron-log/main'
 
 export const setupAutoUpdater = (): void => {
   if (!app.isPackaged) {
-    console.log('Auto updates are disabled in development mode')
+    log.info('Auto updates are disabled in development mode')
     return
   }
 
   // autoUpdater.forceDevUpdateConfig = true
+  autoUpdater.logger = log
   autoUpdater.autoDownload = false
 
   autoUpdater.on('update-available', (info) => {
@@ -43,7 +45,7 @@ export const setupAutoUpdater = (): void => {
   })
 
   autoUpdater.on('error', (error) => {
-    console.error('AutoUpdater error:', error.message)
+    log.error('AutoUpdater error:', error.message)
   })
 
   setTimeout(() => autoUpdater.checkForUpdates(), 5000)

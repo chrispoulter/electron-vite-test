@@ -1,13 +1,17 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { join } from 'path'
+import log from 'electron-log/main'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
 import { setupAutoUpdater } from './updater'
 import { getSettings, loadSettings, setSettings } from './settingsStore'
 import { getWindowState, loadWindowState, setWindowState } from './windowStateStore'
-import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
 import { loadPosters } from './posterStore'
+import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
+
+log.errorHandler.startCatching()
+log.initialize()
 
 function createWindow(): void {
   const windowState = getWindowState()
@@ -64,6 +68,7 @@ function registerHandlers(): void {
   // })
 
   ipcMain.handle('get-app-version', () => app.getVersion())
+  ipcMain.handle('open-log-file', () => shell.openPath(log.transports.file.getFile().path))
   ipcMain.handle('open-file', (_, filePath: string) => shell.openPath(filePath))
   ipcMain.handle('get-settings', () => getSettings())
   ipcMain.handle('set-settings', (_, settings: Settings) => setSettings(settings))

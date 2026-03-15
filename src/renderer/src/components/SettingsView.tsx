@@ -160,6 +160,18 @@ export const SettingsView = (): React.JSX.Element => {
           </p>
         )}
       </form>
+      <div className="mt-6">
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
+          onClick={() => window.api.openLogFile()}
+        >
+          Open Log File
+        </button>
+        <p className="mt-1 text-sm text-gray-400">
+          Opens the application log file for diagnostics.
+        </p>
+      </div>
     </div>
   )
 }

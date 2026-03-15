@@ -6,6 +6,7 @@ import {
   type UseMutationResult,
   type UseQueryResult
 } from '@tanstack/react-query'
+import log from 'electron-log/renderer'
 import type { Movie, TvShow, Settings, Poster } from '../../../shared/types'
 import { applyTheme } from '../utils/theme'
 
@@ -63,7 +64,7 @@ export const usePosterUpdates = (): void => {
 
   useEffect(() => {
     const unsubscribe = window.api.onPosterUpdated((data: Poster): void => {
-      console.log('Poster updated:', data)
+      log.info('Poster updated:', data)
 
       if (data.type === 'movie') {
         queryClient.setQueryData<Movie[]>(['movies'], (old) =>

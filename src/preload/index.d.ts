@@ -6,6 +6,7 @@ declare global {
     electron: ElectronAPI
     api: {
       getAppVersion: () => Promise<string>
+      openLogFile: () => Promise<void>
       openFile: (filePath: string) => Promise<void>
       getSettings: () => Promise<Settings>
       setSettings: (settings: Settings) => Promise<void>

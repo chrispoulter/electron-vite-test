@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron'
+import log from 'electron-log/main'
 import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 
@@ -27,7 +28,7 @@ export const loadWindowState = async (): Promise<WindowState> => {
     const data = await readFile(windowStatePath, 'utf-8')
     windowState = JSON.parse(data)
   } catch (error) {
-    console.error('Failed to load window state:', error)
+    log.error('Failed to load window state:', error)
   }
 
   return windowState
@@ -49,6 +50,6 @@ export const setWindowState = async (win: BrowserWindow): Promise<void> => {
   try {
     await writeFile(windowStatePath, JSON.stringify(windowState, null, 2))
   } catch (error) {
-    console.error('Failed to save window state:', error)
+    log.error('Failed to save window state:', error)
   }
 }

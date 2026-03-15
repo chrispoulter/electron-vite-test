@@ -1,4 +1,5 @@
 import { app } from 'electron'
+import log from 'electron-log/main'
 import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 
@@ -12,7 +13,7 @@ export const loadPosters = async (): Promise<Record<string, string | null>> => {
     posters = JSON.parse(data)
     return posters
   } catch (error) {
-    console.error('Failed to load posters:', error)
+    log.error('Failed to load posters:', error)
     return {}
   }
 }
@@ -25,6 +26,6 @@ export const setPoster = async (key: string, posterUrl: string | null): Promise<
   try {
     await writeFile(postersPath, JSON.stringify(posters, null, 2))
   } catch (error) {
-    console.error('Failed to save posters:', error)
+    log.error('Failed to save posters:', error)
   }
 }

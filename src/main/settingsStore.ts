@@ -1,4 +1,5 @@
 import { app } from 'electron'
+import log from 'electron-log/main'
 import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 import type { Settings } from '../shared/types'
@@ -19,7 +20,7 @@ export const loadSettings = async (): Promise<Settings> => {
     const data = await readFile(settingsPath, 'utf-8')
     settings = { ...defaultSettings, ...JSON.parse(data) }
   } catch (error) {
-    console.error('Failed to load settings:', error)
+    log.error('Failed to load settings:', error)
   }
 
   return settings
@@ -33,6 +34,6 @@ export const setSettings = async (newSettings: Settings): Promise<void> => {
   try {
     await writeFile(settingsPath, JSON.stringify(settings, null, 2))
   } catch (error) {
-    console.error('Failed to save settings:', error)
+    log.error('Failed to save settings:', error)
   }
 }
