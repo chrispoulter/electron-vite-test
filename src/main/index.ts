@@ -1,9 +1,9 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { autoUpdater } from 'electron-updater'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
+import { setupAutoUpdater } from './updater'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
 import { getPosters } from './posterStore'
@@ -88,7 +88,7 @@ app.whenReady().then(async () => {
 
   createWindow()
 
-  autoUpdater.checkForUpdatesAndNotify()
+  setupAutoUpdater()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
