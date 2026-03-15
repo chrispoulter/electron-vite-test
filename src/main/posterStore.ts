@@ -1,19 +1,21 @@
 import { app } from 'electron'
+import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
-import { readFileSync } from 'fs'
-import { writeFile } from 'fs/promises'
 
 const postersPath = join(app.getPath('userData'), 'posters.json')
 
-const posters: Record<string, string | null> = (() => {
+let posters: Record<string, string | null> = {}
+
+export const loadPosters = async (): Promise<Record<string, string | null>> => {
   try {
-    const data = readFileSync(postersPath, 'utf-8')
-    return JSON.parse(data)
+    const data = await readFile(postersPath, 'utf-8')
+    posters = JSON.parse(data)
+    return posters
   } catch (error) {
     console.error('Failed to load posters:', error)
     return {}
   }
-})()
+}
 
 export const getPosterUrl = (key: string): string | null | undefined => posters[key]
 

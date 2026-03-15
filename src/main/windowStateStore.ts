@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 
 type WindowState = {
@@ -20,21 +20,25 @@ const defaultWindowState: WindowState = {
 
 const windowStatePath = join(app.getPath('userData'), 'window-state.json')
 
-export const getWindowState = (): WindowState => {
+let windowState: WindowState = defaultWindowState
+
+export const loadWindowState = async (): Promise<WindowState> => {
   try {
-    const data = readFileSync(windowStatePath, 'utf-8')
-    return { ...defaultWindowState, ...JSON.parse(data) }
+    const data = await readFile(windowStatePath, 'utf-8')
+    windowState = JSON.parse(data)
   } catch (error) {
     console.error('Failed to load window state:', error)
-    return defaultWindowState
   }
+
+  return windowState
 }
 
-export const setWindowState = (win: BrowserWindow): void => {
+export const getWindowState = (): WindowState => windowState
+
+export const setWindowState = async (win: BrowserWindow): Promise<void> => {
   const isMaximized = win.isMaximized()
   const bounds = isMaximized ? win.getNormalBounds() : win.getBounds()
-
-  const state: WindowState = {
+  windowState = {
     width: bounds.width,
     height: bounds.height,
     x: bounds.x,
@@ -43,7 +47,7 @@ export const setWindowState = (win: BrowserWindow): void => {
   }
 
   try {
-    writeFileSync(windowStatePath, JSON.stringify(state, null, 2))
+    await writeFile(windowStatePath, JSON.stringify(windowState, null, 2))
   } catch (error) {
     console.error('Failed to save window state:', error)
   }

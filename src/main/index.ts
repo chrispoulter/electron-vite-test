@@ -4,9 +4,10 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import type { Settings } from '../shared/types'
 import { setupAutoUpdater } from './updater'
-import { getSettings, setSettings } from './settingsStore'
-import { getWindowState, setWindowState } from './windowStateStore'
+import { getSettings, loadSettings, setSettings } from './settingsStore'
+import { getWindowState, loadWindowState, setWindowState } from './windowStateStore'
 import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
+import { loadPosters } from './posterStore'
 
 function createWindow(): void {
   const windowState = getWindowState()
@@ -74,7 +75,7 @@ function registerHandlers(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.chrispoulter.medialibrary')
 
@@ -84,6 +85,8 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
+
+  await Promise.all([loadSettings(), loadWindowState(), loadPosters()])
 
   registerHandlers()
   createWindow()
