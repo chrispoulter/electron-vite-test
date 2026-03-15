@@ -17,9 +17,9 @@ export const loadPosters = async (): Promise<Record<string, string | null>> => {
   }
 }
 
-export const getPosterUrl = (key: string): string | null | undefined => posters[key]
+export const getPoster = (key: string): string | null | undefined => posters[key]
 
-export const setPosterUrl = async (key: string, posterUrl: string | null): Promise<void> => {
+export const setPoster = async (key: string, posterUrl: string | null): Promise<void> => {
   posters[key] = posterUrl
 
   try {

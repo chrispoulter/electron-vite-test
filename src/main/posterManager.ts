@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron'
 import { Poster } from '../shared/types'
-import { getPosterUrl, setPosterUrl } from './posterStore'
+import { getPoster, setPoster } from './posterStore'
 import { getPosterUrlForMovie, getPosterUrlForTvShow } from './tmdbFetcher'
 
 type QueueItem = { title: string; type: 'movie' | 'tv-show' }
@@ -15,7 +15,7 @@ export const enqueuePoster = (
 ): void => {
   console.log('Enqueuing poster image for', title, type)
 
-  const posterUrl = getPosterUrl(title)
+  const posterUrl = getPoster(title)
 
   if (posterUrl !== undefined) {
     return
@@ -63,7 +63,7 @@ const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> =
       break
   }
 
-  await setPosterUrl(item.title, posterUrl)
+  await setPoster(item.title, posterUrl)
 
   if (!posterUrl) {
     return
