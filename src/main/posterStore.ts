@@ -1,31 +1,17 @@
-import { app } from 'electron'
+import Store from 'electron-store'
 import log from 'electron-log/main'
-import { readFile, writeFile } from 'fs/promises'
-import { join } from 'path'
 
-const postersPath = join(app.getPath('userData'), 'posters.json')
+const store = new Store<Record<string, string | null>>({
+  name: 'posters',
+  defaults: {}
+})
 
-let posters: Record<string, string | null> = {}
+export const getPoster = (key: string): string | null | undefined => store.get(key)
 
-export const loadPosters = async (): Promise<Record<string, string | null>> => {
+export const setPoster = (key: string, posterUrl: string | null): void => {
   try {
-    const data = await readFile(postersPath, 'utf-8')
-    posters = JSON.parse(data)
-    return posters
+    store.set(key, posterUrl)
   } catch (error) {
-    log.error('Failed to load posters:', error)
-    return {}
-  }
-}
-
-export const getPoster = (key: string): string | null | undefined => posters[key]
-
-export const setPoster = async (key: string, posterUrl: string | null): Promise<void> => {
-  posters[key] = posterUrl
-
-  try {
-    await writeFile(postersPath, JSON.stringify(posters, null, 2))
-  } catch (error) {
-    log.error('Failed to save posters:', error)
+    log.error('Failed to save poster:', error)
   }
 }

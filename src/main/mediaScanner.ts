@@ -76,7 +76,7 @@ export const getMovies = async (): Promise<Movie[]> => {
 }
 
 export const getTvShows = async (): Promise<TvShow[]> => {
-  log.info('Fetching TV shows from directory')
+  log.info('Fetching tv shows from directory')
 
   const { tvShowsDirectory, tmdbApiKey } = await getSettings()
 
@@ -155,7 +155,7 @@ export const getTvShows = async (): Promise<TvShow[]> => {
 }
 
 export const getRecentlyAdded = async (): Promise<(Movie | TvShow)[]> => {
-  log.info('Fetching recently added movies and TV shows')
+  log.info('Fetching recently added movies and tv shows')
 
   const [movies, tvShows] = await Promise.all([getMovies(), getTvShows()])
 

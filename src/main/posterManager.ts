@@ -64,7 +64,7 @@ const processItem = async (item: QueueItem, tmdbApiKey: string): Promise<void> =
       break
   }
 
-  await setPoster(item.title, posterUrl)
+  setPoster(item.title, posterUrl)
 
   if (!posterUrl) {
     return

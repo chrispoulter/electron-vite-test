@@ -1,7 +1,6 @@
-import { app, BrowserWindow } from 'electron'
+import { BrowserWindow } from 'electron'
+import Store from 'electron-store'
 import log from 'electron-log/main'
-import { readFile, writeFile } from 'fs/promises'
-import { join } from 'path'
 
 type WindowState = {
   width: number
@@ -11,44 +10,31 @@ type WindowState = {
   isMaximized: boolean
 }
 
-const defaultWindowState: WindowState = {
-  width: 1280,
-  height: 730,
-  x: undefined,
-  y: undefined,
-  isMaximized: false
-}
-
-const windowStatePath = join(app.getPath('userData'), 'window-state.json')
-
-let windowState: WindowState = defaultWindowState
-
-export const loadWindowState = async (): Promise<WindowState> => {
-  try {
-    const data = await readFile(windowStatePath, 'utf-8')
-    windowState = JSON.parse(data)
-  } catch (error) {
-    log.error('Failed to load window state:', error)
+const store = new Store<WindowState>({
+  name: 'window-state',
+  defaults: {
+    width: 1280,
+    height: 730,
+    x: undefined,
+    y: undefined,
+    isMaximized: false
   }
+})
 
-  return windowState
-}
+export const getWindowState = (): WindowState => store.store
 
-export const getWindowState = (): WindowState => windowState
-
-export const setWindowState = async (win: BrowserWindow): Promise<void> => {
+export const setWindowState = (win: BrowserWindow): void => {
   const isMaximized = win.isMaximized()
   const bounds = isMaximized ? win.getNormalBounds() : win.getBounds()
-  windowState = {
-    width: bounds.width,
-    height: bounds.height,
-    x: bounds.x,
-    y: bounds.y,
-    isMaximized
-  }
 
   try {
-    await writeFile(windowStatePath, JSON.stringify(windowState, null, 2))
+    store.store = {
+      width: bounds.width,
+      height: bounds.height,
+      x: bounds.x,
+      y: bounds.y,
+      isMaximized
+    }
   } catch (error) {
     log.error('Failed to save window state:', error)
   }
