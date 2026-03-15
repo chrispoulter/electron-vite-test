@@ -3,6 +3,7 @@ import { autoUpdater } from 'electron-updater'
 
 export const setupAutoUpdater = (): void => {
   if (!app.isPackaged) {
+    console.log('Auto updates are disabled in development mode')
     return
   }
 
