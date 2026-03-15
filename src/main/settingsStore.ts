@@ -21,5 +21,10 @@ export const getSettings = async (): Promise<Settings> => {
   }
 }
 
-export const setSettings = async (settings: Settings): Promise<void> =>
-  await writeFile(settingsPath, JSON.stringify(settings, null, 2))
+export const setSettings = async (settings: Settings): Promise<void> => {
+  try {
+    await writeFile(settingsPath, JSON.stringify(settings, null, 2))
+  } catch (error) {
+    console.error('Failed to save settings:', error)
+  }
+}

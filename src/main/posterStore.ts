@@ -20,5 +20,9 @@ export const getPosterUrl = (key: string): string | null | undefined => posters[
 
 export const setPosterUrl = async (key: string, posterUrl: string | null): Promise<void> => {
   posters[key] = posterUrl
-  await writeFile(postersPath, JSON.stringify(posters, null, 2))
+  try {
+    await writeFile(postersPath, JSON.stringify(posters, null, 2))
+  } catch (error) {
+    console.error('Failed to save posters:', error)
+  }
 }

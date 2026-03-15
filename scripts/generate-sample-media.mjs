@@ -97,7 +97,6 @@ const generate = async () => {
 }
 
 generate().catch((error) => {
-  console.error('Failed to generate sample media library.')
-  console.error(error)
+  console.error('Failed to generate sample media library:', error)
   process.exitCode = 1
 })

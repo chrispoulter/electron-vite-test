@@ -40,5 +40,9 @@ export const setWindowState = async (win: BrowserWindow): Promise<void> => {
     isMaximized
   }
 
-  await writeFile(windowStatePath, JSON.stringify(state, null, 2))
+  try {
+    await writeFile(windowStatePath, JSON.stringify(state, null, 2))
+  } catch (error) {
+    console.error('Failed to save window state:', error)
+  }
 }
