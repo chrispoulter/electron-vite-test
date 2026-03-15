@@ -1,5 +1,5 @@
 import { app } from 'electron'
-import { readFile, writeFile } from 'fs/promises'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import type { Settings } from '../shared/types'
 
@@ -12,18 +12,19 @@ const defaultSettings: Settings = {
 
 const settingsPath = join(app.getPath('userData'), 'settings.json')
 
-export const getSettings = async (): Promise<Settings> => {
+export const getSettings = (): Settings => {
   try {
-    const data = await readFile(settingsPath, 'utf-8')
-    return JSON.parse(data)
-  } catch {
+    const data = readFileSync(settingsPath, 'utf-8')
+    return { ...defaultSettings, ...JSON.parse(data) }
+  } catch (error) {
+    console.error('Failed to load settings:', error)
     return defaultSettings
   }
 }
 
-export const setSettings = async (settings: Settings): Promise<void> => {
+export const setSettings = (settings: Settings): void => {
   try {
-    await writeFile(settingsPath, JSON.stringify(settings, null, 2))
+    writeFileSync(settingsPath, JSON.stringify(settings, null, 2))
   } catch (error) {
     console.error('Failed to save settings:', error)
   }

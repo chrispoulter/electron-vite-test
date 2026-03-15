@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-import { readFile, writeFile } from 'fs/promises'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
 type WindowState = {
@@ -20,18 +20,20 @@ const defaultWindowState: WindowState = {
 
 const windowStatePath = join(app.getPath('userData'), 'window-state.json')
 
-export const getWindowState = async (): Promise<WindowState> => {
+export const getWindowState = (): WindowState => {
   try {
-    const data = await readFile(windowStatePath, 'utf-8')
-    return JSON.parse(data)
-  } catch {
+    const data = readFileSync(windowStatePath, 'utf-8')
+    return { ...defaultWindowState, ...JSON.parse(data) }
+  } catch (error) {
+    console.error('Failed to load window state:', error)
     return defaultWindowState
   }
 }
 
-export const setWindowState = async (win: BrowserWindow): Promise<void> => {
+export const setWindowState = (win: BrowserWindow): void => {
   const isMaximized = win.isMaximized()
   const bounds = isMaximized ? win.getNormalBounds() : win.getBounds()
+
   const state: WindowState = {
     width: bounds.width,
     height: bounds.height,
@@ -41,7 +43,7 @@ export const setWindowState = async (win: BrowserWindow): Promise<void> => {
   }
 
   try {
-    await writeFile(windowStatePath, JSON.stringify(state, null, 2))
+    writeFileSync(windowStatePath, JSON.stringify(state, null, 2))
   } catch (error) {
     console.error('Failed to save window state:', error)
   }

@@ -6,11 +6,10 @@ import type { Settings } from '../shared/types'
 import { setupAutoUpdater } from './updater'
 import { getSettings, setSettings } from './settingsStore'
 import { getWindowState, setWindowState } from './windowStateStore'
-import { getPosters } from './posterStore'
 import { getMovies, getRecentlyAdded, getTvShows } from './mediaScanner'
 
-async function createWindow(): Promise<void> {
-  const windowState = await getWindowState()
+function createWindow(): void {
+  const windowState = getWindowState()
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -75,9 +74,7 @@ function registerHandlers(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(async () => {
-  await getPosters()
-
+app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.chrispoulter.medialibrary')
 
@@ -89,7 +86,7 @@ app.whenReady().then(async () => {
   })
 
   registerHandlers()
-  await createWindow()
+  createWindow()
   setupAutoUpdater()
 
   app.on('activate', function () {
