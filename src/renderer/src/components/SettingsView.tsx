@@ -142,13 +142,22 @@ export const SettingsView = (): React.JSX.Element => {
             Enter your TMDb API key to enable metadata fetching.
           </p>
         </div>
-        <button
-          type="submit"
-          disabled={isPending}
-          className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-        >
-          {isPending ? 'Saving...' : 'Save Settings'}
-        </button>
+        <div className="flex flex-row gap-3">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          >
+            {isPending ? 'Saving...' : 'Save Settings'}
+          </button>
+          <button
+            type="button"
+            className="cursor-pointer rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
+            onClick={() => window.api.openLogFile()}
+          >
+            Open Log File
+          </button>
+        </div>
         {isSuccess && (
           <p className="mt-3 rounded border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700 dark:border-green-800/50 dark:bg-green-900/20 dark:text-green-400">
             Settings saved successfully.
@@ -160,18 +169,6 @@ export const SettingsView = (): React.JSX.Element => {
           </p>
         )}
       </form>
-      <div className="mt-6">
-        <button
-          type="button"
-          className="cursor-pointer rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
-          onClick={() => window.api.openLogFile()}
-        >
-          Open Log File
-        </button>
-        <p className="mt-1 text-sm text-gray-400">
-          Opens the application log file for diagnostics.
-        </p>
-      </div>
     </div>
   )
 }
