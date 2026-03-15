@@ -16,9 +16,9 @@ export const getPosters = async (): Promise<Record<string, string | null>> => {
   return posters
 }
 
-export const getPosterUrl = (title: string): string | null => posters[title]
+export const getPosterUrl = (key: string): string | null | undefined => posters[key]
 
-export const setPosterUrl = async (title: string, posterUrl: string | null): Promise<void> => {
-  posters[title] = posterUrl
+export const setPosterUrl = async (key: string, posterUrl: string | null): Promise<void> => {
+  posters[key] = posterUrl
   await writeFile(postersPath, JSON.stringify(posters, null, 2))
 }

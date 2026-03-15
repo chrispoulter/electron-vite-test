@@ -1,5 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import type { Settings, Movie, TvShow } from '../shared/types'
+import type { Settings, Movie, TvShow, Poster } from '../shared/types'
 
 declare global {
   interface Window {
@@ -12,7 +12,7 @@ declare global {
       getRecentlyAdded: () => Promise<(Movie | TvShow)[]>
       getMovies: () => Promise<Movie[]>
       getTvShows: () => Promise<TvShow[]>
-      onPosterUpdated: (callback: (data: PosterUpdate) => void) => () => void
+      onPosterUpdated: (callback: (data: Poster) => void) => () => void
     }
   }
 }
