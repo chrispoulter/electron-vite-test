@@ -14,7 +14,7 @@ export const enqueuePoster = (
   type: 'movie' | 'tv-show',
   tmdbApiKey: string
 ): void => {
-  log.info('Enqueuing poster image for', title, type)
+  log.info('Enqueuing poster image for', type, title)
 
   const posterUrl = getPoster(title)
 

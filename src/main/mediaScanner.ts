@@ -21,7 +21,7 @@ const parseTitle = (fileName: string): string => {
 export const getMovies = async (): Promise<Movie[]> => {
   log.info('Fetching movies from directory')
 
-  const { moviesDirectory, tmdbApiKey } = await getSettings()
+  const { moviesDirectory, tmdbApiKey } = getSettings()
 
   if (!moviesDirectory) {
     return []
@@ -78,7 +78,7 @@ export const getMovies = async (): Promise<Movie[]> => {
 export const getTvShows = async (): Promise<TvShow[]> => {
   log.info('Fetching tv shows from directory')
 
-  const { tvShowsDirectory, tmdbApiKey } = await getSettings()
+  const { tvShowsDirectory, tmdbApiKey } = getSettings()
 
   if (!tvShowsDirectory) {
     return []
