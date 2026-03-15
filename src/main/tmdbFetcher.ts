@@ -29,6 +29,10 @@ export const getPosterUrlForMovie = async (
       headers: { Authorization: `Bearer ${tmdbApiKey}` }
     })
 
+    if (!response.ok) {
+      throw new Error(`TMDb responded with ${response.status} ${response.statusText}`)
+    }
+
     const data = await response.json()
 
     if (data.results && data.results.length > 0) {
@@ -60,6 +64,10 @@ export const getPosterUrlForTvShow = async (
     const response = await fetch(`${API_URL}/search/tv?${params.toString()}`, {
       headers: { Authorization: `Bearer ${tmdbApiKey}` }
     })
+
+    if (!response.ok) {
+      throw new Error(`TMDb responded with ${response.status} ${response.statusText}`)
+    }
 
     const data = await response.json()
 
